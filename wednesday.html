@@ -4,244 +4,394 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GECDV 201: Spring 2026 (Wednesday)</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS for Modal and fast styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Core Canvas Styles */
         body { margin: 0; padding: 20px; background-color: #f0f0f0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
         .umkc-root { width: 100%; max-width: 1200px; margin: 0 auto; background: #ffffff; border-radius: 8px; color: #003366; border: 1px solid #e1e1e1; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
-        /* Button Styles */
-        .btn { display: inline-block; padding: 8px 14px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 0.85rem; transition: all 0.2s ease; margin: 4px; cursor: pointer; white-space: nowrap; line-height: 1.2; }
-        .btn-gold { background-color: #ffc72c; color: #003366; border: 1px solid #cca300; }
-        .btn-gold:hover { background-color: #ffdb4d; transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn-blue { background-color: #003366; color: #ffffff; border: 1px solid #003366; }
-        .btn-outline { background-color: transparent; color: #003366; border: 2px solid #003366; }
-        .btn-outline:hover { background-color: #e6f0fa; }
+        /* Button Styles for Accessibility & Usability */
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            margin: 4px 4px 4px 0; 
+            white-space: nowrap; 
+            line-height: 1.2;
+            cursor: pointer;
+        }
 
-        /* Grade Table & Tooltips */
-        .grade-row { transition: background-color 0.2s; }
-        .grade-row:nth-child(even) { background-color: #eff6ff; }
-        .grade-row:nth-child(odd) { background-color: #ffffff; }
-        .grade-row:hover { background-color: #e0f2fe !important; }
+        .btn-blue {
+            background-color: #003366;
+            color: #ffffff !important;
+            border: 1px solid #003366;
+        }
+        .btn-blue:hover {
+            background-color: #002244;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn-gold {
+            background-color: #ffc72c;
+            color: #003366 !important;
+            border: 1px solid #cca300;
+        }
+        .btn-gold:hover {
+            background-color: #ffdb4d;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #003366 !important;
+            border: 2px solid #003366;
+        }
+        .btn-outline:hover {
+            background-color: #e6f0fa;
+        }
+
+        /* Presentation Slots Styling */
+        .slot-pill {
+            display: inline-block;
+            background: #e6f0fa;
+            color: #003366;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin: 2px;
+            border: 1px solid #b3d1ef;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .slot-counter {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #d97706; /* Amber-600 */
+            margin-top: 4px;
+        }
+        .slot-full {
+            color: #dc2626; /* Red-600 */
+        }
+
+        /* Force single line for due dates */
+        .due-date-text {
+            display: block; 
+            font-size: 0.9rem; 
+            margin-top: 8px; 
+            color: #003366; 
+            font-weight: bold;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+
+        /* New Grades Table Styling */
+        .grade-row {
+            transition: background-color 0.2s;
+        }
+        /* Alternating Row Colors */
+        .grade-row:nth-child(even) {
+            background-color: #eff6ff; /* Light Blue */
+        }
+        .grade-row:nth-child(odd) {
+            background-color: #ffffff; /* White */
+        }
+        /* Hover Effect */
+        .grade-row:hover {
+            background-color: #e0f2fe !important; /* Slightly darker blue on hover */
+        }
         
-        .badge { display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
-        .badge-signature { background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-        .badge-discussion { background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
-        .badge-journal { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
-        .badge-participation { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
-        .badge-presentation { background-color: #fae8ff; color: #86198f; border: 1px solid #f0abfc; }
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .badge-signature { background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; } /* Blue */
+        .badge-discussion { background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; } /* Gray */
+        .badge-journal { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; } /* Yellow */
+        .badge-participation { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; } /* Green */
+        .badge-presentation { background-color: #fae8ff; color: #86198f; border: 1px solid #f0abfc; } /* Purple */
 
-        .due-date-text { display: block; font-size: 0.9rem; margin-top: 8px; color: #003366; font-weight: bold; line-height: 1.4; white-space: nowrap; }
-
-        /* Slots */
-        .slot-pill { display: inline-flex; align-items: center; gap: 4px; background: #e6f0fa; color: #003366; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin: 2px; border: 1px solid #b3d1ef; }
-        .slot-counter { font-size: 0.8rem; font-weight: bold; color: #d97706; margin-top: 4px; }
-        .slot-full { color: #dc2626; }
-
-        /* Tooltip */
-        #hover-tooltip { pointer-events: none; transition: opacity 0.2s ease-in-out; }
+        /* Tooltip Styling */
+        #hover-tooltip {
+            pointer-events: none; /* Allows mouse to pass through so it doesn't flicker */
+            transition: opacity 0.2s ease-in-out;
+        }
 
         @media (max-width: 600px) {
-            .btn { display: block; width: 100%; text-align: center; }
+            .btn {
+                display: block; 
+                text-align: center;
+                width: 100%;
+                margin-right: 0;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="umkc-root">
-    <!-- Header -->
+
+    <!-- HEADER SECTION -->
     <header style="background: linear-gradient(135deg, #ffc72c 0%, #ffc72c 25%, #0066cc 100%); border-radius: 8px 8px 0 0; padding: 40px 30px;">
         <h1 style="margin: 0 0 10px 0; font-size: 2.5rem; font-weight: 700; color: #003366; text-shadow: 0px 1px 1px rgba(255,255,255,0.4);">GECDV 201: Self in a Multicultural Society</h1>
         <p style="margin: 0; font-size: 1.4rem; font-weight: 500; color: #003366; max-width: 800px;">Spring 2026 &bull; Wednesdays 4:30 PM &ndash; 7:15 PM</p>
     </header>
 
-    <!-- Zoom Link -->
+    <!-- ZOOM ACCESS SECTION -->
     <section style="background: #0066cc; color: #ffffff; padding: 30px;">
         <h2 style="margin: 0 0 20px 0; font-size: 1.6rem; color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;">Weekly Live Sessions</h2>
+        
         <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: rgba(0, 0, 0, 0.1); padding: 20px; border-radius: 8px;">
             <div style="flex: 1; min-width: 280px;">
-                <p style="margin: 0 0 10px 0; font-size: 1.15rem;"><strong>Step 1:</strong> Authenticate Zoom</p>
+                <p style="margin: 0 0 10px 0; font-size: 1.15rem;"><strong>Step 1:</strong> Authenticate your Zoom account.</p>
                 <a href="https://umsystem.zoom.us/" target="_blank" class="btn btn-blue">Sign in to UMKC Zoom Portal &rarr;</a>
             </div>
             <div style="flex: 1; min-width: 280px;">
-                <p style="margin: 0 0 10px 0; font-size: 1.15rem;"><strong>Step 2:</strong> Join class</p>
-                <a href="https://umsystem.zoom.us/meeting/register/X2NTE0hPRFaASJ9GR5gC3g" target="_blank" class="btn btn-gold">Join Wednesday Session</a>
+                <p style="margin: 0 0 10px 0; font-size: 1.15rem;"><strong>Step 2:</strong> Join class (Wednesdays @ 4:30 PM).</p>
+                <a href="https://umsystem.zoom.us/meeting/register/X2NTE0hPRFaASJ9GR5gC3g" target="_blank" class="btn btn-gold" style="font-size: 1.1rem; padding: 12px 24px;">Join Wednesday Session</a>
             </div>
         </div>
     </section>
 
-    <!-- Course Overview -->
+    <!-- COURSE OVERVIEW -->
     <section style="padding: 40px 30px; background-color: #f9f9f9; border-bottom: 1px solid #ddd;">
         <h2 style="margin-top: 0; color: #003366; font-size: 1.8rem;">About This Course</h2>
-        <p style="font-size: 1.15rem; line-height: 1.6;">Students will engage in deep investigation and reflection on their own backgrounds and cultures. <strong>Participation is Key.</strong></p>
+        <p style="font-size: 1.15rem; line-height: 1.6;">
+            Students will engage in deep investigation and reflection on their own backgrounds and cultures, examining worldviews and implicit biases. Through signature assignments—including a cultural autobiography, a cultural event analysis, and a final reflection—you will develop a comprehensive awareness of yourself as a cultural being.
+        </p>
+        <p style="font-size: 1.15rem; line-height: 1.6; background-color: #fff; border-left: 5px solid #ffc72c; padding: 15px; margin-top: 20px;">
+            <strong>Participation is Key:</strong> This course fosters critical consciousness through mandatory weekly breakout discussions and a "Who am I as a cultural being?" presentation. Attendance is crucial to ensuring active participation in this dialogue.
+        </p>
     </section>
 
-    <!-- Schedule -->
+    <!-- SCHEDULE TABLE -->
     <section id="schedule-section" style="padding: 30px;">
-        <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-            <h2 style="color: #003366; font-size: 1.8rem; margin: 0;">Spring 2026 Course Schedule</h2>
-            <button onclick="openModal()" class="btn btn-gold" style="border: 2px solid #003366;">📝 Sign Up for Presentation</button>
+        <div style="margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 8px;">
+                <h2 style="color: #003366; font-size: 1.8rem; margin: 0;">Spring 2026 Course Schedule</h2>
+                <!-- NEW SIGN UP BUTTON (NOW A LINK TO EXTERNAL SHEET) -->
+                <button onclick="openModal()" class="btn btn-gold" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #003366;">
+                    📝 Sign Up for Presentation
+                </button>
+            </div>
+            <p style="margin: 0; font-style: italic; color: #555;">Note: Click <strong>Week Prep Kit</strong> to access required readings, videos, and discussion prompts before our live session.</p>
         </div>
-
+        
         <div style="overflow-x: auto; border: 1px solid #ccc; border-radius: 8px;">
             <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
                 <thead>
                     <tr style="background-color: #0056b3; color: white;">
-                        <th style="padding: 15px;">Week</th>
-                        <th style="padding: 15px; text-align: left;">Date</th>
-                        <th style="padding: 15px; text-align: left;">Agenda &amp; Topics</th>
-                        <th style="padding: 15px; text-align: left;">Your Weekly Toolkit</th>
+                        <th scope="col" style="padding: 15px; text-align: center; border-bottom: 2px solid #fff; width: 10%;">Week</th>
+                        <th scope="col" style="padding: 15px; text-align: left; border-bottom: 2px solid #fff; width: 15%;">Date</th>
+                        <th scope="col" style="padding: 15px; text-align: left; border-bottom: 2px solid #fff; width: 40%;">Agenda &amp; Topics</th>
+                        <th scope="col" style="padding: 15px; text-align: left; border-bottom: 2px solid #fff; width: 35%;">Your Weekly Toolkit</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 1.05rem;">
-                    <!-- Week 1 -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">1</th>
-                        <td style="padding: 15px;">Jan 21<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Introductions</strong><br><em>The Cultural Iceberg</em></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 1 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 2 -->
-                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">2</th>
-                        <td style="padding: 15px;">Jan 28<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Deep Dive</strong><br><em>Race, Racism, Privilege</em></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 2 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 3 Presentations -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">3</th>
-                        <td style="padding: 15px;">Feb 04<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Student Presentations</strong><div id="week-3-slots" style="margin-top:10px;"></div></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 3 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 4 Async -->
-                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">4</th>
-                        <td style="padding: 15px;">Feb 11<br><span style="font-size:0.85rem; color:#666; font-weight:bold;">No Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Asynchronous Week</strong><br><em>Socioeconomic Status</em></td>
+                    <!-- WEEK 1 -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">1</th>
+                        <td style="padding: 15px;">Jan 21<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Introductions &amp; Orientation</strong><br><em>The Cultural Iceberg</em></td>
                         <td style="padding: 15px;">
-                            <a href="#" class="btn btn-gold">Week 4 Prep Kit</a>
-                            <a href="#" class="btn btn-blue">Discussion Board 1</a>
-                            <button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
-                            <span class="due-date-text">Discussion 1 Due:<br>Sun, Feb 15th by 11:59 PM</span>
-                        </td>
-                    </tr>
-                    <!-- Week 5 Presentations -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">5</th>
-                        <td style="padding: 15px;">Feb 18<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Student Presentations</strong><div id="week-5-slots" style="margin-top:10px;"></div></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 5 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 6 -->
-                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">6</th>
-                        <td style="padding: 15px;">Feb 25<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Deep Dive</strong><br><em>Gender & Sexuality</em></td>
-                        <td style="padding: 15px;">
-                            <a href="#" class="btn btn-gold">Week 6 Prep Kit</a>
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-1-guide" class="btn btn-gold">Week 1 Prep Kit</a>
                             <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
-                            <span class="due-date-text">Journal #1 Due:<br>Sun, Mar 1st by 11:59 PM</span>
                         </td>
                     </tr>
-                    <!-- Week 7 Presentations -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">7</th>
-                        <td style="padding: 15px;">Mar 04<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Student Presentations</strong><div id="week-7-slots" style="margin-top:10px;"></div></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 7 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 8 -->
+                    <!-- WEEK 2 -->
                     <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">8</th>
-                        <td style="padding: 15px;">Mar 11<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Deep Dive</strong><br><em>Immigration</em></td>
+                        <th scope="row" style="padding: 15px; text-align: center;">2</th>
+                        <td style="padding: 15px;">Jan 28<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Deep Dive &amp; Dialogue</strong><br><em>How do race, racism, and privilege impact my understanding of self and others?</em></td>
                         <td style="padding: 15px;">
-                            <a href="#" class="btn btn-gold">Week 8 Prep Kit</a>
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-assignment-number-1-2" class="btn btn-gold">Week 2 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
+                    </tr>
+                    <!-- WEEK 3 - Presentation -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;" id="week-3-row">
+                        <th scope="row" style="padding: 15px; text-align: center;">3</th>
+                        <td style="padding: 15px;">Feb 04<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;">
+                            <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
+                            <div id="week-3-slots" style="margin-top:10px;"></div>
+                        </td>
+                        <td style="padding: 15px;">
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-race" class="btn btn-gold">Week 3 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
+                    </tr>
+                    <!-- WEEK 4: ASYNC DISCUSSION 1 -->
+                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">4</th>
+                        <td style="padding: 15px;">Feb 11<br><span style="font-size:0.85rem; color:#666; font-weight:bold; display:block; margin-top:4px;">No Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Asynchronous Week</strong><br><em>How does my socioeconomic status impact my understanding of self and others?</em></td>
+                        <td style="padding: 15px;">
+                             <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 4 Prep Kit</a>
+                             <a href="#" class="btn btn-blue">Discussion Board 1</a>
+                             <button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                             <span class="due-date-text">Discussion 1 Due:<br>Sun, Feb 15th by 11:59 PM</span>
+                        </td>
+                    </tr>
+                    <!-- WEEK 5 - Presentation -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;" id="week-5-row">
+                        <th scope="row" style="padding: 15px; text-align: center;">5</th>
+                        <td style="padding: 15px;">Feb 18<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;">
+                            <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
+                            <div id="week-5-slots" style="margin-top:10px;"></div>
+                        </td>
+                        <td style="padding: 15px;">
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/toxic-masculinity" class="btn btn-gold">Week 5 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
+                    </tr>
+                     <!-- WEEK 6 -->
+                     <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">6</th>
+                        <td style="padding: 15px;">Feb 25<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Deep Dive &amp; Dialogue</strong><br><em>How do gender and sexuality impact my understanding of self and others?</em></td>
+                        <td style="padding: 15px;">
+                             <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 6 Prep Kit</a>
+                             <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                             <span class="due-date-text">Journal #1 Due:<br>Sun, Mar 1st by 11:59 PM</span>
+                        </td>
+                    </tr>
+                    <!-- WEEK 7 - Presentation -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;" id="week-7-row">
+                        <th scope="row" style="padding: 15px; text-align: center;">7</th>
+                        <td style="padding: 15px;">Mar 04<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;">
+                            <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
+                            <div id="week-7-slots" style="margin-top:10px;"></div>
+                        </td>
+                        <td style="padding: 15px;">
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 7 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
+                    </tr>
+                    <!-- WEEK 8 -->
+                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">8</th>
+                        <td style="padding: 15px;">Mar 11<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Deep Dive &amp; Dialogue</strong><br><em>How does immigration impact my understanding of self and others?</em></td>
+                        <td style="padding: 15px;">
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-removed" class="btn btn-gold">Week 8 Prep Kit</a>
                             <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
                             <span class="due-date-text">Autobiography Due:<br>Sun, Mar 15th by 11:59 PM</span>
                         </td>
                     </tr>
-                    <!-- Week 9 Presentations -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">9</th>
-                        <td style="padding: 15px;">Mar 18<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Student Presentations</strong><div id="week-9-slots" style="margin-top:10px;"></div></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 9 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
+                     <!-- WEEK 9 - Presentation -->
+                     <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;" id="week-9-row">
+                        <th scope="row" style="padding: 15px; text-align: center;">9</th>
+                        <td style="padding: 15px;">Mar 18<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;">
+                            <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
+                            <div id="week-9-slots" style="margin-top:10px;"></div>
+                        </td>
+                        <td style="padding: 15px;">
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 9 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
                     </tr>
-                    <!-- Spring Break -->
+                    <!-- SPRING BREAK -->
                     <tr style="background-color: #ffc72c; color: #003366; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">-</th>
+                        <th scope="row" style="padding: 15px; text-align: center;">-</th>
                         <td style="padding: 15px;"><strong>Mar 25</strong></td>
                         <td style="padding: 15px;"><strong>NO CLASS - SPRING BREAK</strong></td>
                         <td style="padding: 15px;">Take a break!</td>
                     </tr>
-                    <!-- Week 10 Async -->
+                    <!-- WEEK 10: ASYNC DISCUSSION 2 (TOPIC SWAPPED TO ABLEISM) -->
                     <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">10</th>
-                        <td style="padding: 15px;">Apr 01<br><span style="font-size:0.85rem; color:#666; font-weight:bold;">No Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Asynchronous Week</strong><br><em>Ableism</em></td>
+                        <th scope="row" style="padding: 15px; text-align: center;">10</th>
+                        <td style="padding: 15px;">Apr 01<br><span style="font-size:0.85rem; color:#666; font-weight:bold; display:block; margin-top:4px;">No Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Asynchronous Week</strong><br><em>How does having or not having an able body impact my understanding of self and others?</em></td>
                         <td style="padding: 15px;">
-                             <a href="#" class="btn btn-gold">Week 10 Prep Kit</a>
-                             <a href="#" class="btn btn-blue">Discussion Board 2</a>
-                             <button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
-                             <span class="due-date-text">Discussion 2 Due:<br>Sun, Apr 5th by 11:59 PM</span>
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 10 Prep Kit</a>
+                            <a href="#" class="btn btn-blue">Discussion Board 2</a>
+                            <button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                            <span class="due-date-text">Discussion 2 Due:<br>Sun, Apr 5th by 11:59 PM</span>
                         </td>
                     </tr>
-                    <!-- Week 11 Presentations -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">11</th>
-                        <td style="padding: 15px;">Apr 08<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Student Presentations</strong><div id="week-11-slots" style="margin-top:10px;"></div></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 11 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
+                    <!-- WEEK 11 - Presentation -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;" id="week-11-row">
+                        <th scope="row" style="padding: 15px; text-align: center;">11</th>
+                        <td style="padding: 15px;">Apr 08<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;">
+                            <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
+                            <div id="week-11-slots" style="margin-top:10px;"></div>
+                        </td>
+                        <td style="padding: 15px;">
+                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 11 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
                     </tr>
-                    <!-- Week 12 -->
-                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">12</th>
-                        <td style="padding: 15px;">Apr 15<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Deep Dive</strong><br><em>Health & Education Access</em></td>
+                     <!-- WEEK 12: DEEP DIVE (TOPIC SWAPPED TO HEALTH/EDUCATION) -->
+                     <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">12</th>
+                        <td style="padding: 15px;">Apr 15<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Deep Dive &amp; Dialogue</strong><br><em>How do access to health care and education impact my understanding of self and others?</em></td>
                         <td style="padding: 15px;">
                             <a href="#" class="btn btn-gold">Week 12 Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
-                            <span class="due-date-text">Journal #2 Due:<br>Sun, Apr 19th by 11:59 PM</span>
+                             <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                             <span class="due-date-text">Journal #2 Due:<br>Sun, Apr 19th by 11:59 PM</span>
                         </td>
                     </tr>
-                    <!-- Week 13 Presentations -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">13</th>
-                        <td style="padding: 15px;">Apr 22<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Student Presentations</strong><div id="week-13-slots" style="margin-top:10px;"></div></td>
+                    <!-- WEEK 13 - Presentation -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;" id="week-13-row">
+                        <th scope="row" style="padding: 15px; text-align: center;">13</th>
+                        <td style="padding: 15px;">Apr 22<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
-                             <a href="#" class="btn btn-gold">Week 13 Prep Kit</a>
+                            <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
+                            <div id="week-13-slots" style="margin-top:10px;"></div>
+                        </td>
+                        <td style="padding: 15px;">
+                            <a href="#" class="btn btn-gold">Week 13 Prep Kit</a>
                              <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
                              <span class="due-date-text">Cultural Event Paper Due:<br>Sun, Apr 26th by 11:59 PM</span>
                         </td>
                     </tr>
-                    <!-- Week 14 -->
+                    <!-- WEEK 14 -->
                     <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">14</th>
-                        <td style="padding: 15px;">Apr 29<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Deep Dive</strong><br><em>Course Synthesis</em></td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 14 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 15 Closing -->
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">15</th>
-                        <td style="padding: 15px;">May 06<br><span style="font-size:0.85rem; color:#003366; font-weight:bold;">Zoom Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Closing Session</strong><br>TBD</td>
-                        <td style="padding: 15px;"><a href="#" class="btn btn-gold">Week 15 Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button></td>
-                    </tr>
-                    <!-- Week 16 Finals -->
-                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
-                        <th style="padding: 15px;">16</th>
-                        <td style="padding: 15px;">May 13<br><span style="font-size:0.85rem; color:#666; font-weight:bold;">No Class Meeting</span></td>
-                        <td style="padding: 15px;"><strong>Finals Week</strong><br>TBD (No formal exam)</td>
+                        <th scope="row" style="padding: 15px; text-align: center;">14</th>
+                        <td style="padding: 15px;">Apr 29<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Deep Dive &amp; Dialogue</strong><br><em>Course Synthesis: Intersectionality and Reflection</em></td>
                         <td style="padding: 15px;">
-                            <button onclick="openAttendanceModal('finals')" onmouseenter="showTooltip(event, 'finals')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
-                            <span class="due-date-text">Final Reflection Due:<br>Sun, May 17th by 11:59 PM</span>
-                            <span style="font-size:0.8rem; color:#666; display:block;">(Opens ~2 weeks prior)</span>
+                            <a href="#" class="btn btn-gold">Week 14 Prep Kit</a>
+                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
+                    </tr>
+                    <!-- WEEK 15 -->
+                    <tr style="background-color: #ffffff; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">15</th>
+                        <td style="padding: 15px;">May 06<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Closing Session</strong><br>TBD</td>
+                        <td style="padding: 15px;">
+                             <a href="#" class="btn btn-gold">Week 15 Prep Kit</a>
+                             <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                        </td>
+                    </tr>
+                    <!-- WEEK 16 -->
+                    <tr style="background-color: #f4f8fb; border-bottom: 1px solid #ddd;">
+                        <th scope="row" style="padding: 15px; text-align: center;">16</th>
+                        <td style="padding: 15px;">May 13<br><span style="font-size:0.85rem; color:#666; font-weight:bold; display:block; margin-top:4px;">No Class Meeting</span></td>
+                        <td style="padding: 15px;"><strong>Finals Week</strong><br>TBD<br><span style="font-size:0.9rem; font-style:italic;">No formal final exam.</span></td>
+                        <td style="padding: 15px;">
+                             <button onclick="openAttendanceModal('finals')" onmouseenter="showTooltip(event, 'finals')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance &amp; Participation</button>
+                             <span class="due-date-text">Final Reflection Due:<br>Sun, May 17th by 11:59 PM</span>
+                             <span style="display:block; font-size: 0.8rem; margin-top: 4px; color: #666;">(Opens ~2 weeks prior)</span>
                         </td>
                     </tr>
                 </tbody>
@@ -314,9 +464,53 @@
         </div>
     </section>
 
+    <!-- SUPPORT FOOTER -->
+    <div id="faq-section" style="background: #ffc72c; padding: 25px 30px; border-radius: 0 0 8px 8px; color: #003366;">
+        <h2 style="margin-top: 0; font-size: 1.5rem;">Support &amp; FAQ</h2>
+        
+        <div style="margin-bottom: 20px;">
+            <p><strong>Feedback Times:</strong> Journals (3–5 days), Signature Assignments (7–10 days).</p>
+            <p><strong>Need Help?</strong> Contact Professor John via Canvas Inbox.</p>
+        </div>
+
+        <!-- FAQ ACCORDIONS (Styled Details) -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            
+            <details style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #003366;">
+                <summary style="cursor: pointer; font-weight: bold; color: #003366; outline: none;">Do I need a textbook?</summary>
+                <div style="margin-top: 10px; line-height: 1.5;">
+                    No. All readings and videos are provided in Canvas.
+                </div>
+            </details>
+
+            <details style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #003366;">
+                <summary style="cursor: pointer; font-weight: bold; color: #003366; outline: none;">What is the camera policy?</summary>
+                <div style="margin-top: 10px; line-height: 1.5;">
+                    Cameras are expected to support community and participation (30% of grade). Background blur is welcome. If you have bandwidth issues, message the instructor.
+                </div>
+            </details>
+            
+            <details style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #003366;">
+                <summary style="cursor: pointer; font-weight: bold; color: #003366; outline: none;">How is attendance taken?</summary>
+                <div style="margin-top: 10px; line-height: 1.5;">
+                    We will not be using exit tickets this semester. Attendance will be taken via Zoom analytic tools. Full attendance points will be rewarded each week for coming to class and participating with your zoom camera on.
+                </div>
+            </details>
+
+            <details style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #003366;">
+                <summary style="cursor: pointer; font-weight: bold; color: #003366; outline: none;">Is ChatGPT allowed?</summary>
+                <div style="margin-top: 10px; line-height: 1.5;">
+                     <p>Yes, for brainstorming and editing, but not for creating content. You must document its use. Example citation:</p>
+                     <p style="background: #f0f0f0; padding: 8px; border-radius: 4px; font-family: monospace;">OpenAI. (2026). ChatGPT (Feb 2026 version) [Large language model]. https://chat.openai.com/</p>
+                     <p>Your work must reflect your authentic voice.</p>
+                </div>
+            </details>
+
+        </div>
+    </div>
 </div>
 
-<!-- MODALS & TOOLTIPS -->
+<!-- ATTENDANCE MODAL -->
 <div id="attendance-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-8 max-w-md w-full border-4 border-[#003366]">
         <h2 class="text-xl font-bold text-[#003366] mb-4">Attendance & Participation Rubric</h2>
@@ -325,6 +519,7 @@
     </div>
 </div>
 
+<!-- SIGN UP MODAL -->
 <div id="signup-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-8 max-w-md w-full border-4 border-[#003366]">
         <h2 class="text-xl font-bold text-[#003366] mb-4">Sign Up</h2>
@@ -343,12 +538,13 @@
     </div>
 </div>
 
+<!-- HOVER TOOLTIP ELEMENT -->
 <div id="hover-tooltip" class="hidden fixed z-50 bg-white p-4 rounded shadow-xl border border-gray-300 w-72 text-sm pointer-events-none"></div>
 
 <!-- LOGIC -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // --- CONFIG ---
@@ -369,16 +565,16 @@
     };
 
     let presentationWeeks = {
-        3: { date: "Feb 04", students: [] },
-        5: { date: "Feb 18", students: [] },
-        7: { date: "Mar 04", students: [] },
-        9: { date: "Mar 18", students: [] },
-        11: { date: "Apr 08", students: [] },
-        13: { date: "Apr 22", students: [] }
+        3: { date: "Feb 03", students: [] },
+        5: { date: "Feb 17", students: [] },
+        7: { date: "Mar 03", students: [] },
+        9: { date: "Mar 17", students: [] },
+        11: { date: "Apr 07", students: [] },
+        13: { date: "Apr 21", students: [] }
     };
     const MAX_SLOTS = 5;
-    // UNIQUE DOC ID FOR WEDNESDAY CLASS (Updated to ensure separation)
-    const DOC_ID = 'wednesday_schedule'; 
+    // UNIQUE DOC ID FOR TUESDAY CLASS
+    const DOC_ID = 'tuesday_schedule'; 
 
     // --- UI HELPERS ---
     window.showTooltip = (e, type) => {
@@ -467,22 +663,28 @@
     // --- INIT ---
     async function init() {
         if(auth) {
+            onAuthStateChanged(auth, (user) => {
+                if(user) {
+                     // Real-time listener specifically for TUESDAY doc
+                    onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID), (snap) => {
+                        if(snap.exists()) {
+                            const data = snap.data();
+                            for(const key in data) {
+                                const w = key.replace('week','');
+                                if(presentationWeeks[w]) presentationWeeks[w].students = data[key];
+                            }
+                            renderSchedule();
+                        }
+                    });
+                }
+            });
+
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                  await signInWithCustomToken(auth, __initial_auth_token);
             } else {
                  await signInAnonymously(auth);
             }
-            // Real-time listener specifically for WEDNESDAY doc
-            onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID), (snap) => {
-                if(snap.exists()) {
-                    const data = snap.data();
-                    for(const key in data) {
-                        const w = key.replace('week','');
-                        if(presentationWeeks[w]) presentationWeeks[w].students = data[key];
-                    }
-                    renderSchedule();
-                }
-            });
+           
         } else {
             renderSchedule();
         }
