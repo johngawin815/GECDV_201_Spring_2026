@@ -84,20 +84,49 @@
         .grade-row:nth-child(odd) { background-color: #ffffff; }
         .grade-row:hover { background-color: #e0f2fe !important; }
         
-        .badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 999px;
-            font-weight: 600;
+        /* New Action Badge Styles */
+        .badge-group {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 6px;
             margin-left: 8px;
             vertical-align: middle;
         }
-        .badge-signature { background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-        .badge-discussion { background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
-        .badge-journal { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
-        .badge-participation { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
-        .badge-presentation { background-color: #fae8ff; color: #86198f; border: 1px solid #f0abfc; }
+        /* Mobile optimization for badges */
+        @media (max-width: 640px) {
+            .badge-group {
+                display: flex;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+        }
+
+        .badge-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        /* Rubric - Purple */
+        .badge-rubric { background-color: #f3e8ff; color: #7e22ce; border-color: #d8b4fe; }
+        .badge-rubric:hover { background-color: #e9d5ff; transform: translateY(-1px); }
+
+        /* Example - Teal */
+        .badge-example { background-color: #ccfbf1; color: #0f766e; border-color: #99f6e4; }
+        .badge-example:hover { background-color: #a7f3d0; transform: translateY(-1px); }
+
+        /* Canvas - Red */
+        .badge-canvas { background-color: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+        .badge-canvas:hover { background-color: #fca5a5; transform: translateY(-1px); }
 
         #hover-tooltip {
             pointer-events: none;
@@ -119,14 +148,14 @@
         <p style="margin: 0; font-size: 1.4rem; font-weight: 500; color: #003366; max-width: 800px;">Spring 2026 &bull; Tuesdays 4:30 PM &ndash; 7:15 PM</p>
     </header>
 
-    <!-- ZOOM ACCESS SECTION (UPDATED) -->
+    <!-- ZOOM ACCESS SECTION -->
     <section style="background: #0066cc; color: #ffffff; padding: 30px;">
         <h2 style="margin: 0 0 20px 0; font-size: 1.6rem; color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;">Weekly Live Sessions</h2>
         
         <div style="background: rgba(0, 0, 0, 0.1); padding: 25px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
             <p style="margin: 0 0 20px 0; font-size: 1.3rem;"><strong>Tuesdays @ 4:30 PM</strong></p>
             
-            <a href="https://umsystem.zoom.us/j/92292790634" target="_blank" class="btn btn-gold" style="font-size: 1.3rem; padding: 16px 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+            <a href="https://umsystem.zoom.us/meeting/register/X2NTE0hPRFaASJ9GR5gC3g" target="_blank" class="btn btn-gold" style="font-size: 1.3rem; padding: 16px 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
                 🚀 Join Tuesday Session
             </a>
             
@@ -398,47 +427,108 @@
                     </thead>
                     <tbody>
                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Attendance &amp; Participation <span class="badge badge-participation">Weekly</span></td>
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Attendance &amp; Participation</div>
+                                <div style="font-size: 0.85rem; color: #555; font-style: italic;">
+                                    Note: Hover over "Attendance & Participation" on the weekly schedule above to see the specific rubric for that week.
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>400 pts</strong> <span style="font-size: 0.8rem;">(40%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Weekly <span style="font-size:0.85rem;">(25 pts/week)</span></td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Discussion 1: Socioeconomic Status <span class="badge badge-discussion">Discussion</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Discussion 1: Socioeconomic Status</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <!-- Example badge removed for Discussions -->
+                                    <a href="#" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>50 pts</strong> <span style="font-size: 0.8rem;">(5%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, Feb 15 by 11:59 PM</td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Journal Entry 1 <span class="badge badge-journal">Journal</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Journal Entry 1</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <a href="#" download class="badge-btn badge-example">Example</a>
+                                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3198850" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>50 pts</strong> <span style="font-size: 0.8rem;">(5%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, Mar 1 by 11:59 PM</td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Cultural Autobiography <span class="badge badge-signature">Signature</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Cultural Autobiography</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <a href="#" download class="badge-btn badge-example">Example</a>
+                                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3172895" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>150 pts</strong> <span style="font-size: 0.8rem;">(15%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, Mar 15 by 11:59 PM</td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Discussion 2: Ableism <span class="badge badge-discussion">Discussion</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Discussion 2: Ableism</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <!-- Example badge removed for Discussions -->
+                                    <a href="#" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>50 pts</strong> <span style="font-size: 0.8rem;">(5%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, Apr 5 by 11:59 PM</td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Journal Entry 2 <span class="badge badge-journal">Journal</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Journal Entry 2</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <a href="#" download class="badge-btn badge-example">Example</a>
+                                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3198867" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>50 pts</strong> <span style="font-size: 0.8rem;">(5%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, Apr 19 by 11:59 PM</td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Cultural Event Paper <span class="badge badge-signature">Signature</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Cultural Event Paper</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <a href="#" download class="badge-btn badge-example">Example</a>
+                                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3174017" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>50 pts</strong> <span style="font-size: 0.8rem;">(5%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, Apr 26 by 11:59 PM</td>
                         </tr>
-                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Presentation <span class="badge badge-presentation">Presentation</span></td>
+                        <tr class="grade-row border-b border-gray-100">
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Presentation</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <a href="#" download class="badge-btn badge-example">Example</a>
+                                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3203425" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>100 pts</strong> <span style="font-size: 0.8rem;">(10%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Per Sign-up</td>
                         </tr>
                         <tr class="grade-row border-b border-gray-100">
-                            <td style="padding: 20px 24px;">Final Reflection <span class="badge badge-signature">Signature</span></td>
+                            <td style="padding: 20px 24px;">
+                                <div style="font-weight: bold; margin-bottom: 4px;">Final Reflection</div>
+                                <div class="badge-group">
+                                    <a href="#" download class="badge-btn badge-rubric">Rubric</a>
+                                    <a href="#" download class="badge-btn badge-example">Example</a>
+                                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3196691" target="_blank" class="badge-btn badge-canvas">Canvas</a>
+                                </div>
+                            </td>
                             <td style="padding: 20px 24px; text-align: right;"><strong>100 pts</strong> <span style="font-size: 0.8rem;">(10%)</span></td>
                             <td style="padding: 20px 24px; text-align: right;">Sun, May 17 by 11:59 PM</td>
                         </tr>
