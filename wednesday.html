@@ -67,6 +67,9 @@
             font-size: 0.8rem;
             margin: 2px;
             border: 1px solid #b3d1ef;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .slot-counter {
             font-size: 0.8rem;
@@ -157,7 +160,7 @@
             </div>
             <div style="flex: 1; min-width: 280px;">
                 <p style="margin: 0 0 10px 0; font-size: 1.15rem;"><strong>Step 2:</strong> Join class (Wednesdays @ 4:30 PM).</p>
-                <a href="https://umsystem.zoom.us/j/96554800061" target="_blank" class="btn btn-gold" style="font-size: 1.1rem; padding: 12px 24px;">Join Wednesday Session</a>
+                <a href="https://umsystem.zoom.us/meeting/register/X2NTE0hPRFaASJ9GR5gC3g" target="_blank" class="btn btn-gold" style="font-size: 1.1rem; padding: 12px 24px;">Join Wednesday Session</a>
             </div>
         </div>
     </section>
@@ -178,10 +181,10 @@
         <div style="margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 8px;">
                 <h2 style="color: #003366; font-size: 1.8rem; margin: 0;">Spring 2026 Course Schedule</h2>
-                <!-- NEW SIGN UP BUTTON -->
-                <button onclick="openModal()" class="btn btn-gold" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #003366;">
+                <!-- NEW SIGN UP BUTTON (NOW A LINK TO EXTERNAL SHEET) -->
+                <a href="PUT_YOUR_GOOGLE_DOC_LINK_HERE" target="_blank" class="btn btn-gold" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #003366;">
                     📝 Sign Up for Presentation
-                </button>
+                </a>
             </div>
             <p style="margin: 0; font-style: italic; color: #555;">Note: Click <strong>Week Prep Kit</strong> to access required readings, videos, and discussion prompts before our live session.</p>
         </div>
@@ -223,7 +226,6 @@
                         <td style="padding: 15px;">Feb 04<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
                             <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
-                            <div id="week-3-slots" style="margin-top:10px;"></div>
                         </td>
                         <td style="padding: 15px;">
                             <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-race" class="btn btn-gold">Week 3 Prep Kit</a>
@@ -248,7 +250,6 @@
                         <td style="padding: 15px;">Feb 18<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
                             <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
-                            <div id="week-5-slots" style="margin-top:10px;"></div>
                         </td>
                         <td style="padding: 15px;">
                             <a href="https://umsystem.instructure.com/courses/321213/pages/toxic-masculinity" class="btn btn-gold">Week 5 Prep Kit</a>
@@ -272,7 +273,6 @@
                         <td style="padding: 15px;">Mar 04<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
                             <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
-                            <div id="week-7-slots" style="margin-top:10px;"></div>
                         </td>
                         <td style="padding: 15px;">
                             <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 7 Prep Kit</a>
@@ -296,7 +296,6 @@
                         <td style="padding: 15px;">Mar 18<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
                             <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
-                            <div id="week-9-slots" style="margin-top:10px;"></div>
                         </td>
                         <td style="padding: 15px;">
                             <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 9 Prep Kit</a>
@@ -328,7 +327,6 @@
                         <td style="padding: 15px;">Apr 08<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
                             <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
-                            <div id="week-11-slots" style="margin-top:10px;"></div>
                         </td>
                         <td style="padding: 15px;">
                             <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="btn btn-gold">Week 11 Prep Kit</a>
@@ -352,7 +350,6 @@
                         <td style="padding: 15px;">Apr 22<br><span style="font-size:0.85rem; color:#003366; font-weight:bold; display:block; margin-top:4px;">Zoom Meeting</span></td>
                         <td style="padding: 15px;">
                             <strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em>
-                            <div id="week-13-slots" style="margin-top:10px;"></div>
                         </td>
                         <td style="padding: 15px;">
                             <a href="#" class="btn btn-gold">Week 13 Prep Kit</a>
@@ -630,7 +627,32 @@
 </div>
 
 <!-- APP LOGIC -->
-<script>
+<!-- FIREBASE CONFIGURATION & IMPORTS -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Initialize Firebase
+    // NOTE: In a real deployment, these values are typically injected by the environment. 
+    // Since we are generating a standalone file, we assume the globals __firebase_config and __app_id 
+    // would be present if this were running in the official preview environment. 
+    // If running elsewhere, you would replace this block with your actual Firebase config object.
+    
+    let db;
+    let auth;
+    let appId = 'default-app-id'; // Fallback if not provided
+
+    try {
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        if (typeof __app_id !== 'undefined') appId = __app_id;
+    } catch (e) {
+        console.warn("Firebase config not found. The app will run in offline simulation mode for testing UI.");
+    }
+    
     // --- RUBRIC DATA ---
     const rubrics = {
         zoom: `
@@ -655,8 +677,8 @@
         `
     };
 
-    // --- TOOLTIP LOGIC ---
-    function showTooltip(e, type) {
+    // --- GLOBAL FUNCTIONS FOR UI ---
+    window.showTooltip = function(e, type) {
         const tooltip = document.getElementById('hover-tooltip');
         tooltip.innerHTML = rubrics[type];
         
@@ -668,26 +690,110 @@
         tooltip.classList.remove('hidden');
     }
 
-    function hideTooltip() {
+    window.hideTooltip = function() {
         document.getElementById('hover-tooltip').classList.add('hidden');
     }
 
-    // --- ATTENDANCE MODAL LOGIC (Mobile/Click Fallback) ---
-    function openAttendanceModal(type) {
-        // Just reuse the HTML we already defined for the tooltip
+    window.openAttendanceModal = function(type) {
         const contentDiv = document.getElementById('attendance-content');
-        // We can inject the same HTML but maybe wrap it in a div for padding if needed
         contentDiv.innerHTML = rubrics[type]; 
         document.getElementById('attendance-modal').classList.remove('hidden');
     }
 
-    function closeAttendanceModal() {
+    window.closeAttendanceModal = function() {
         document.getElementById('attendance-modal').classList.add('hidden');
     }
+    
+    window.closeModal = function() {
+        document.getElementById('signup-modal').classList.add('hidden');
+        document.getElementById('student-name').value = '';
+    }
+    
+    window.openModal = function() {
+        const select = document.getElementById('date-select');
+        select.innerHTML = '<option value="">-- Choose a Date --</option>';
+        
+        // Populate dropdown with available weeks
+        for (const [week, data] of Object.entries(presentationWeeks)) {
+            if (data.students.length < MAX_SLOTS) {
+                const option = document.createElement('option');
+                option.value = week;
+                option.textContent = `Week ${week} - ${data.date}`;
+                select.appendChild(option);
+            }
+        }
+        
+        document.getElementById('signup-modal').classList.remove('hidden');
+    }
+    
+    window.confirmSignUp = async function() {
+        const week = document.getElementById('date-select').value;
+        const name = document.getElementById('student-name').value.trim();
 
-    // --- SIGN UP LOGIC ---
-    // State to hold sign-ups
-    const presentationWeeks = {
+        if (!week) {
+            alert("Please select a date.");
+            return;
+        }
+        if (!name) {
+            alert("Please enter your name.");
+            return;
+        }
+        
+        // Save to Database (Firestore)
+        if (db) {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups');
+            
+            try {
+                const weekDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', `week${week}`);
+                
+                // First ensure doc exists
+                const docSnap = await getDoc(weekDocRef);
+                if (!docSnap.exists()) {
+                     await setDoc(weekDocRef, { students: [name], date: presentationWeeks[week].date });
+                } else {
+                     await updateDoc(weekDocRef, {
+                        students: arrayUnion(name)
+                    });
+                }
+            } catch (error) {
+                console.error("Error signing up:", error);
+                alert("There was an error saving your sign-up. Please try again.");
+                return;
+            }
+        } else {
+             // Fallback for local testing if firebase fails
+             presentationWeeks[week].students.push(name);
+             renderSchedule();
+        }
+
+        closeModal();
+    }
+    
+    // Deletion Logic
+    window.removeStudent = async function(week, name) {
+        if(confirm(`Are you sure you want to remove ${name}?`)) {
+            if(db) {
+                try {
+                    const weekDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', `week${week}`);
+                    await updateDoc(weekDocRef, {
+                        students: arrayRemove(name)
+                    });
+                } catch(error) {
+                    console.error("Error removing student:", error);
+                }
+            } else {
+                 const index = presentationWeeks[week].students.indexOf(name);
+                 if (index > -1) {
+                    presentationWeeks[week].students.splice(index, 1);
+                    renderSchedule();
+                 }
+            }
+        }
+    }
+
+    // --- SIGN UP STATE ---
+    // Initial state structure
+    let presentationWeeks = {
         3:  { date: "Feb 04", students: [] },
         5:  { date: "Feb 18", students: [] },
         7:  { date: "Mar 04", students: [] },
@@ -708,10 +814,30 @@
             container.innerHTML = "";
 
             // Add student pills
-            data.students.forEach(name => {
+            data.students.forEach((name) => {
                 const pill = document.createElement("span");
                 pill.className = "slot-pill";
-                pill.textContent = name;
+                
+                // Name text
+                const textSpan = document.createElement("span");
+                textSpan.textContent = name;
+                pill.appendChild(textSpan);
+
+                // Delete Button (X)
+                const deleteBtn = document.createElement("span");
+                deleteBtn.textContent = "×";
+                deleteBtn.style.cursor = "pointer";
+                deleteBtn.style.color = "#dc2626"; // Red
+                deleteBtn.style.fontWeight = "bold";
+                deleteBtn.style.marginLeft = "4px";
+                deleteBtn.title = "Remove student";
+                
+                // Add click handler to remove this specific student
+                deleteBtn.onclick = function() {
+                    removeStudent(week, name);
+                };
+
+                pill.appendChild(deleteBtn);
                 container.appendChild(pill);
             });
 
@@ -729,58 +855,44 @@
         }
     }
 
-    // Modal Logic
-    function openModal() {
-        const select = document.getElementById('date-select');
-        select.innerHTML = '<option value="">-- Choose a Date --</option>';
-        
-        // Populate dropdown with available weeks
-        for (const [week, data] of Object.entries(presentationWeeks)) {
-            if (data.students.length < MAX_SLOTS) {
-                const option = document.createElement('option');
-                option.value = week;
-                option.textContent = `Week ${week} - ${data.date}`;
-                select.appendChild(option);
+    // --- INIT ---
+    async function initApp() {
+        if (auth) {
+            try {
+                // Anonymous Sign In
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                     await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                     await signInAnonymously(auth);
+                }
+
+                // Set up Real-time Listeners for each week
+                // We listen to the whole collection for efficiency? Or specific docs? 
+                // A collection listener is easiest.
+                const q = collection(db, 'artifacts', appId, 'public', 'data', 'presentation_signups');
+                onSnapshot(q, (snapshot) => {
+                    snapshot.forEach((doc) => {
+                        const weekKey = doc.id.replace('week', ''); // extract '3' from 'week3'
+                        const data = doc.data();
+                        if (presentationWeeks[weekKey]) {
+                            presentationWeeks[weekKey].students = data.students || [];
+                        }
+                    });
+                    renderSchedule();
+                });
+                
+            } catch (error) {
+                console.error("Firebase Auth/Init Error:", error);
             }
+        } else {
+            // Initial render for offline mode
+            renderSchedule();
         }
-        
-        document.getElementById('signup-modal').classList.remove('hidden');
     }
 
-    function closeModal() {
-        document.getElementById('signup-modal').classList.add('hidden');
-        document.getElementById('student-name').value = '';
-    }
+    // Start everything
+    initApp();
 
-    function confirmSignUp() {
-        const week = document.getElementById('date-select').value;
-        const name = document.getElementById('student-name').value.trim();
-
-        if (!week) {
-            alert("Please select a date.");
-            return;
-        }
-        if (!name) {
-            alert("Please enter your name.");
-            return;
-        }
-
-        // Add student to state
-        presentationWeeks[week].students.push(name);
-        
-        // Update UI
-        renderSchedule();
-        closeModal();
-    }
-
-    // Initialize
-    window.onload = function() {
-        // Add some dummy data to show it working
-        presentationWeeks[3].students.push("Example Student");
-        presentationWeeks[7].students.push("Maria Garcia");
-        presentationWeeks[7].students.push("John Smith");
-        renderSchedule();
-    };
 </script>
 
 </body>
