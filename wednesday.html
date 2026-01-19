@@ -616,7 +616,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td data-label="Assignment"><strong>Attendance & Participation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/external_tools/117" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Attendance & Participation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3178358" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">400 pts (40%)</td>
                     <td data-label="Due" style="text-align: right;">Weekly</td>
                 </tr>
@@ -626,12 +626,12 @@
                     <td data-label="Due" style="text-align: right;">Feb 15</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Journal Entry 1</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582924" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Journal Entry 1</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3198850" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Mar 01</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Cultural Autobiography</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582928" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Cultural Autobiography</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3172895" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">150 pts (15%)</td>
                     <td data-label="Due" style="text-align: right;">Mar 15</td>
                 </tr>
@@ -641,22 +641,22 @@
                     <td data-label="Due" style="text-align: right;">Apr 05</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Journal Entry 2</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582925" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Journal Entry 2</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3198867" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Apr 19</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Cultural Event Paper</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582929" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Cultural Event Paper</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3174017" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Apr 26</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Presentation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582931" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Presentation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3203425" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">100 pts (10%)</td>
                     <td data-label="Due" style="text-align: right;">Per Sign-up</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Final Reflection</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582930" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment"><strong>Final Reflection</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/321213/assignments/3196691" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">100 pts (10%)</td>
                     <td data-label="Due" style="text-align: right;">May 17</td>
                 </tr>
@@ -689,13 +689,27 @@
 
     const ADMIN_PIN = "2026"; 
     let db, auth, appId = 'default-app-id';
-    try { const firebaseConfig =   
+    
+    // --- PASTE YOUR KEYS HERE ---
+    const manualFirebaseConfig = {
   apiKey: "AIzaSyAKCgHNTj12wRgOqT32nZ0jB_XgDsID1hc",
   authDomain: "class-signup-spring26.firebaseapp.com",
   projectId: "class-signup-spring26",
   storageBucket: "class-signup-spring26.firebasestorage.app",
   messagingSenderId: "61729101450",
-  appId: "1:61729101450:web:556af70a98aa6b63e57f73" }
+  appId: "1:61729101450:web:556af70a98aa6b63e57f73"
+    };
+    // ----------------------------
+
+    try {
+        const firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : manualFirebaseConfig;
+        if(firebaseConfig.apiKey !== "YOUR_API_KEY_HERE") {
+             const app = initializeApp(firebaseConfig);
+             auth = getAuth(app);
+             db = getFirestore(app);
+             if (typeof __app_id !== 'undefined') appId = __app_id;
+        }
+    } catch (e) { console.warn("Firebase not found."); }
 
     const rubrics = { zoom: `<b>Zoom Meeting (25 pts)</b><ul style='padding-left:20px;margin-top:5px;'><li>10 pts: Camera on</li><li>5 pts: On time</li><li>10 pts: Active</li></ul>`, async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` };
     
