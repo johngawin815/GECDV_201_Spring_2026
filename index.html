@@ -6,262 +6,376 @@
     <title>GECDV 201: Spring 2026 (Tuesday)</title>
     <style>
         :root {
-            /* OCEAN PALETTE */
-            --ocean-depths: #003049;   /* Deep Navy (Text/Headers) */
-            --ocean-aegean: #005f73;   /* Rich Teal (Primary Buttons) */
-            --ocean-lagoon: #0a9396;   /* Bright Teal (Secondary) */
-            --ocean-sky: #94d2bd;      /* Seafoam (Backgrounds) */
-            --ocean-sand: #e0fbfc;     /* Very pale cool blue (Page BG) */
-            --ocean-surf: #ffffff;     /* White (Cards) */
+            /* SURFACE PALETTE (Default) */
+            --bg-body: #e0fbfc;
+            --bg-gradient-end: #c2dfe3;
+            --bg-container: #ffffff;
+            --bg-header-start: #003049;
+            --bg-header-end: #005f73;
+            --text-main: #003049;
+            --text-muted: #2c5d63;
+            --border-color: #98c1d9;
+            --accent-primary: #005f73;
+            --accent-secondary: #0a9396;
+            --highlight: #00b4d8;
+            --alert: #C04ABC;
+            --sunlight-row: #fffbea;
+            --badge-bg: #e0fbfc;
+            --badge-text: #003049;
+            --icon-fill: #005f73;
+            --toggle-bg: #2c5d63;
+            --shadow-color: rgba(0, 95, 115, 0.1);
             
-            /* Functional Colors */
-            --ocean-accent: #00b4d8;   /* Bright Cyan (Highlights/Buttons) */
-            --ocean-alert: #C04ABC;    /* Deep Berry/Magenta */
-            --ocean-border: #98c1d9;   /* Soft Blue Grey */
-            --ocean-sunlight: #fffbea; /* Warm highlight for current week */
+            /* LANTERN/STAR COLORS */
+            --star-core: #ffd166;
+            --star-glow: drop-shadow(0 0 4px rgba(255, 209, 102, 0.8));
+        }
+
+        /* DEEP SEA PALETTE (Dark Mode) */
+        [data-theme="dark"] {
+            --bg-body: #001219;
+            --bg-gradient-end: #001d29;
+            --bg-container: #002533;
+            --bg-header-start: #000814;
+            --bg-header-end: #001d29;
+            --text-main: #e0fbfc;
+            --text-muted: #94d2bd;
+            --border-color: #1b4965;
+            --accent-primary: #48cae4; 
+            --accent-secondary: #0a9396;
+            --highlight: #00b4d8;
+            --alert: #ff99c8; 
+            --sunlight-row: #003547; 
+            --badge-bg: #1b4965;
+            --badge-text: #e0fbfc;
+            --icon-fill: #48cae4;
+            --toggle-bg: #94d2bd;
+            --shadow-color: rgba(0, 0, 0, 0.5);
             
-            /* Mapping to variables used in CSS */
-            --primary-color: var(--ocean-aegean);
-            --secondary-color: var(--ocean-lagoon);
-            --text-dark: var(--ocean-depths);
-            --text-light: #2c5d63;
-            --border-color: var(--ocean-border);
-            --shadow: 0 4px 15px rgba(0, 95, 115, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
-            --modal-overlay: rgba(0, 48, 73, 0.4); 
+            --star-core: #ffb703;
+            --star-glow: drop-shadow(0 0 6px rgba(255, 183, 3, 0.8));
         }
 
         body {
             margin: 0;
             padding: 20px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--ocean-sand);
-            background-image: linear-gradient(to bottom, #e0fbfc 0%, #c2dfe3 100%);
-            color: var(--text-dark);
+            background-color: var(--bg-body);
+            background-image: linear-gradient(to bottom, var(--bg-body) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            background: var(--ocean-surf);
+            background: var(--bg-container);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 48, 73, 0.1);
-            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 15px 35px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: background 0.5s ease, border-color 0.5s ease;
+            position: relative; 
         }
 
-        /* --- HEADER (#1 LIVING OCEAN) --- */
+        /* --- HEADER --- */
         header {
-            background: linear-gradient(135deg, var(--ocean-depths) 0%, var(--ocean-aegean) 100%);
+            background: linear-gradient(135deg, var(--bg-header-start) 0%, var(--bg-header-end) 100%);
             color: #fff;
-            padding: 45px 35px 80px 35px; /* Extra bottom padding for waves */
+            padding: 45px 35px 80px 35px;
             position: relative;
             overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* Dark Mode Toggle Switch */
+        .theme-switch-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input { display: none; }
+        .slider {
+            background-color: rgba(255,255,255,0.3);
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 3px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--highlight); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* CELESTIAL STARS CONTAINER */
+        .star-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1; /* Behind text and waves */
+        }
+
+        .star {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--star-core);
+            filter: var(--star-glow);
+            animation: twinkle 4s ease-in-out infinite alternate;
+            opacity: 0.7;
+        }
+
+        .star svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+        }
+        
+        .s-star svg polygon { fill: none; stroke: currentColor; stroke-width: 2; }
+        .s-om svg text { fill: currentColor; stroke: none; }
+        /* Fix for Yin Yang to be visible as single color */
+        .s-yinyang svg path { fill: currentColor; }
+        .s-yinyang svg circle { fill: currentColor; }
+
+        /* --- STAR POSITIONING (Total 30) --- */
+        
+        /* 1. TOP BAND (Above Title) */
+        .s-pos-1 { top: 15px; left: 5%; width: 22px; height: 22px; animation-delay: 0s; } /* Om */
+        .s-pos-2 { top: 25px; left: 20%; width: 16px; height: 16px; animation-delay: 1.2s; } /* Star */
+        .s-pos-3 { top: 10px; left: 35%; width: 20px; height: 20px; animation-delay: 2.5s; opacity: 0.5; } /* Crescent */
+        .s-pos-4 { top: 30px; left: 50%; width: 16px; height: 16px; animation-delay: 0.5s; } /* Cross */
+        .s-pos-5 { top: 15px; left: 65%; width: 24px; height: 24px; animation-delay: 3s; } /* Wheel */
+        .s-pos-16 { top: 20px; left: 80%; width: 14px; height: 14px; animation-delay: 0.8s; opacity: 0.4; } /* Torii */
+        .s-pos-17 { top: 10px; right: 25%; width: 18px; height: 18px; animation-delay: 2.1s; } /* Yin Yang */
+        .s-pos-30 { top: 25px; right: 40%; width: 12px; height: 12px; animation-delay: 1.5s; opacity: 0.5; } /* Star */
+
+        /* 2. MIDDLE BAND (Left/Right of Text) */
+        .s-pos-6 { top: 80px; left: 3%; width: 24px; height: 24px; animation-delay: 1.8s; } /* Torii */
+        .s-pos-7 { top: 110px; left: 10%; width: 18px; height: 18px; animation-delay: 0.2s; opacity: 0.6; } /* Star */
+        .s-pos-24 { top: 60px; left: 15%; width: 14px; height: 14px; animation-delay: 2.9s; } /* Om */
+        .s-pos-25 { top: 90px; left: 22%; width: 20px; height: 20px; animation-delay: 1.1s; } /* Wheel */
+        
+        .s-pos-10 { top: 60px; right: 18%; width: 26px; height: 26px; animation-delay: 0.7s; } /* Om */
+        .s-pos-14 { top: 85px; right: 10%; width: 16px; height: 16px; animation-delay: 0.1s; opacity: 0.5; } /* Torii */
+        .s-pos-20 { top: 50px; right: 5%; width: 20px; height: 20px; animation-delay: 3.2s; } /* Crescent */
+        .s-pos-29 { top: 100px; right: 25%; width: 14px; height: 14px; animation-delay: 1.9s; opacity: 0.4; } /* Cross */
+
+        /* 3. BOTTOM BAND (Below Text/Around Schedule Text) */
+        .s-pos-8 { top: 140px; left: 5%; width: 20px; height: 20px; animation-delay: 2s; } /* Yin Yang */
+        .s-pos-9 { top: 125px; left: 25%; width: 16px; height: 16px; animation-delay: 1.5s; opacity: 0.5; } /* Cross */
+        .s-pos-18 { top: 135px; left: 45%; width: 14px; height: 14px; animation-delay: 2.4s; } /* Star */
+        .s-pos-19 { top: 130px; right: 35%; width: 22px; height: 22px; animation-delay: 0.9s; } /* Wheel */
+        .s-pos-11 { top: 120px; right: 5%; width: 18px; height: 18px; animation-delay: 2.2s; } /* Crescent */
+        .s-pos-12 { top: 150px; right: 15%; width: 24px; height: 24px; animation-delay: 1.1s; } /* Star */
+        .s-pos-13 { top: 145px; right: 45%; width: 15px; height: 15px; animation-delay: 3.5s; opacity: 0.4; } /* Om */
+        .s-pos-15 { top: 135px; left: 70%; width: 18px; height: 18px; animation-delay: 1.9s; } /* Yin Yang */
+        
+        /* 4. SCATTERED FILLERS */
+        .s-pos-21 { top: 40px; left: 8%; width: 12px; height: 12px; animation-delay: 0.3s; opacity: 0.3; }
+        .s-pos-22 { top: 110px; left: 30%; width: 14px; height: 14px; animation-delay: 2.7s; opacity: 0.4; }
+        .s-pos-23 { bottom: 20px; right: 55%; width: 12px; height: 12px; animation-delay: 1.4s; opacity: 0.3; }
+        .s-pos-26 { top: 35px; right: 30%; width: 14px; height: 14px; animation-delay: 0.6s; opacity: 0.4; }
+        .s-pos-27 { bottom: 30px; left: 40%; width: 10px; height: 10px; animation-delay: 3.1s; opacity: 0.3; }
+        .s-pos-28 { top: 75px; right: 2%; width: 12px; height: 12px; animation-delay: 1.6s; opacity: 0.4; }
+
+        @keyframes twinkle {
+            0% { transform: scale(1); opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { transform: scale(1.15); opacity: 0.4; }
         }
 
         .ocean-waves {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            overflow: hidden;
-            line-height: 0;
-            transform: rotate(180deg);
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50px;
+            overflow: hidden; line-height: 0; transform: rotate(180deg); z-index: 2;
         }
-
         .ocean-waves svg {
-            position: relative;
-            display: block;
-            width: calc(150% + 1.3px);
-            height: 60px;
+            position: relative; display: block; width: calc(150% + 1.3px); height: 60px;
             animation: moveWaves 10s linear infinite;
         }
+        .ocean-waves .shape-fill { fill: var(--bg-container); opacity: 0.9; transition: fill 0.5s ease; }
+        @keyframes moveWaves { 0% { transform: translateX(0); } 50% { transform: translateX(-25%); } 100% { transform: translateX(0); } }
 
-        .ocean-waves .shape-fill {
-            fill: var(--ocean-surf);
-            opacity: 0.9;
-        }
-
-        @keyframes moveWaves {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(-25%); }
-            100% { transform: translateX(0); }
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.4rem;
-            letter-spacing: -0.5px;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            position: relative; z-index: 10;
-        }
-
-        header p {
-            margin: 10px 0 0 0;
-            font-size: 1.25rem;
-            opacity: 0.9;
-            font-weight: 400;
-            color: #caf0f8;
-            position: relative; z-index: 10;
-        }
+        /* Ensure Text is above everything except controls */
+        header h1 { margin: 0; font-size: 2.4rem; letter-spacing: -0.5px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3); position: relative; z-index: 4; }
+        header p { margin: 10px 0 0 0; font-size: 1.25rem; opacity: 0.9; font-weight: 400; color: #caf0f8; position: relative; z-index: 4; }
 
         /* --- ZOOM BAR --- */
         .zoom-bar {
-            background: #f0fcfc;
+            background: var(--bg-container);
             padding: 25px 35px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            border-bottom: 1px solid var(--ocean-border);
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative; z-index: 5;
         }
-
-        .zoom-info strong { display: block; font-size: 1.15rem; color: var(--ocean-aegean); margin-bottom: 4px; }
-        .zoom-info small { color: var(--text-light); font-size: 0.95rem; }
+        .zoom-info strong { display: block; font-size: 1.15rem; color: var(--accent-primary); margin-bottom: 4px; }
+        .zoom-info small { color: var(--text-muted); font-size: 0.95rem; }
 
         /* --- BUTTONS --- */
         .btn {
-            display: inline-block;
-            padding: 10px 22px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid transparent;
-            line-height: 1.2;
-            text-align: center;
-            letter-spacing: 0.3px;
+            display: inline-block; padding: 10px 22px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; cursor: pointer;
+            border: 1px solid transparent; line-height: 1.2; text-align: center; letter-spacing: 0.3px;
         }
         .btn-gold {
-            background-color: var(--ocean-accent); color: #ffffff; border-color: var(--ocean-lagoon);
+            background-color: var(--highlight); color: #ffffff; border-color: var(--accent-secondary);
             text-shadow: 0 1px 1px rgba(0,0,0,0.1);
         }
-        .btn-gold:hover { background-color: var(--ocean-lagoon); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 180, 216, 0.4); }
-        .btn-blue { background-color: var(--ocean-aegean); color: white; }
-        .btn-blue:hover { background-color: var(--ocean-depths); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 95, 115, 0.3); }
-        .btn-outline { background: transparent; border: 1px solid var(--ocean-aegean); color: var(--ocean-aegean); }
-        .btn-outline:hover { background-color: #e0fbfc; color: var(--ocean-depths); border-color: var(--ocean-depths); }
+        .btn-gold:hover { background-color: var(--accent-secondary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 180, 216, 0.4); }
+        .btn-blue { background-color: var(--accent-primary); color: var(--bg-container); } /* Adaptive text color */
+        .btn-blue:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 95, 115, 0.3); }
+        .btn-outline { background: transparent; border: 1px solid var(--accent-primary); color: var(--accent-primary); }
+        .btn-outline:hover { background-color: rgba(0, 180, 216, 0.1); }
         .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
 
         /* --- SECTIONS --- */
-        section { padding: 40px 35px; border-bottom: 1px solid #eef6f8; }
+        section { padding: 40px 35px; border-bottom: 1px solid var(--border-color); position: relative; z-index: 1; }
         section:last-of-type { border-bottom: none; }
-        h2 { color: var(--ocean-aegean); font-size: 1.7rem; margin-top: 0; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+        h2 { color: var(--accent-primary); font-size: 1.7rem; margin-top: 0; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
 
-        /* --- PILLAR CARDS --- */
+        /* --- PILLAR CARDS (#2 SVG ICONS) --- */
         .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .pillar-card {
-            background: #fff; border: 1px solid var(--ocean-border); padding: 25px; border-radius: 12px;
+            background: var(--bg-container); border: 1px solid var(--border-color); padding: 25px; border-radius: 12px;
             transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column;
+            box-shadow: 0 2px 5px var(--shadow-color); display: flex; flex-direction: column; align-items: center; text-align: center;
         }
-        .pillar-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--ocean-accent); }
-        .pillar-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0, 180, 216, 0.15); border-color: var(--ocean-accent); }
-        .pillar-card h3 { margin: 0 0 12px 0; color: var(--ocean-depths); font-size: 1.2rem; }
-        .pillar-card p { color: var(--text-light); margin: 0; flex-grow: 1; }
+        .pillar-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--highlight); }
+        .pillar-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px var(--shadow-color); border-color: var(--highlight); }
         
-        .policy-box { background-color: #fbf5fc; border-left: 5px solid var(--ocean-alert); padding: 25px; border-radius: 8px; margin-top: 25px; }
+        .pillar-icon { width: 48px; height: 48px; margin-bottom: 15px; fill: var(--icon-fill); transition: fill 0.5s ease; }
+        
+        .pillar-card h3 { margin: 0 0 10px 0; color: var(--text-main); font-size: 1.2rem; }
+        .pillar-card p { color: var(--text-muted); margin: 0; font-size: 0.95rem; line-height: 1.5; }
+        
+        .policy-box { 
+            background-color: rgba(192, 74, 188, 0.05); 
+            border-left: 5px solid var(--alert); 
+            padding: 25px; border-radius: 8px; margin-top: 25px; 
+        }
+        .policy-box h4 { margin:0 0 5px 0; color: var(--text-main); font-weight: 700; }
+        .policy-box p { color: var(--text-muted); margin: 0; }
 
         /* --- RESPONSIVE TABLES & SMART SCHEDULE --- */
         .responsive-table {
             width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px;
-            font-size: 0.95rem; border: 1px solid var(--ocean-border); border-radius: 12px; overflow: hidden;
+            font-size: 0.95rem; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;
+            position: relative; z-index: 2;
         }
-        .responsive-table thead { background: #eef6f8; }
+        .responsive-table thead { background: rgba(0,0,0,0.03); }
         .responsive-table th {
-            text-align: left; padding: 18px 20px; border-bottom: 2px solid #bce3eb;
-            font-size: 0.85rem; text-transform: uppercase; color: var(--ocean-depths); letter-spacing: 0.8px; font-weight: 700;
+            text-align: left; padding: 18px 20px; border-bottom: 2px solid var(--border-color);
+            font-size: 0.85rem; text-transform: uppercase; color: var(--text-main); letter-spacing: 0.8px; font-weight: 700;
         }
-        .responsive-table td { padding: 18px 20px; border-bottom: 1px solid #f0f4f5; vertical-align: top; color: var(--text-dark); transition: background-color 0.3s; }
+        .responsive-table td { padding: 18px 20px; border-bottom: 1px solid var(--border-color); vertical-align: top; color: var(--text-main); transition: background-color 0.3s; }
         .responsive-table tr:last-child td { border-bottom: none; }
-        .responsive-table tbody tr:nth-child(even) { background-color: #f7fcfe; }
+        .responsive-table tbody tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
         
-        /* #3 Smart Schedule: GLOW UP Styles */
+        /* Glow Up Logic */
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(255, 200, 87, 0.1); }
-            50% { box-shadow: 0 0 25px rgba(255, 200, 87, 0.3); }
-            100% { box-shadow: 0 0 15px rgba(255, 200, 87, 0.1); }
+            0% { box-shadow: 0 0 15px rgba(0, 180, 216, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(0, 180, 216, 0.25); }
+            100% { box-shadow: 0 0 15px rgba(0, 180, 216, 0.1); }
         }
-
         tr.current-week {
-            position: relative;
-            z-index: 5;
-            animation: pulseGlow 3s infinite ease-in-out;
-            border-left: 6px solid var(--ocean-accent);
+            position: relative; z-index: 5; animation: pulseGlow 3s infinite ease-in-out;
+            border-left: 6px solid var(--highlight);
         }
-        
-        /* The Glow Up Background */
         tr.current-week td {
-            background-color: var(--ocean-sunlight) !important;
-            border-bottom: 1px solid #ffeeba;
-            color: #5c4e00; /* Darker warm text for contrast */
+            background-color: var(--sunlight-row) !important;
+            border-bottom: 1px solid var(--border-color);
         }
-        
-        tr.current-week td:first-child { 
-            color: var(--ocean-aegean);
-            font-weight: 900;
-            font-size: 1.1em;
-        }
-        
+        tr.current-week td:first-child { color: var(--highlight); font-weight: 900; font-size: 1.1em; }
         tr.past-week { opacity: 0.5; filter: grayscale(0.6); }
         tr.past-week:hover { opacity: 1; filter: grayscale(0); transition: all 0.2s; }
 
-        .date-cell { white-space: nowrap; color: var(--ocean-aegean); font-weight: 700; }
-        .week-cell { text-align: center; font-weight: bold; color: var(--ocean-lagoon); }
+        .date-cell { white-space: nowrap; color: var(--accent-primary); font-weight: 700; }
+        .week-cell { text-align: center; font-weight: bold; color: var(--accent-secondary); }
 
         @media (max-width: 768px) {
             .zoom-bar { flex-direction: column; align-items: flex-start; }
             .responsive-table, .responsive-table tbody, .responsive-table tr, .responsive-table td { display: block; width: 100%; box-sizing: border-box; }
             .responsive-table thead { display: none; }
-            .responsive-table tr { margin-bottom: 20px; border: 1px solid var(--ocean-border); border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); background: #fff !important; overflow: hidden; }
-            .responsive-table td { text-align: left; padding-left: 20px; padding-right: 20px; border-bottom: 1px solid #f0f0f0; position: relative; }
-            .responsive-table td::before { content: attr(data-label); display: block; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: var(--ocean-lagoon); margin-bottom: 6px; letter-spacing: 0.5px; }
-            .week-cell { text-align: left; background: #e0fbfc; color: var(--ocean-depths); }
-            tr.current-week { border-left: none; border: 3px solid var(--ocean-accent); }
+            .responsive-table tr { margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 2px 5px var(--shadow-color); background: var(--bg-container) !important; overflow: hidden; }
+            .responsive-table td { text-align: left; padding-left: 20px; padding-right: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); position: relative; }
+            .responsive-table td::before { content: attr(data-label); display: block; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: var(--accent-secondary); margin-bottom: 6px; letter-spacing: 0.5px; }
+            .week-cell { text-align: left; background: rgba(0,0,0,0.03); color: var(--text-main); }
+            tr.current-week { border-left: none; border: 3px solid var(--highlight); }
         }
 
         /* --- SLOTS & BADGES --- */
-        .slot-pill { display: inline-flex; align-items: center; background: #e0fbfc; color: var(--ocean-depths); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; margin: 4px 4px 0 0; border: 1px solid #98c1d9; font-weight: 600; }
-        .slot-delete { margin-left: 6px; cursor: pointer; color: var(--ocean-alert); font-weight: bold; line-height: 1; padding: 0 4px; font-size: 1.1em; }
+        .slot-pill { display: inline-flex; align-items: center; background: var(--badge-bg); color: var(--badge-text); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; margin: 4px 4px 0 0; border: 1px solid var(--border-color); font-weight: 600; }
+        .slot-delete { margin-left: 6px; cursor: pointer; color: var(--alert); font-weight: bold; line-height: 1; padding: 0 4px; font-size: 1.1em; }
         .slot-delete:hover { background: rgba(192, 74, 188, 0.1); border-radius: 50%; }
-        .slot-counter { font-size: 0.75rem; font-weight: 700; color: var(--ocean-alert); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .slot-counter-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 6px;
+            border: 1px solid;
+        }
+        .badge-available { background-color: rgba(10, 147, 150, 0.1); color: var(--accent-secondary); border-color: var(--accent-secondary); }
+        .badge-full { background-color: rgba(192, 74, 188, 0.1); color: var(--alert); border-color: var(--alert); }
 
         .badge-group { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .badge { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; text-decoration: none; line-height: 1; transition: all 0.2s; }
-        .badge-canvas { background: #e0fbfc; color: #006d77; border: 1px solid #98c1d9; }
-        .badge-canvas:hover { background: #98c1d9; transform: translateY(-1px); }
+        .badge-canvas { background: var(--badge-bg); color: var(--accent-primary); border: 1px solid var(--border-color); }
+        .badge-canvas:hover { background: var(--border-color); transform: translateY(-1px); }
 
-        .due-date-text { display: block; font-size: 0.8rem; margin-top: 8px; color: var(--ocean-alert); font-weight: 600; }
+        .due-date-text { display: block; font-size: 0.8rem; margin-top: 8px; color: var(--alert); font-weight: 600; }
 
         /* --- FAQ / ACCORDION --- */
-        details { margin-bottom: 12px; border: 1px solid var(--ocean-border); border-radius: 8px; transition: all 0.3s; background: #fff; }
-        summary { padding: 16px 20px; font-weight: 600; cursor: pointer; color: var(--ocean-aegean); outline: none; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+        details { margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 8px; transition: all 0.3s; background: var(--bg-container); }
+        summary { padding: 16px 20px; font-weight: 600; cursor: pointer; color: var(--text-main); outline: none; list-style: none; display: flex; align-items: center; justify-content: space-between; }
         summary::-webkit-details-marker { display: none; }
-        summary::after { content: '+'; font-size: 1.4rem; font-weight: 300; color: var(--ocean-lagoon); }
-        details[open] summary::after { content: '-'; color: var(--ocean-accent); }
-        details[open] { border-color: var(--ocean-accent); background: #f0fcfc; }
-        .faq-content { padding: 0 20px 20px 20px; font-size: 0.95rem; color: var(--text-dark); border-top: 1px solid #eef6f8; line-height: 1.7; }
+        summary::after { content: '+'; font-size: 1.4rem; font-weight: 300; color: var(--accent-secondary); }
+        details[open] summary::after { content: '-'; color: var(--highlight); }
+        details[open] { border-color: var(--highlight); background: rgba(0, 180, 216, 0.05); }
+        .faq-content { padding: 0 20px 20px 20px; font-size: 0.95rem; color: var(--text-main); border-top: 1px solid rgba(0,0,0,0.05); line-height: 1.7; }
 
         /* --- MODALS --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--modal-overlay); backdrop-filter: blur(5px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s; }
         .modal-overlay.hidden { display: none; opacity: 0; pointer-events: none; }
-        .modal-content { background: white; width: 90%; max-width: 500px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 48, 73, 0.3); overflow: hidden; border: 1px solid rgba(255,255,255,0.8); transform: scale(1); transition: transform 0.2s; }
-        .modal-header { background: var(--ocean-depths); color: white; padding: 18px 25px; font-weight: bold; font-size: 1.2rem; border-bottom: 3px solid var(--ocean-accent); }
-        .modal-body { padding: 25px; }
+        .modal-content { background: var(--bg-container); width: 90%; max-width: 500px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden; border: 1px solid var(--border-color); transform: scale(1); transition: transform 0.2s; }
+        .modal-header { background: var(--bg-header-end); color: white; padding: 18px 25px; font-weight: bold; font-size: 1.2rem; border-bottom: 3px solid var(--highlight); }
+        .modal-body { padding: 25px; color: var(--text-main); }
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--ocean-depths); }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid var(--ocean-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; background: #f7fcfe; color: var(--ocean-depths); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--ocean-accent); background: #fff; }
-        .modal-footer { padding: 15px 25px; background: #f0fcfc; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid #e0fbfc; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--text-main); }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem; box-sizing: border-box; background: var(--bg-body); color: var(--text-main); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--highlight); }
+        .modal-footer { padding: 15px 25px; background: rgba(0,0,0,0.05); display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--border-color); }
 
         /* Tooltip */
-        #hover-tooltip { position: fixed; z-index: 200; background: rgba(255, 255, 255, 0.98); padding: 15px; border-radius: 10px; box-shadow: 0 10px 20px -3px rgba(0, 48, 73, 0.15); border: 1px solid var(--ocean-accent); width: 300px; font-size: 0.9rem; pointer-events: none; opacity: 1; transition: opacity 0.2s; color: var(--ocean-depths); }
+        #hover-tooltip { position: fixed; z-index: 200; background: var(--bg-container); padding: 15px; border-radius: 10px; box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2); border: 1px solid var(--highlight); width: 300px; font-size: 0.9rem; pointer-events: none; opacity: 1; transition: opacity 0.2s; color: var(--text-main); }
         #hover-tooltip.hidden { opacity: 0; }
         .hidden { display: none !important; }
     </style>
@@ -269,8 +383,115 @@
 <body>
 
 <div class="container">
-    <!-- Header with Living Ocean Animation (#1) -->
+    <!-- Header with Living Ocean Animation -->
     <header>
+        <!-- Dark Mode Switch -->
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider"></div>
+            </label>
+        </div>
+        
+        <!-- CELESTIAL STARS CONTAINER (Header Only) -->
+        <div class="star-container">
+            <!-- 1. ABOVE TITLE (Top band) -->
+            <div class="star s-pos-1 s-om">
+                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
+            </div>
+            <div class="star s-pos-2 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-3 s-crescent">
+                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
+            </div>
+            <div class="star s-pos-4 s-cross">
+                <svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg>
+            </div>
+            <div class="star s-pos-5 s-wheel">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
+            </div>
+            <div class="star s-pos-16 s-yinyang">
+                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
+            </div>
+            <div class="star s-pos-17 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-20 s-om">
+                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
+            </div>
+            <div class="star s-pos-30 s-crescent">
+                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
+            </div>
+
+            <!-- 2. UNDERNEATH TITLE (Around middle) -->
+            <div class="star s-pos-6 s-torii">
+                <svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg>
+            </div>
+            <div class="star s-pos-7 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-8 s-yinyang">
+                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
+            </div>
+            <div class="star s-pos-9 s-cross">
+                <svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg>
+            </div>
+            <div class="star s-pos-24 s-om">
+                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
+            </div>
+            <div class="star s-pos-25 s-wheel">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
+            </div>
+            <div class="star s-pos-27 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-28 s-crescent">
+                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
+            </div>
+
+            <!-- 3. RIGHT OF SCHEDULE (Right side cluster) -->
+            <div class="star s-pos-10 s-om">
+                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
+            </div>
+            <div class="star s-pos-11 s-crescent">
+                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
+            </div>
+            <div class="star s-pos-12 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-13 s-wheel">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
+            </div>
+            <div class="star s-pos-14 s-torii">
+                <svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg>
+            </div>
+            <div class="star s-pos-15 s-yinyang">
+                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
+            </div>
+            <div class="star s-pos-18 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-19 s-wheel">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
+            </div>
+            <div class="star s-pos-21 s-cross">
+                <svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg>
+            </div>
+            <div class="star s-pos-22 s-torii">
+                <svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg>
+            </div>
+            <div class="star s-pos-23 s-yinyang">
+                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
+            </div>
+            <div class="star s-pos-26 s-star">
+                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="star s-pos-29 s-crescent">
+                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
+            </div>
+        </div>
+
         <h1>GECDV 201: Self in a Multicultural Society</h1>
         <p>Spring 2026 • Tuesdays 4:30 PM – 7:15 PM</p>
         
@@ -288,49 +509,52 @@
             <small>Make sure to sign into the Zoom portal first.</small>
         </div>
         <div class="btn-group">
-            <a href="https://umsystem.zoom.us/" target="_blank" class="btn btn-outline" style="background: white;">1. Zoom Portal</a>
+            <a href="https://umsystem.zoom.us/" target="_blank" class="btn btn-outline" style="background: var(--bg-container); color: var(--accent-primary);">1. Zoom Portal</a>
             <a href="https://umsystem.zoom.us/j/92292790634" target="_blank" class="btn btn-gold">2. Join Class Session</a>
         </div>
     </div>
 
-    <!-- About Section -->
+    <!-- About Section with SVG Icons -->
     <section>
         <h2>About This Course</h2>
         <p>GECDV 201 moves beyond surface-level diversity to critically investigate the self. You will examine the invisible forces—history, family, society, and privilege—that shape your worldview.</p>
         
-        <!-- 4 PILLARS GRID -->
         <div class="pillar-grid">
             <div class="pillar-card">
-                <h3>🌱 Introspection</h3>
+                <svg class="pillar-icon" viewBox="0 0 24 24"><path d="M12 2C7.58 2 4 5.58 4 10v2h16v-2c0-4.42-3.58-8-8-8zm0 2c3.31 0 6 2.69 6 6v2H6v-2c0-3.31 2.69-6 6-6zm-6 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm12-2c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>
+                <h3>Introspection</h3>
                 <p>Map your personal history and background to understand the forces that have shaped your identity.</p>
             </div>
             <div class="pillar-card">
-                <h3>🌍 Engagement</h3>
+                <svg class="pillar-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <h3>Engagement</h3>
                 <p>Step into unfamiliar cultural spaces to analyze dynamics of power, community, and belonging.</p>
             </div>
             <div class="pillar-card">
-                <h3>🗣️ Dialogue</h3>
+                <svg class="pillar-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                <h3>Dialogue</h3>
                 <p>Weekly sessions are active workshops where we dismantle biases together through community.</p>
             </div>
             <div class="pillar-card">
-                <h3>🧭 Navigation</h3>
+                <svg class="pillar-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
+                <h3>Navigation</h3>
                 <p>Develop the skills to navigate complex cultural dynamics with empathy, awareness, and agility.</p>
             </div>
         </div>
         
         <div class="policy-box">
-            <h4 style="margin:0 0 5px 0; color:var(--ocean-depths); font-weight: 700;">Attendance & Participation (40% of Grade)</h4>
-            <p style="margin:0;">Everyone gets <strong>2 no-questions-asked absences</strong>. Beyond that, attendance is mandatory. Cameras must be on to receive full credit.</p>
+            <h4>Attendance & Participation (40% of Grade)</h4>
+            <p>Everyone gets <strong>2 no-questions-asked absences</strong>. Beyond that, attendance is mandatory. Cameras must be on to receive full credit.</p>
         </div>
     </section>
 
-    <!-- Schedule Section (#3 Smart Schedule implemented via JS below) -->
+    <!-- Schedule Section -->
     <section id="schedule-section">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
             <h2 style="margin:0;">Course Schedule</h2>
             <button onclick="openModal()" class="btn btn-blue">📝 Sign Up for Presentation</button>
         </div>
-        <p style="margin-top: 0; color: #666; font-size: 0.9rem;">Click <strong>Week Prep Kit</strong> for readings. Hover over <strong>Attendance</strong> for rubrics.</p>
+        <p style="margin-top: 0; color: var(--text-muted); font-size: 0.9rem;">Click <strong>Week Prep Kit</strong> for readings. Hover over <strong>Attendance</strong> for rubrics.</p>
 
         <table class="responsive-table">
             <thead>
@@ -342,272 +566,112 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Added data-date for Smart Schedule JS Logic -->
                 <tr data-date="2026-01-20">
                     <td data-label="Week" class="week-cell">1</td>
                     <td data-label="Date" class="date-cell">Jan 20</td>
-                    <td data-label="Agenda">
-                        <strong>Introductions & Orientation</strong><br>
-                        <em>The Cultural Iceberg</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-1-guide" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Introductions & Orientation</strong><br><em>The Cultural Iceberg</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-1-guide" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-                
                 <tr data-date="2026-01-27">
                     <td data-label="Week" class="week-cell">2</td>
                     <td data-label="Date" class="date-cell">Jan 27</td>
-                    <td data-label="Agenda">
-                        <strong>Deep Dive & Dialogue</strong><br>
-                        <em>How do race, racism, and privilege impact my understanding of self?</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-assignment-number-1-2" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Deep Dive & Dialogue</strong><br><em>Race, racism, and privilege</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="https://umsystem.instructure.com/courses/321213/pages/pre-assignment-number-1-2" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-
                 <tr id="week-3-row" data-date="2026-02-03">
                     <td data-label="Week" class="week-cell">3</td>
                     <td data-label="Date" class="date-cell">Feb 03</td>
-                    <td data-label="Agenda">
-                        <strong>Student Presentations</strong><br>
-                        <em>Who Am I As a Cultural Being?</em>
-                        <div id="week-3-slots" style="margin-top:8px;"></div>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-race" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-3-status"></div><div id="week-3-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-race" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-
                 <tr data-date="2026-02-10">
                     <td data-label="Week" class="week-cell">4</td>
                     <td data-label="Date" class="date-cell">Feb 10</td>
-                    <td data-label="Agenda">
-                        <strong>Asynchronous Week (No Zoom)</strong><br>
-                        <em>Socioeconomic status and self.</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Participation</button>
-                        </div>
-                        <span class="due-date-text">Discussion 1 Due: Feb 15</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Asynchronous Week</strong><br><em>Socioeconomic status</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Participation</button></div><span class="due-date-text">Discussion 1 Due: Feb 15</span></td>
                 </tr>
-
                 <tr id="week-5-row" data-date="2026-02-17">
                     <td data-label="Week" class="week-cell">5</td>
                     <td data-label="Date" class="date-cell">Feb 17</td>
-                    <td data-label="Agenda">
-                        <strong>Student Presentations</strong><br>
-                        <em>Who Am I As a Cultural Being?</em>
-                        <div id="week-5-slots" style="margin-top:8px;"></div>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="https://umsystem.instructure.com/courses/321213/pages/toxic-masculinity" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-5-status"></div><div id="week-5-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="https://umsystem.instructure.com/courses/321213/pages/toxic-masculinity" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-
                 <tr data-date="2026-02-24">
                     <td data-label="Week" class="week-cell">6</td>
                     <td data-label="Date" class="date-cell">Feb 24</td>
-                    <td data-label="Agenda">
-                        <strong>Deep Dive & Dialogue</strong><br>
-                        <em>Gender and sexuality.</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                        <span class="due-date-text">Journal #1 Due: Mar 1</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Deep Dive & Dialogue</strong><br><em>Gender and sexuality</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div><span class="due-date-text">Journal #1 Due: Mar 1</span></td>
                 </tr>
-                
                 <tr id="week-7-row" data-date="2026-03-03">
                     <td data-label="Week" class="week-cell">7</td>
                     <td data-label="Date" class="date-cell">Mar 03</td>
-                    <td data-label="Agenda">
-                        <strong>Student Presentations</strong><br>
-                        <em>Who Am I As a Cultural Being?</em>
-                        <div id="week-7-slots" style="margin-top:8px;"></div>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-7-status"></div><div id="week-7-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-
                 <tr data-date="2026-03-10">
                     <td data-label="Week" class="week-cell">8</td>
                     <td data-label="Date" class="date-cell">Mar 10</td>
-                    <td data-label="Agenda">
-                        <strong>Deep Dive & Dialogue</strong><br>
-                        <em>Immigration and self.</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                        <span class="due-date-text">Autobiography Due: Mar 15</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Deep Dive & Dialogue</strong><br><em>Immigration</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div><span class="due-date-text">Autobiography Due: Mar 15</span></td>
                 </tr>
-                
                 <tr id="week-9-row" data-date="2026-03-17">
                     <td data-label="Week" class="week-cell">9</td>
                     <td data-label="Date" class="date-cell">Mar 17</td>
-                    <td data-label="Agenda">
-                        <strong>Student Presentations</strong><br>
-                        <em>Who Am I As a Cultural Being?</em>
-                        <div id="week-9-slots" style="margin-top:8px;"></div>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-9-status"></div><div id="week-9-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-                
-                <!-- SPRING BREAK -->
-                <tr style="background-color: #f7fcfe;" data-date="2026-03-24">
+                <tr style="background-color: var(--sunlight-row);" data-date="2026-03-24">
                     <td data-label="Week" class="week-cell">-</td>
                     <td data-label="Date" class="date-cell">Mar 24</td>
-                    <td data-label="Agenda" colspan="2" style="color: var(--ocean-alert); font-weight: bold;">
-                        NO CLASS - SPRING BREAK 🌴
-                    </td>
+                    <td data-label="Agenda" colspan="2" style="color: var(--alert); font-weight: bold;">NO CLASS - SPRING BREAK 🌴</td>
                 </tr>
-
                 <tr data-date="2026-03-31">
                     <td data-label="Week" class="week-cell">10</td>
                     <td data-label="Date" class="date-cell">Mar 31</td>
-                    <td data-label="Agenda">
-                        <strong>Asynchronous Week (No Zoom)</strong><br>
-                        <em>Ableism and self.</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Participation</button>
-                        </div>
-                        <span class="due-date-text">Discussion 2 Due: Apr 5</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Asynchronous Week</strong><br><em>Ableism and self</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Participation</button></div><span class="due-date-text">Discussion 2 Due: Apr 5</span></td>
                 </tr>
-
                 <tr id="week-11-row" data-date="2026-04-07">
                     <td data-label="Week" class="week-cell">11</td>
                     <td data-label="Date" class="date-cell">Apr 07</td>
-                    <td data-label="Agenda">
-                        <strong>Student Presentations</strong><br>
-                        <em>Who Am I As a Cultural Being?</em>
-                        <div id="week-11-slots" style="margin-top:8px;"></div>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-11-status"></div><div id="week-11-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-
                 <tr data-date="2026-04-14">
                     <td data-label="Week" class="week-cell">12</td>
                     <td data-label="Date" class="date-cell">Apr 14</td>
-                    <td data-label="Agenda">
-                        <strong>Deep Dive & Dialogue</strong><br>
-                        <em>Health care, education, and self.</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                        <span class="due-date-text">Journal #2 Due: Apr 19</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Deep Dive & Dialogue</strong><br><em>Health care & Education</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div><span class="due-date-text">Journal #2 Due: Apr 19</span></td>
                 </tr>
-
                 <tr id="week-13-row" data-date="2026-04-21">
                     <td data-label="Week" class="week-cell">13</td>
                     <td data-label="Date" class="date-cell">Apr 21</td>
-                    <td data-label="Agenda">
-                        <strong>Student Presentations</strong><br>
-                        <em>Who Am I As a Cultural Being?</em>
-                        <div id="week-13-slots" style="margin-top:8px;"></div>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                        <span class="due-date-text">Cultural Event Paper: Apr 26</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-13-status"></div><div id="week-13-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div><span class="due-date-text">Cultural Event Paper: Apr 26</span></td>
                 </tr>
-
                 <tr data-date="2026-04-28">
                     <td data-label="Week" class="week-cell">14</td>
                     <td data-label="Date" class="date-cell">Apr 28</td>
-                    <td data-label="Agenda">
-                        <strong>Deep Dive & Dialogue</strong><br>
-                        <em>Synthesis and Intersectionality.</em>
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Deep Dive & Dialogue</strong><br><em>Synthesis</em></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-
                 <tr data-date="2026-05-05">
                     <td data-label="Week" class="week-cell">15</td>
                     <td data-label="Date" class="date-cell">May 05</td>
-                    <td data-label="Agenda">
-                        <strong>Closing Session</strong><br>
-                        TBD
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-gold">Prep Kit</a>
-                            <button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                    </td>
+                    <td data-label="Agenda"><strong>Closing Session</strong><br>TBD</td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="#" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-                
                 <tr data-date="2026-05-12">
                     <td data-label="Week" class="week-cell">16</td>
                     <td data-label="Date" class="date-cell">May 12</td>
-                    <td data-label="Agenda">
-                        <strong>Finals Week</strong><br>
-                        No class meeting.
-                    </td>
-                    <td data-label="Toolkit">
-                        <div class="btn-group">
-                            <button onclick="openAttendanceModal('finals')" onmouseenter="showTooltip(event, 'finals')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button>
-                        </div>
-                        <span class="due-date-text">Final Reflection Due: May 17</span>
-                    </td>
+                    <td data-label="Agenda"><strong>Finals Week</strong><br>No class meeting.</td>
+                    <td data-label="Toolkit"><div class="btn-group"><button onclick="openAttendanceModal('finals')" onmouseenter="showTooltip(event, 'finals')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div><span class="due-date-text">Final Reflection Due: May 17</span></td>
                 </tr>
             </tbody>
         </table>
     </section>
 
-    <!-- Grade Breakdown (Donut Chart Removed) -->
+    <!-- Assignments & Grades -->
     <section>
         <h2>Assignments & Grades</h2>
         <table class="responsive-table">
@@ -620,92 +684,47 @@
             </thead>
             <tbody>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Attendance & Participation</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/external_tools/117" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Attendance & Participation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/external_tools/117" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">400 pts (40%)</td>
                     <td data-label="Due" style="text-align: right;">Weekly</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Discussion 1: Socioeconomic Status</strong>
-                        <div class="badge-group">
-                            <a href="#" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Discussion 1: Socioeconomic Status</strong><div class="badge-group"><a href="#" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Feb 15</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Journal Entry 1</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582924" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Journal Entry 1</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582924" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Mar 01</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Cultural Autobiography</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582928" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Cultural Autobiography</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582928" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">150 pts (15%)</td>
                     <td data-label="Due" style="text-align: right;">Mar 15</td>
                 </tr>
                  <tr>
-                    <td data-label="Assignment">
-                        <strong>Discussion 2: Ableism</strong>
-                        <div class="badge-group">
-                            <a href="#" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Discussion 2: Ableism</strong><div class="badge-group"><a href="#" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Apr 05</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Journal Entry 2</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582925" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Journal Entry 2</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582925" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Apr 19</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Cultural Event Paper</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582929" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Cultural Event Paper</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582929" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">50 pts (5%)</td>
                     <td data-label="Due" style="text-align: right;">Apr 26</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Presentation</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582931" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Presentation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582931" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">100 pts (10%)</td>
                     <td data-label="Due" style="text-align: right;">Per Sign-up</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment">
-                        <strong>Final Reflection</strong>
-                        <div class="badge-group">
-                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582930" target="_blank" class="badge badge-canvas">Canvas</a>
-                        </div>
-                    </td>
+                    <td data-label="Assignment"><strong>Final Reflection</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582930" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
                     <td data-label="Value" style="text-align: right;">100 pts (10%)</td>
                     <td data-label="Due" style="text-align: right;">May 17</td>
                 </tr>
@@ -714,82 +733,23 @@
     </section>
 
     <!-- Support & FAQ -->
-    <section style="background: #f0fcfc;">
+    <section style="background: var(--sunlight-row);">
         <h2>Support & FAQ</h2>
-        
-        <details>
-            <summary>Grading Turnaround</summary>
-            <div class="faq-content">
-                <p>All assignments are graded within 3–5 business days.</p>
-            </div>
-        </details>
-        
-        <details>
-            <summary>Need Help?</summary>
-            <div class="faq-content">
-                <p>Contact Professor John via the Canvas Inbox.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Do I need to buy a textbook?</summary>
-            <div class="faq-content">
-                <p><strong>No.</strong> You do not need to purchase any books. All required readings, videos, and podcasts are provided directly via our Course Hub.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Do I need a working webcam?</summary>
-            <div class="faq-content">
-                <p><strong>Yes.</strong> Cameras are expected to be on during Zoom sessions to support community building and active participation (which counts for 30% of your grade).</p>
-                <p style="margin-top: 8px;">We understand life happens—background blur is welcome, and if you have temporary bandwidth issues, please message the instructor so we can accommodate you.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>Is Generative AI allowed?</summary>
-            <div class="faq-content">
-                <p><strong>Yes, with clear boundaries.</strong> You may use generative AI tools (such as ChatGPT, Gemini, or Claude) for brainstorming, outlining, proofreading, or polishing your work. However, you <strong>may not</strong> use them to generate the core content of your essays.</p>
-                <p>If you use AI assistance, you must document it. Example citation:</p>
-                <code style="background: #f0f0f0; padding: 10px; display: block; border-radius: 4px; font-size: 0.85rem; margin: 10px 0; border: 1px solid #d1d9e0;">OpenAI. (2026). ChatGPT (Feb 2026 version) [Large language model]. https://chat.openai.com/</code>
-                <p><strong>Bottom line:</strong> Use these tools to support your thinking, not replace it. Your work must always reflect your own authentic voice and lived experience.</p>
-            </div>
-        </details>
+        <details><summary>Grading Turnaround</summary><div class="faq-content"><p>All assignments are graded within 3–5 business days.</p></div></details>
+        <details><summary>Need Help?</summary><div class="faq-content"><p>Contact Professor John via the Canvas Inbox.</p></div></details>
+        <details><summary>Do I need to buy a textbook?</summary><div class="faq-content"><p><strong>No.</strong> All materials are in the Course Hub.</p></div></details>
+        <details><summary>Do I need a working webcam?</summary><div class="faq-content"><p><strong>Yes.</strong> Cameras support community. Blur is fine.</p></div></details>
+        <details><summary>Is Generative AI allowed?</summary><div class="faq-content"><p><strong>Yes, with clear boundaries.</strong> Use for brainstorming, not drafting.</p></div></details>
     </section>
 </div>
 
-<!-- MODALS (Styled with new CSS) -->
+<!-- MODALS -->
 <div id="attendance-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <div class="modal-header">Attendance & Participation Rubric</div>
-        <div class="modal-body" id="attendance-content"></div>
-        <div class="modal-footer">
-            <button onclick="closeAttendanceModal()" class="btn btn-blue">Close</button>
-        </div>
-    </div>
+    <div class="modal-content"><div class="modal-header">Rubric</div><div class="modal-body" id="attendance-content"></div><div class="modal-footer"><button onclick="closeAttendanceModal()" class="btn btn-blue">Close</button></div></div>
 </div>
-
 <div id="signup-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <div class="modal-header">Sign Up for Presentation</div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label>Select Date:</label>
-                <select id="date-select"></select>
-            </div>
-            <div class="form-group">
-                <label>Your Name:</label>
-                <input id="student-name" type="text" placeholder="First and Last Name">
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button onclick="closeModal()" class="btn btn-outline">Cancel</button>
-            <button onclick="confirmSignUp()" class="btn btn-blue">Confirm</button>
-        </div>
-    </div>
+    <div class="modal-content"><div class="modal-header">Sign Up</div><div class="modal-body"><div class="form-group"><label>Date:</label><select id="date-select"></select></div><div class="form-group"><label>Name:</label><input id="student-name" type="text"></div></div><div class="modal-footer"><button onclick="closeModal()" class="btn btn-outline">Cancel</button><button onclick="confirmSignUp()" class="btn btn-blue">Confirm</button></div></div>
 </div>
-
-<!-- HOVER TOOLTIP -->
 <div id="hover-tooltip" class="hidden"></div>
 
 <!-- LOGIC -->
@@ -798,121 +758,88 @@
     import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // --- CONFIG ---
     const ADMIN_PIN = "2026"; 
     let db, auth, appId = 'default-app-id';
-    
     try {
         const firebaseConfig = JSON.parse(__firebase_config);
         const app = initializeApp(firebaseConfig);
         auth = getAuth(app);
         db = getFirestore(app);
         if (typeof __app_id !== 'undefined') appId = __app_id;
-    } catch (e) { console.warn("Firebase not found. Running in offline mode."); }
+    } catch (e) { console.warn("Firebase not found."); }
 
-    // --- DATA ---
-    const rubrics = {
-        zoom: `<b>Zoom Meeting (25 pts)</b><ul style='padding-left:20px; margin-top:5px;'><li>10 pts: Camera on (entire session)</li><li>5 pts: On time</li><li>10 pts: Active participation</li></ul>`,
-        async: `<b>Asynchronous Week (25 pts)</b><p style='margin-top:5px;'>25 pts: Timely completion of async assignment.</p>`,
-        finals: `<b>Finals Week (25 pts)</b><p style='margin-top:5px;'>25 pts: Submission of Final Reflection.</p>`
-    };
-
-    let presentationWeeks = {
-        3: { date: "Feb 03", students: [] },
-        5: { date: "Feb 17", students: [] },
-        7: { date: "Mar 03", students: [] },
-        9: { date: "Mar 17", students: [] },
-        11: { date: "Apr 07", students: [] },
-        13: { date: "Apr 21", students: [] }
-    };
+    const rubrics = { zoom: `<b>Zoom Meeting (25 pts)</b><ul style='padding-left:20px;margin-top:5px;'><li>10 pts: Camera on</li><li>5 pts: On time</li><li>10 pts: Active</li></ul>`, async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` };
+    let presentationWeeks = { 3: { date: "Feb 03", students: [] }, 5: { date: "Feb 17", students: [] }, 7: { date: "Mar 03", students: [] }, 9: { date: "Mar 17", students: [] }, 11: { date: "Apr 07", students: [] }, 13: { date: "Apr 21", students: [] } };
     const MAX_SLOTS = 5;
     const DOC_ID = 'tuesday_spring2026_data'; 
 
-    // --- UI HELPERS ---
-    window.showTooltip = (e, type) => {
-        const t = document.getElementById('hover-tooltip');
-        t.innerHTML = rubrics[type];
-        const rect = e.target.getBoundingClientRect();
-        let top = rect.top - 10;
-        let left = rect.left + (rect.width / 2);
-        t.style.top = top + 'px';
-        t.style.left = left + 'px';
-        t.style.transform = "translate(-50%, -100%)";
-        t.classList.remove('hidden');
-    };
-    window.hideTooltip = () => document.getElementById('hover-tooltip').classList.add('hidden');
-    
-    window.openAttendanceModal = (type) => {
-        document.getElementById('attendance-content').innerHTML = rubrics[type];
-        document.getElementById('attendance-modal').classList.remove('hidden');
-    };
-    window.closeAttendanceModal = () => document.getElementById('attendance-modal').classList.add('hidden');
-    
-    window.openModal = () => {
-        const s = document.getElementById('date-select');
-        s.innerHTML = '<option value="">-- Choose Date --</option>';
-        for(const [w, d] of Object.entries(presentationWeeks)) {
-            if(d.students.length < MAX_SLOTS) {
-                const opt = document.createElement('option');
-                opt.value = w;
-                opt.textContent = `Week ${w} - ${d.date}`;
-                s.appendChild(opt);
-            }
+    // --- DARK MODE LOGIC ---
+    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
         }
+    }
+    toggleSwitch.addEventListener('change', switchTheme, false);
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') toggleSwitch.checked = true;
+    }
+
+    // --- UI HELPERS ---
+    window.showTooltip = (e, type) => { const t = document.getElementById('hover-tooltip'); t.innerHTML = rubrics[type]; const r = e.target.getBoundingClientRect(); t.style.top = (r.top-10)+'px'; t.style.left = (r.left+r.width/2)+'px'; t.style.transform="translate(-50%, -100%)"; t.classList.remove('hidden'); };
+    window.hideTooltip = () => document.getElementById('hover-tooltip').classList.add('hidden');
+    window.openAttendanceModal = (t) => { document.getElementById('attendance-content').innerHTML = rubrics[t]; document.getElementById('attendance-modal').classList.remove('hidden'); };
+    window.closeAttendanceModal = () => document.getElementById('attendance-modal').classList.add('hidden');
+    window.openModal = () => {
+        const s = document.getElementById('date-select'); s.innerHTML = '<option value="">-- Choose Date --</option>';
+        for(const [w, d] of Object.entries(presentationWeeks)) { if(d.students.length < MAX_SLOTS) { const o = document.createElement('option'); o.value = w; o.textContent = `Week ${w} - ${d.date}`; s.appendChild(o); } }
         document.getElementById('signup-modal').classList.remove('hidden');
     };
     window.closeModal = () => document.getElementById('signup-modal').classList.add('hidden');
 
-    // --- LOGIC: #3 SMART SCHEDULE (Fixed) ---
     function initSmartSchedule() {
         const today = new Date(); 
-        
-        const rows = document.querySelectorAll('tr[data-date]');
-        rows.forEach(row => {
-            const rowDateStr = row.getAttribute('data-date');
-            if(!rowDateStr) return;
-            
-            const rowDate = new Date(rowDateStr);
-            
-            // Define Week Window: Starts 2 days before class (Sunday), Ends 5 days after (Next Sunday)
-            const weekStart = new Date(rowDate);
-            weekStart.setDate(rowDate.getDate() - 2); 
-            
-            const weekEnd = new Date(weekStart);
-            weekEnd.setDate(weekStart.getDate() + 7);
-
-            // If today is AFTER this week window -> Past
-            if (today >= weekEnd) {
-                row.classList.add('past-week');
-            } 
-            // If today is WITHIN this week window -> Current
-            else if (today >= weekStart && today < weekEnd) {
-                row.classList.add('current-week');
-            }
+        document.querySelectorAll('tr[data-date]').forEach(row => {
+            const d = new Date(row.getAttribute('data-date'));
+            const s = new Date(d); s.setDate(d.getDate()-2); 
+            const e = new Date(s); e.setDate(s.getDate()+7);
+            if (today >= e) row.classList.add('past-week');
+            else if (today >= s && today < e) row.classList.add('current-week');
         });
     }
 
     function renderSchedule() {
         for(const [w, d] of Object.entries(presentationWeeks)) {
+            // Render Slots
             const el = document.getElementById(`week-${w}-slots`);
-            if(!el) continue;
-            el.innerHTML = '';
-            d.students.forEach(name => {
-                const pill = document.createElement('span');
-                pill.className = 'slot-pill';
-                // ESCAPE NAME FOR SAFETY
-                const safeName = name.replace(/'/g, "\\'");
-                pill.innerHTML = `${name} <span class="slot-delete" onclick="removeStudent('${w}', '${safeName}')" title="Instructor Delete Only">×</span>`;
-                el.appendChild(pill);
-            });
-            const div = document.createElement('div');
-            div.className = 'slot-counter';
-            const left = MAX_SLOTS - d.students.length;
-            div.innerHTML = left === 0 ? "<span style='color:#C04ABC'>FULL</span>" : `${left} spots left`;
-            el.appendChild(div);
+            if(el) {
+                el.innerHTML = '';
+                d.students.forEach(n => {
+                    const safe = n.replace(/'/g, "\\'");
+                    el.innerHTML += `<span class="slot-pill">${n} <span class="slot-delete" onclick="removeStudent('${w}', '${safe}')">×</span></span>`;
+                });
+            }
+            
+            // Render Availability Badge (#1)
+            const statEl = document.getElementById(`week-${w}-status`);
+            if(statEl) {
+                const left = MAX_SLOTS - d.students.length;
+                if(left > 0) {
+                    statEl.innerHTML = `<span class="slot-counter-badge badge-available">${left} Spots Left</span>`;
+                } else {
+                    statEl.innerHTML = `<span class="slot-counter-badge badge-full">FULL</span>`;
+                }
+            }
         }
     }
 
+    // --- DB ACTIONS ---
     window.confirmSignUp = async () => {
         const w = document.getElementById('date-select').value;
         const n = document.getElementById('student-name').value.trim();
@@ -923,65 +850,42 @@
                 const snap = await getDoc(ref);
                 if(!snap.exists()) await setDoc(ref, { [`week${w}`]: [n] });
                 else await updateDoc(ref, { [`week${w}`]: arrayUnion(n) });
-                // No alert needed for success, just close modal
-            } catch(e) { console.error(e); alert("Error saving sign up. Please try again."); }
-        } else {
-            presentationWeeks[w].students.push(n);
-            renderSchedule();
-        }
+            } catch(e) { console.error(e); alert("Error saving."); }
+        } else { presentationWeeks[w].students.push(n); renderSchedule(); }
         window.closeModal();
     };
 
     window.removeStudent = async (w, n) => {
-        const enteredPin = prompt("Restricted: Enter Instructor PIN to delete student:");
-        if(enteredPin !== ADMIN_PIN) { alert("❌ Access Denied: Incorrect PIN."); return; }
-        if(!confirm(`Confirm delete: ${n}?`)) return;
+        if(prompt("Enter PIN:") !== ADMIN_PIN) return alert("Incorrect PIN");
+        if(!confirm(`Delete ${n}?`)) return;
         if(db) {
-             try {
-                 const ref = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID);
-                 await updateDoc(ref, { [`week${w}`]: arrayRemove(n) });
-                 alert("✅ Student removed successfully.");
-             } catch(e) {
-                 console.error(e);
-                 alert("❌ Error removing student: " + e.message);
-             }
+             const ref = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID);
+             await updateDoc(ref, { [`week${w}`]: arrayRemove(n) });
         } else {
-            const idx = presentationWeeks[w].students.indexOf(n);
-            if(idx > -1) presentationWeeks[w].students.splice(idx, 1);
+            const i = presentationWeeks[w].students.indexOf(n);
+            if(i > -1) presentationWeeks[w].students.splice(i, 1);
             renderSchedule();
         }
     };
 
-    // --- INIT ---
     async function init() {
-        initSmartSchedule(); // Run visual logic immediately
+        renderSchedule(); // Force immediate render of default empty states
+        initSmartSchedule();
         if(auth) {
-            onAuthStateChanged(auth, (user) => {
-                if(user) {
-                    onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID), (snap) => {
-                        if(snap.exists()) {
-                            const data = snap.data();
-                            for(const key in data) {
-                                const w = key.replace('week','');
-                                if(presentationWeeks[w]) presentationWeeks[w].students = data[key];
-                            }
-                            renderSchedule();
-                        }
-                    });
-                }
+            onAuthStateChanged(auth, (u) => {
+                if(u) onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID), (snap) => {
+                    if(snap.exists()) {
+                        const d = snap.data();
+                        for(const k in d) { const w = k.replace('week',''); if(presentationWeeks[w]) presentationWeeks[w].students = d[k]; }
+                        renderSchedule();
+                    }
+                });
             });
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                 await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                 await signInAnonymously(auth);
-            }
-        } else {
-            renderSchedule();
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
+            else await signInAnonymously(auth);
         }
     }
     init();
-
 </script>
-
 </body>
 </html>
