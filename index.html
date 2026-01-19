@@ -26,9 +26,9 @@
             --toggle-bg: #2c5d63;
             --shadow-color: rgba(0, 95, 115, 0.1);
             
-            /* LANTERN/STAR COLORS */
+            /* STAR COLORS */
             --star-core: #ffd166;
-            --star-glow: drop-shadow(0 0 4px rgba(255, 209, 102, 0.8));
+            --star-glow: drop-shadow(0 0 5px rgba(255, 209, 102, 0.9));
         }
 
         /* DEEP SEA PALETTE (Dark Mode) */
@@ -53,7 +53,7 @@
             --shadow-color: rgba(0, 0, 0, 0.5);
             
             --star-core: #ffb703;
-            --star-glow: drop-shadow(0 0 6px rgba(255, 183, 3, 0.8));
+            --star-glow: drop-shadow(0 0 8px rgba(255, 183, 3, 0.9));
         }
 
         body {
@@ -148,7 +148,7 @@
             color: var(--star-core);
             filter: var(--star-glow);
             animation: twinkle 4s ease-in-out infinite alternate;
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         .star svg {
@@ -157,57 +157,58 @@
             fill: currentColor;
         }
         
-        .s-star svg polygon { fill: none; stroke: currentColor; stroke-width: 2; }
-        .s-om svg text { fill: currentColor; stroke: none; }
-        /* Fix for Yin Yang to be visible as single color */
-        .s-yinyang svg path { fill: currentColor; }
-        .s-yinyang svg circle { fill: currentColor; }
-
-        /* --- STAR POSITIONING (Total 30) --- */
+        /* SVG Stroke/Fill Fixes */
+        .stroke-only { fill: none !important; stroke: currentColor; stroke-width: 1.5; }
+        .fill-only { fill: currentColor; stroke: none; }
+        .text-icon { font-family: serif; font-weight: bold; fill: currentColor; }
         
-        /* 1. TOP BAND (Above Title) */
-        .s-pos-1 { top: 15px; left: 5%; width: 22px; height: 22px; animation-delay: 0s; } /* Om */
-        .s-pos-2 { top: 25px; left: 20%; width: 16px; height: 16px; animation-delay: 1.2s; } /* Star */
-        .s-pos-3 { top: 10px; left: 35%; width: 20px; height: 20px; animation-delay: 2.5s; opacity: 0.5; } /* Crescent */
-        .s-pos-4 { top: 30px; left: 50%; width: 16px; height: 16px; animation-delay: 0.5s; } /* Cross */
-        .s-pos-5 { top: 15px; left: 65%; width: 24px; height: 24px; animation-delay: 3s; } /* Wheel */
-        .s-pos-16 { top: 20px; left: 80%; width: 14px; height: 14px; animation-delay: 0.8s; opacity: 0.4; } /* Torii */
-        .s-pos-17 { top: 10px; right: 25%; width: 18px; height: 18px; animation-delay: 2.1s; } /* Yin Yang */
-        .s-pos-30 { top: 25px; right: 40%; width: 12px; height: 12px; animation-delay: 1.5s; opacity: 0.5; } /* Star */
+        /* Star of David specific fix */
+        .star-david polygon { fill: none; stroke: currentColor; stroke-width: 2; }
 
-        /* 2. MIDDLE BAND (Left/Right of Text) */
-        .s-pos-6 { top: 80px; left: 3%; width: 24px; height: 24px; animation-delay: 1.8s; } /* Torii */
-        .s-pos-7 { top: 110px; left: 10%; width: 18px; height: 18px; animation-delay: 0.2s; opacity: 0.6; } /* Star */
-        .s-pos-24 { top: 60px; left: 15%; width: 14px; height: 14px; animation-delay: 2.9s; } /* Om */
-        .s-pos-25 { top: 90px; left: 22%; width: 20px; height: 20px; animation-delay: 1.1s; } /* Wheel */
+        /* --- CONSTELLATION MAP (30 Stars) --- */
         
-        .s-pos-10 { top: 60px; right: 18%; width: 26px; height: 26px; animation-delay: 0.7s; } /* Om */
-        .s-pos-14 { top: 85px; right: 10%; width: 16px; height: 16px; animation-delay: 0.1s; opacity: 0.5; } /* Torii */
-        .s-pos-20 { top: 50px; right: 5%; width: 20px; height: 20px; animation-delay: 3.2s; } /* Crescent */
-        .s-pos-29 { top: 100px; right: 25%; width: 14px; height: 14px; animation-delay: 1.9s; opacity: 0.4; } /* Cross */
+        /* ZONE 1: THE UPPER FIRMAMENT (Above Title, Top 10-40px) */
+        .pos-1 { top: 15px; left: 5%; width: 22px; height: 22px; animation-delay: 0s; } /* Om */
+        .pos-2 { top: 25px; left: 15%; width: 16px; height: 16px; animation-delay: 1.2s; } /* Star of David */
+        .pos-3 { top: 10px; left: 25%; width: 20px; height: 20px; animation-delay: 2.5s; opacity: 0.6; } /* Crescent */
+        .pos-4 { top: 30px; left: 35%; width: 16px; height: 16px; animation-delay: 0.5s; } /* Cross */
+        .pos-5 { top: 15px; left: 45%; width: 24px; height: 24px; animation-delay: 3s; } /* Wheel */
+        .pos-6 { top: 20px; left: 55%; width: 14px; height: 14px; animation-delay: 0.8s; opacity: 0.5; } /* Torii */
+        .pos-7 { top: 10px; right: 35%; width: 18px; height: 18px; animation-delay: 2.1s; } /* Yin Yang */
+        .pos-8 { top: 25px; right: 25%; width: 22px; height: 22px; animation-delay: 1.5s; } /* Lotus */
+        .pos-9 { top: 15px; right: 15%; width: 20px; height: 20px; animation-delay: 0.3s; } /* Infinity */
+        .pos-10 { top: 30px; right: 5%; width: 16px; height: 16px; animation-delay: 2.8s; } /* Buddha */
 
-        /* 3. BOTTOM BAND (Below Text/Around Schedule Text) */
-        .s-pos-8 { top: 140px; left: 5%; width: 20px; height: 20px; animation-delay: 2s; } /* Yin Yang */
-        .s-pos-9 { top: 125px; left: 25%; width: 16px; height: 16px; animation-delay: 1.5s; opacity: 0.5; } /* Cross */
-        .s-pos-18 { top: 135px; left: 45%; width: 14px; height: 14px; animation-delay: 2.4s; } /* Star */
-        .s-pos-19 { top: 130px; right: 35%; width: 22px; height: 22px; animation-delay: 0.9s; } /* Wheel */
-        .s-pos-11 { top: 120px; right: 5%; width: 18px; height: 18px; animation-delay: 2.2s; } /* Crescent */
-        .s-pos-12 { top: 150px; right: 15%; width: 24px; height: 24px; animation-delay: 1.1s; } /* Star */
-        .s-pos-13 { top: 145px; right: 45%; width: 15px; height: 15px; animation-delay: 3.5s; opacity: 0.4; } /* Om */
-        .s-pos-15 { top: 135px; left: 70%; width: 18px; height: 18px; animation-delay: 1.9s; } /* Yin Yang */
+        /* ZONE 2: THE LOWER HORIZON (Under Title, Top 120px+) */
+        .pos-11 { top: 130px; left: 3%; width: 24px; height: 24px; animation-delay: 1.8s; } /* Khatim */
+        .pos-12 { top: 115px; left: 12%; width: 18px; height: 18px; animation-delay: 0.2s; opacity: 0.7; } /* Sujud */
+        .pos-13 { top: 140px; left: 22%; width: 20px; height: 20px; animation-delay: 2s; } /* Allah */
+        .pos-14 { top: 125px; left: 32%; width: 18px; height: 18px; animation-delay: 1.5s; } /* Trinity */
+        .pos-15 { top: 135px; left: 42%; width: 22px; height: 22px; animation-delay: 0.9s; opacity: 0.6; } /* Dove */
+        .pos-16 { top: 120px; left: 52%; width: 16px; height: 16px; animation-delay: 3.1s; } /* Om */
+        .pos-17 { top: 145px; left: 62%; width: 20px; height: 20px; animation-delay: 1.1s; } /* Star of David */
+        .pos-18 { top: 130px; left: 72%; width: 18px; height: 18px; animation-delay: 2.4s; } /* Cross */
+
+        /* ZONE 3: THE EASTERN SKY (Right of Schedule, Right 0-30%) */
+        .pos-19 { top: 70px; right: 28%; width: 14px; height: 14px; animation-delay: 0.6s; opacity: 0.5; } /* Torii */
+        .pos-20 { top: 90px; right: 22%; width: 20px; height: 20px; animation-delay: 1.9s; } /* Crescent */
+        .pos-21 { top: 110px; right: 26%; width: 16px; height: 16px; animation-delay: 3.3s; } /* Wheel */
+        .pos-22 { top: 60px; right: 18%; width: 22px; height: 22px; animation-delay: 1.4s; } /* Lotus */
+        .pos-23 { top: 85px; right: 12%; width: 18px; height: 18px; animation-delay: 0.1s; opacity: 0.7; } /* Yin Yang */
+        .pos-24 { top: 105px; right: 16%; width: 24px; height: 24px; animation-delay: 2.7s; } /* Khatim */
+        .pos-25 { top: 130px; right: 8%; width: 15px; height: 15px; animation-delay: 1.0s; } /* Sujud */
+        .pos-26 { top: 55px; right: 5%; width: 18px; height: 18px; animation-delay: 2.3s; } /* Allah */
         
-        /* 4. SCATTERED FILLERS */
-        .s-pos-21 { top: 40px; left: 8%; width: 12px; height: 12px; animation-delay: 0.3s; opacity: 0.3; }
-        .s-pos-22 { top: 110px; left: 30%; width: 14px; height: 14px; animation-delay: 2.7s; opacity: 0.4; }
-        .s-pos-23 { bottom: 20px; right: 55%; width: 12px; height: 12px; animation-delay: 1.4s; opacity: 0.3; }
-        .s-pos-26 { top: 35px; right: 30%; width: 14px; height: 14px; animation-delay: 0.6s; opacity: 0.4; }
-        .s-pos-27 { bottom: 30px; left: 40%; width: 10px; height: 10px; animation-delay: 3.1s; opacity: 0.3; }
-        .s-pos-28 { top: 75px; right: 2%; width: 12px; height: 12px; animation-delay: 1.6s; opacity: 0.4; }
+        /* ZONE 4: SCATTERED FILLERS (Safe gaps) */
+        .pos-27 { top: 50px; left: 8%; width: 12px; height: 12px; animation-delay: 1.7s; opacity: 0.4; }
+        .pos-28 { top: 80px; left: 2%; width: 14px; height: 14px; animation-delay: 0.4s; opacity: 0.3; }
+        .pos-29 { top: 150px; right: 40%; width: 12px; height: 12px; animation-delay: 3.4s; opacity: 0.4; }
+        .pos-30 { top: 70px; left: 18%; width: 10px; height: 10px; animation-delay: 2.9s; opacity: 0.3; }
 
         @keyframes twinkle {
-            0% { transform: scale(1); opacity: 0.4; }
-            50% { opacity: 0.8; }
-            100% { transform: scale(1.15); opacity: 0.4; }
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { opacity: 0.9; }
+            100% { transform: scale(1.15); opacity: 0.5; }
         }
 
         .ocean-waves {
@@ -395,101 +396,43 @@
         
         <!-- CELESTIAL STARS CONTAINER (Header Only) -->
         <div class="star-container">
-            <!-- 1. ABOVE TITLE (Top band) -->
-            <div class="star s-pos-1 s-om">
-                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
-            </div>
-            <div class="star s-pos-2 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-3 s-crescent">
-                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
-            </div>
-            <div class="star s-pos-4 s-cross">
-                <svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg>
-            </div>
-            <div class="star s-pos-5 s-wheel">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
-            </div>
-            <div class="star s-pos-16 s-yinyang">
-                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
-            </div>
-            <div class="star s-pos-17 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-20 s-om">
-                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
-            </div>
-            <div class="star s-pos-30 s-crescent">
-                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
-            </div>
+            <!-- 1. UPPER FIRMAMENT (Top Band) -->
+            <div class="star pos-1"><svg viewBox="0 0 24 24" class="text-icon"><text x="50%" y="70%" font-size="20" text-anchor="middle">ॐ</text></svg></div>
+            <div class="star pos-2 star-david"><svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" /><polygon points="12,22 3,6 21,6" /></svg></div>
+            <div class="star pos-3 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
+            <div class="star pos-4 stroke-only"><svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg></div>
+            <div class="star pos-5 stroke-only"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2v20 M2 12h20 M4.9 4.9l14.2 14.2 M4.9 19.1l14.2-14.2"/></svg></div>
+            <div class="star pos-6 stroke-only"><svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg></div>
+            <div class="star pos-7 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 0 10 5 5 0 0 0 0 10 10 10 0 0 0 0-20z"/><circle cx="12" cy="7" r="1.5" class="fill-only"/><circle cx="12" cy="17" r="1.5" class="fill-only"/></svg></div>
+            <div class="star pos-8 fill-only"><svg viewBox="0 0 24 24"><path d="M12 2c0 0-6 8-6 14 0 3.3 2.7 6 6 6s6-2.7 6-6C18 10 12 2 12 2z M12 20c-2.2 0-4-1.8-4-4 0-3.3 4-8 4-8s4 4.7 4 8C16 18.2 14.2 20 12 20z"/></svg></div>
+            <div class="star pos-9 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 12c-2-2-5-5-5-8 0-4 6-4 6 0 0 3-3 6-5 8-2 2-5 5-5 8 0 4 6 4 6 0 0-3-3-6-5-8z"/></svg></div>
+            <div class="star pos-10 fill-only"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8c0 3 2 5 2 7 0 2-2 4-2 4h14s-2-2-2-4c0-2 2-4 2-7 0-3-3-6-7-6z"/></svg></div>
 
-            <!-- 2. UNDERNEATH TITLE (Around middle) -->
-            <div class="star s-pos-6 s-torii">
-                <svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg>
-            </div>
-            <div class="star s-pos-7 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-8 s-yinyang">
-                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
-            </div>
-            <div class="star s-pos-9 s-cross">
-                <svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg>
-            </div>
-            <div class="star s-pos-24 s-om">
-                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
-            </div>
-            <div class="star s-pos-25 s-wheel">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
-            </div>
-            <div class="star s-pos-27 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-28 s-crescent">
-                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
-            </div>
+            <!-- 2. LOWER HORIZON (Under Title) -->
+            <div class="star pos-11 stroke-only"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><rect x="4" y="4" width="16" height="16" transform="rotate(45 12 12)"/></svg></div>
+            <div class="star pos-12 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z M12 6v10 M8 16h8"/></svg></div>
+            <div class="star pos-13 text-icon"><svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="16" text-anchor="middle">الله</text></svg></div>
+            <div class="star pos-14 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2C6.5 11.5 6.5 11.5 2 12c4.5 .5 4.5 .5 10 10 5.5-.5 5.5-.5 10-10-4.5-.5-4.5-.5-10-10z"/></svg></div>
+            <div class="star pos-15 fill-only"><svg viewBox="0 0 24 24"><path d="M2 12l6-4 4 2 6-6 2 2-6 6 8 2-2 4-8-2-4 4-2-2 2-6z"/></svg></div>
+            <div class="star pos-16 text-icon"><svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle">ॐ</text></svg></div>
+            <div class="star pos-17 star-david"><svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" /><polygon points="12,22 3,6 21,6" /></svg></div>
+            <div class="star pos-18 stroke-only"><svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg></div>
 
-            <!-- 3. RIGHT OF SCHEDULE (Right side cluster) -->
-            <div class="star s-pos-10 s-om">
-                <svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="20" text-anchor="middle" fill="currentColor" style="font-family: serif; font-weight: bold; stroke: none;">ॐ</text></svg>
-            </div>
-            <div class="star s-pos-11 s-crescent">
-                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
-            </div>
-            <div class="star s-pos-12 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-13 s-wheel">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
-            </div>
-            <div class="star s-pos-14 s-torii">
-                <svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg>
-            </div>
-            <div class="star s-pos-15 s-yinyang">
-                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
-            </div>
-            <div class="star s-pos-18 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-19 s-wheel">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M6.34 17.66l1.42-1.42 M16.24 7.76l1.42-1.42"/></svg>
-            </div>
-            <div class="star s-pos-21 s-cross">
-                <svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg>
-            </div>
-            <div class="star s-pos-22 s-torii">
-                <svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg>
-            </div>
-            <div class="star s-pos-23 s-yinyang">
-                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,22A10,10 0 0,1 12,2A10,10 0 0,0 12,12A10,10 0 0,1 12,22Z" fill="currentColor"/><circle cx="12" cy="7" r="2" fill="var(--bg-header-start)"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>
-            </div>
-            <div class="star s-pos-26 s-star">
-                <svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="12,22 3,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <div class="star s-pos-29 s-crescent">
-                <svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg>
-            </div>
+            <!-- 3. EASTERN SKY (Right of Schedule) -->
+            <div class="star pos-19 stroke-only"><svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg></div>
+            <div class="star pos-20 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
+            <div class="star pos-21 stroke-only"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2v20 M2 12h20 M4.9 4.9l14.2 14.2 M4.9 19.1l14.2-14.2"/></svg></div>
+            <div class="star pos-22 fill-only"><svg viewBox="0 0 24 24"><path d="M12 2c0 0-6 8-6 14 0 3.3 2.7 6 6 6s6-2.7 6-6C18 10 12 2 12 2z"/></svg></div>
+            <div class="star pos-23 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 0 10 5 5 0 0 0 0 10 10 10 0 0 0 0-20z"/><circle cx="12" cy="7" r="1.5" class="fill-only"/><circle cx="12" cy="17" r="1.5" class="fill-only"/></svg></div>
+            <div class="star pos-24 stroke-only"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><rect x="4" y="4" width="16" height="16" transform="rotate(45 12 12)"/></svg></div>
+            <div class="star pos-25 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z M12 6v10 M8 16h8"/></svg></div>
+            <div class="star pos-26 text-icon"><svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="16" text-anchor="middle">الله</text></svg></div>
+            
+            <!-- FILLERS -->
+            <div class="star pos-27 fill-only"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="star pos-28 star-david"><svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" /><polygon points="12,22 3,6 21,6" /></svg></div>
+            <div class="star pos-29 stroke-only"><svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg></div>
+            <div class="star pos-30 fill-only"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8c0 3 2 5 2 7 0 2-2 4-2 4h14s-2-2-2-4c0-2 2-4 2-7 0-3-3-6-7-6z"/></svg></div>
         </div>
 
         <h1>GECDV 201: Self in a Multicultural Society</h1>
