@@ -167,7 +167,7 @@
 
         /* --- CONSTELLATION MAP (30 Stars) --- */
         
-        /* ZONE 1: THE UPPER FIRMAMENT (Above Title, Top 10-40px) */
+        /* 1. TOP BAND (Above Title) */
         .pos-1 { top: 15px; left: 5%; width: 22px; height: 22px; animation-delay: 0s; } /* Om */
         .pos-2 { top: 25px; left: 15%; width: 16px; height: 16px; animation-delay: 1.2s; } /* Star of David */
         .pos-3 { top: 10px; left: 25%; width: 20px; height: 20px; animation-delay: 2.5s; opacity: 0.6; } /* Crescent */
@@ -179,7 +179,7 @@
         .pos-9 { top: 15px; right: 15%; width: 20px; height: 20px; animation-delay: 0.3s; } /* Infinity */
         .pos-10 { top: 30px; right: 5%; width: 16px; height: 16px; animation-delay: 2.8s; } /* Buddha */
 
-        /* ZONE 2: THE LOWER HORIZON (Under Title, Top 120px+) */
+        /* 2. MIDDLE BAND (Left/Right of Text) */
         .pos-11 { top: 130px; left: 3%; width: 24px; height: 24px; animation-delay: 1.8s; } /* Khatim */
         .pos-12 { top: 115px; left: 12%; width: 18px; height: 18px; animation-delay: 0.2s; opacity: 0.7; } /* Sujud */
         .pos-13 { top: 140px; left: 22%; width: 20px; height: 20px; animation-delay: 2s; } /* Allah */
@@ -189,7 +189,7 @@
         .pos-17 { top: 145px; left: 62%; width: 20px; height: 20px; animation-delay: 1.1s; } /* Star of David */
         .pos-18 { top: 130px; left: 72%; width: 18px; height: 18px; animation-delay: 2.4s; } /* Cross */
 
-        /* ZONE 3: THE EASTERN SKY (Right of Schedule, Right 0-30%) */
+        /* 3. RIGHT OF SCHEDULE (Right side cluster) */
         .pos-19 { top: 70px; right: 28%; width: 14px; height: 14px; animation-delay: 0.6s; opacity: 0.5; } /* Torii */
         .pos-20 { top: 90px; right: 22%; width: 20px; height: 20px; animation-delay: 1.9s; } /* Crescent */
         .pos-21 { top: 110px; right: 26%; width: 16px; height: 16px; animation-delay: 3.3s; } /* Wheel */
@@ -199,7 +199,7 @@
         .pos-25 { top: 130px; right: 8%; width: 15px; height: 15px; animation-delay: 1.0s; } /* Sujud */
         .pos-26 { top: 55px; right: 5%; width: 18px; height: 18px; animation-delay: 2.3s; } /* Allah */
         
-        /* ZONE 4: SCATTERED FILLERS (Safe gaps) */
+        /* 4. SCATTERED FILLERS (Safe gaps) */
         .pos-27 { top: 50px; left: 8%; width: 12px; height: 12px; animation-delay: 1.7s; opacity: 0.4; }
         .pos-28 { top: 80px; left: 2%; width: 14px; height: 14px; animation-delay: 0.4s; opacity: 0.3; }
         .pos-29 { top: 150px; right: 40%; width: 12px; height: 12px; animation-delay: 3.4s; opacity: 0.4; }
@@ -384,9 +384,7 @@
 <body>
 
 <div class="container">
-    <!-- Header with Living Ocean Animation -->
     <header>
-        <!-- Dark Mode Switch -->
         <div class="theme-switch-wrapper">
             <label class="theme-switch" for="checkbox">
                 <input type="checkbox" id="checkbox" />
@@ -394,9 +392,7 @@
             </label>
         </div>
         
-        <!-- CELESTIAL STARS CONTAINER (Header Only) -->
         <div class="star-container">
-            <!-- 1. UPPER FIRMAMENT (Top Band) -->
             <div class="star pos-1"><svg viewBox="0 0 24 24" class="text-icon"><text x="50%" y="70%" font-size="20" text-anchor="middle">ॐ</text></svg></div>
             <div class="star pos-2 star-david"><svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" /><polygon points="12,22 3,6 21,6" /></svg></div>
             <div class="star pos-3 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
@@ -408,7 +404,6 @@
             <div class="star pos-9 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 12c-2-2-5-5-5-8 0-4 6-4 6 0 0 3-3 6-5 8-2 2-5 5-5 8 0 4 6 4 6 0 0-3-3-6-5-8z"/></svg></div>
             <div class="star pos-10 fill-only"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8c0 3 2 5 2 7 0 2-2 4-2 4h14s-2-2-2-4c0-2 2-4 2-7 0-3-3-6-7-6z"/></svg></div>
 
-            <!-- 2. LOWER HORIZON (Under Title) -->
             <div class="star pos-11 stroke-only"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><rect x="4" y="4" width="16" height="16" transform="rotate(45 12 12)"/></svg></div>
             <div class="star pos-12 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z M12 6v10 M8 16h8"/></svg></div>
             <div class="star pos-13 text-icon"><svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="16" text-anchor="middle">الله</text></svg></div>
@@ -418,7 +413,6 @@
             <div class="star pos-17 star-david"><svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" /><polygon points="12,22 3,6 21,6" /></svg></div>
             <div class="star pos-18 stroke-only"><svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg></div>
 
-            <!-- 3. EASTERN SKY (Right of Schedule) -->
             <div class="star pos-19 stroke-only"><svg viewBox="0 0 24 24"><path d="M4 18h2v-8h12v8h2v-8h2v-2h-2v-1c0-1.1-.9-2-2-2h-2V3h-2v2h-4V3H8v2H6c-1.1 0-2 .9-2 2v1H2v2h2v8z"/></svg></div>
             <div class="star pos-20 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.2 3 5.5 4.7 7.2 4 9 4 10.5 5S13 8 13 10s-1 3.5-2.5 4.5c1.8.3 3.5-.5 4.8-2 1.2-1.5 1.7-3.5 1.2-5.3-2 3-6 3.5-8.5 1C6.2 6.5 6.8 4 9 2.5 10 2.2 11 2 12 2zm5 2l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"/></svg></div>
             <div class="star pos-21 stroke-only"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2v20 M2 12h20 M4.9 4.9l14.2 14.2 M4.9 19.1l14.2-14.2"/></svg></div>
@@ -428,7 +422,6 @@
             <div class="star pos-25 stroke-only"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z M12 6v10 M8 16h8"/></svg></div>
             <div class="star pos-26 text-icon"><svg viewBox="0 0 24 24"><text x="50%" y="70%" font-size="16" text-anchor="middle">الله</text></svg></div>
             
-            <!-- FILLERS -->
             <div class="star pos-27 fill-only"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/></svg></div>
             <div class="star pos-28 star-david"><svg viewBox="0 0 24 24"><polygon points="12,2 21,18 3,18" /><polygon points="12,22 3,6 21,6" /></svg></div>
             <div class="star pos-29 stroke-only"><svg viewBox="0 0 24 24"><path d="M11 2v6H5v4h6v10h2V12h6V8h-6V2z"/></svg></div>
@@ -445,7 +438,6 @@
         </div>
     </header>
 
-    <!-- Zoom Portal -->
     <div class="zoom-bar">
         <div class="zoom-info">
             <strong>Weekly Live Session: Tuesdays @ 4:30 PM</strong>
@@ -457,7 +449,6 @@
         </div>
     </div>
 
-    <!-- About Section with SVG Icons -->
     <section>
         <h2>About This Course</h2>
         <p>GECDV 201 moves beyond surface-level diversity to critically investigate the self. You will examine the invisible forces—history, family, society, and privilege—that shape your worldview.</p>
@@ -491,7 +482,6 @@
         </div>
     </section>
 
-    <!-- Schedule Section -->
     <section id="schedule-section">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
             <h2 style="margin:0;">Course Schedule</h2>
@@ -614,7 +604,6 @@
         </table>
     </section>
 
-    <!-- Assignments & Grades -->
     <section>
         <h2>Assignments & Grades</h2>
         <table class="responsive-table">
@@ -675,7 +664,6 @@
         </table>
     </section>
 
-    <!-- Support & FAQ -->
     <section style="background: var(--sunlight-row);">
         <h2>Support & FAQ</h2>
         <details><summary>Grading Turnaround</summary><div class="faq-content"><p>All assignments are graded within 3–5 business days.</p></div></details>
@@ -686,7 +674,6 @@
     </section>
 </div>
 
-<!-- MODALS -->
 <div id="attendance-modal" class="modal-overlay hidden">
     <div class="modal-content"><div class="modal-header">Rubric</div><div class="modal-body" id="attendance-content"></div><div class="modal-footer"><button onclick="closeAttendanceModal()" class="btn btn-blue">Close</button></div></div>
 </div>
@@ -695,26 +682,54 @@
 </div>
 <div id="hover-tooltip" class="hidden"></div>
 
-<!-- LOGIC -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+    /* -----------------------------------------------------------
+       YOUR FIREBASE CONFIGURATION GOES HERE
+       If you want to sync data between phone and computer,
+       create a Firebase project and paste your keys below.
+    ----------------------------------------------------------- */
+    const manualFirebaseConfig = {
+apiKey: "AIzaSyAKCgHNTj12wRgOqT32nZ0jB_XgDsID1hc",
+authDomain: "class-signup-spring26.firebaseapp.com",
+projectId: "class-signup-spring26",
+storageBucket: "class-signup-spring26.firebasestorage.app",
+messagingSenderId: "61729101450",
+appId: "1:61729101450:web:556af70a98aa6b63e57f73"
+    };
+
     const ADMIN_PIN = "2026"; 
     let db, auth, appId = 'default-app-id';
+
+    // Initialize Firebase (Environment OR Manual)
     try {
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        if (typeof __app_id !== 'undefined') appId = __app_id;
-    } catch (e) { console.warn("Firebase not found."); }
+        let config;
+        if (typeof __firebase_config !== 'undefined') {
+            config = JSON.parse(__firebase_config);
+        } else if (manualFirebaseConfig.apiKey) {
+            config = manualFirebaseConfig;
+        }
+
+        if (config) {
+            const app = initializeApp(config);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            if (typeof __app_id !== 'undefined') appId = __app_id;
+        } else {
+            console.warn("No Firebase config found. Using Local Storage.");
+        }
+    } catch (e) { console.warn("Firebase Init Error:", e); }
 
     const rubrics = { zoom: `<b>Zoom Meeting (25 pts)</b><ul style='padding-left:20px;margin-top:5px;'><li>10 pts: Camera on</li><li>5 pts: On time</li><li>10 pts: Active</li></ul>`, async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` };
+    
+    // Default Data
     let presentationWeeks = { 3: { date: "Feb 03", students: [] }, 5: { date: "Feb 17", students: [] }, 7: { date: "Mar 03", students: [] }, 9: { date: "Mar 17", students: [] }, 11: { date: "Apr 07", students: [] }, 13: { date: "Apr 21", students: [] } };
     const MAX_SLOTS = 5;
     const DOC_ID = 'tuesday_spring2026_data'; 
+    const STORAGE_KEY = 'GECDV_TUESDAY_DATA';
 
     // --- DARK MODE LOGIC ---
     const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
@@ -769,7 +784,7 @@
                 });
             }
             
-            // Render Availability Badge (#1)
+            // Render Availability Badge
             const statEl = document.getElementById(`week-${w}-status`);
             if(statEl) {
                 const left = MAX_SLOTS - d.students.length;
@@ -782,53 +797,100 @@
         }
     }
 
+    // --- LOCAL STORAGE FALLBACK ---
+    function saveLocal() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(presentationWeeks));
+        renderSchedule();
+    }
+
+    function loadLocal() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if(stored) {
+            presentationWeeks = JSON.parse(stored);
+            renderSchedule();
+        }
+    }
+
     // --- DB ACTIONS ---
     window.confirmSignUp = async () => {
         const w = document.getElementById('date-select').value;
         const n = document.getElementById('student-name').value.trim();
         if(!w || !n) return alert("Fill all fields");
+        
         if(db) {
             try {
                 const ref = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID);
                 const snap = await getDoc(ref);
                 if(!snap.exists()) await setDoc(ref, { [`week${w}`]: [n] });
                 else await updateDoc(ref, { [`week${w}`]: arrayUnion(n) });
-            } catch(e) { console.error(e); alert("Error saving."); }
-        } else { presentationWeeks[w].students.push(n); renderSchedule(); }
+            } catch(e) { 
+                console.error(e); 
+                alert("Database Error. Saving locally.");
+                presentationWeeks[w].students.push(n);
+                saveLocal();
+            }
+        } else { 
+            // Fallback to local storage if no DB
+            presentationWeeks[w].students.push(n);
+            saveLocal();
+        }
         window.closeModal();
     };
 
     window.removeStudent = async (w, n) => {
         if(prompt("Enter PIN:") !== ADMIN_PIN) return alert("Incorrect PIN");
         if(!confirm(`Delete ${n}?`)) return;
+        
         if(db) {
-             const ref = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID);
-             await updateDoc(ref, { [`week${w}`]: arrayRemove(n) });
+             try {
+                 const ref = doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID);
+                 await updateDoc(ref, { [`week${w}`]: arrayRemove(n) });
+             } catch(e) {
+                 console.error(e);
+                 // Fallback local delete
+                 const idx = presentationWeeks[w].students.indexOf(n);
+                 if(idx > -1) presentationWeeks[w].students.splice(idx, 1);
+                 saveLocal();
+             }
         } else {
             const i = presentationWeeks[w].students.indexOf(n);
             if(i > -1) presentationWeeks[w].students.splice(i, 1);
-            renderSchedule();
+            saveLocal();
         }
     };
 
     async function init() {
-        renderSchedule(); // Force immediate render of default empty states
-        initSmartSchedule();
+        loadLocal(); // Load any local data first
+        renderSchedule(); // Force render UI
+        initSmartSchedule(); // Highlight rows
+        
         if(auth) {
             onAuthStateChanged(auth, (u) => {
-                if(u) onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID), (snap) => {
-                    if(snap.exists()) {
-                        const d = snap.data();
-                        for(const k in d) { const w = k.replace('week',''); if(presentationWeeks[w]) presentationWeeks[w].students = d[k]; }
-                        renderSchedule();
-                    }
-                });
+                if(u) {
+                    onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'presentation_signups', DOC_ID), (snap) => {
+                        if(snap.exists()) {
+                            const d = snap.data();
+                            for(const k in d) { 
+                                const w = k.replace('week',''); 
+                                if(presentationWeeks[w]) presentationWeeks[w].students = d[k]; 
+                            }
+                            renderSchedule();
+                            // Optional: Sync DB state back to local for redundancy
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(presentationWeeks));
+                        }
+                    });
+                }
             });
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
-            else await signInAnonymously(auth);
+            
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                 await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                 await signInAnonymously(auth);
+            }
         }
     }
     init();
 </script>
 </body>
 </html>
+```eof
