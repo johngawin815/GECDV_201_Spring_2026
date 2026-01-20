@@ -673,9 +673,11 @@
     <section style="background: var(--sunlight-row);">
         <h2>Support & FAQ</h2>
         <details><summary>Grading Turnaround</summary><div class="faq-content"><p>All assignments are graded within 3–5 business days.</p></div></details>
-        <details><summary>Need Help?</summary><div class="faq-content"><p>Contact Professor John via the Canvas Inbox.</p></div></details>
+        <details><summary>Need Help / Struggling?</summary><div class="faq-content"><p><strong>Please reach out.</strong> I pride myself on being a student-friendly professor. I don't want this elective course to be an obstacle to your success. Contact me via Canvas Inbox.</p></div></details>
+        <details><summary>Late Work Policy</summary><div class="faq-content"><p><strong>1 point deduction</strong> for every day an assignment is late.</p></div></details>
+        <details><summary>Do I need a working webcam?</summary><div class="faq-content"><p><strong>Yes, cameras on is a requirement.</strong> This builds community. However, life happens—if you need to step away for personal needs, just turn it off briefly and join us back ASAP.</p></div></details>
         <details><summary>Do I need to buy a textbook?</summary><div class="faq-content"><p><strong>No.</strong> All materials are in the Course Hub.</p></div></details>
-        <details><summary>Do I need a working webcam?</summary><div class="faq-content"><p><strong>Yes.</strong> Cameras support community. Blur is fine.</p></div></details>
+        <details><summary>How long is class?</summary><div class="faq-content"><p>Most classes will run about <strong>90 minutes</strong>. Being on Zoom for 2 hours and 45 minutes is something nobody should endure! :) Use the extra time to work on class assignments.</p></div></details>
         <details><summary>Is Generative AI allowed?</summary><div class="faq-content"><p><strong>Yes, with clear boundaries.</strong> Use for brainstorming, not drafting.</p></div></details>
     </section>
 </div>
@@ -742,7 +744,11 @@ appId: "1:61729101450:web:556af70a98aa6b63e57f73"
         }
     } catch (e) { console.warn("Firebase Init Error:", e); }
 
-    const rubrics = { zoom: `<b>Zoom Meeting (25 pts)</b><ul style='padding-left:20px;margin-top:5px;'><li>10 pts: Camera on</li><li>5 pts: On time</li><li>10 pts: Active</li></ul>`, async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` };
+    const rubrics = { 
+        zoom: `<b>Zoom Meeting (25 pts)</b><p style='margin-top:5px;font-size:0.9em;color:var(--alert);'><b>Pulse Check:</b> Must be completed BEFORE leaving the Zoom call.</p><ul style='padding-left:20px;margin-top:5px;'><li>10 pts: Camera on</li><li>5 pts: On time</li><li>10 pts: Active</li></ul>`, 
+        async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, 
+        finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` 
+    };
     
     // Default Data
     let presentationWeeks = { 3: { date: "Feb 03", students: [] }, 5: { date: "Feb 17", students: [] }, 7: { date: "Mar 03", students: [] }, 9: { date: "Mar 17", students: [] }, 11: { date: "Apr 07", students: [] }, 13: { date: "Apr 21", students: [] } };
