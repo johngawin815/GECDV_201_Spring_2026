@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GECDV 201: Weekly Prep Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepOcean: '#003049',
+                        tealDepth: '#005f73',
+                        starryGold: '#ffd166',
+                        offWhite: '#fdfbf7',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Zen Earth Theme & Glassmorphism */
+        body {
+            background: linear-gradient(to bottom, #e0fbfc 0%, #c2dfe3 100%);
+            min-height: 100vh;
+            color: #003049;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 48, 73, 0.1);
+            border-radius: 16px;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 48, 73, 0.1);
+        }
+
+        /* Utility specific to Canvas overrides */
+        #application-root h1, #application-root h2, #application-root h3 {
+            margin-top: 0;
+            line-height: 1.2;
+        }
+        
+        #application-root a {
+            text-decoration: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 48, 73, 0.05); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #005f73; 
+            border-radius: 4px;
+        }
+
+        /* Accordion Transitions */
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Arbitrary large height */
+            opacity: 1;
+        }
+
+        /* Form styling */
+        .input-zen {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #005f73;
+            color: #003049;
+        }
+        .input-zen:focus {
+            border-color: #ffd166;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.3);
+        }
+    </style>
+</head>
+<body id="application-root" class="p-4 md:p-8">
+
+    <!-- Sticky Nav Pill -->
+    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 glass-nav px-2 py-2 rounded-full shadow-lg max-w-[95vw] overflow-x-auto flex space-x-1 no-scrollbar">
+        <!-- JS will populate generic week links here for quick jumping -->
+        <a href="#week-1" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W1</a>
+        <a href="#week-2" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W2</a>
+        <a href="#week-3" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W3</a>
+        <a href="#week-4" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W4</a>
+        <a href="#week-5" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W5</a>
+        <a href="#week-6" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W6</a>
+        <a href="#week-7" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W7</a>
+        <a href="#week-8" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W8</a>
+        <a href="#week-9" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W9</a>
+        <a href="#week-10" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W10</a>
+        <a href="#week-11" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W11</a>
+        <a href="#week-12" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W12</a>
+        <a href="#week-13" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W13</a>
+        <a href="#week-14" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W14</a>
+        <a href="#week-15" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W15</a>
+        <a href="#week-16" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W16</a>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="max-w-4xl mx-auto mt-16 mb-12 text-center glass-panel p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-starryGold to-tealDepth"></div>
+        <div id="class-badge" class="hidden inline-block bg-starryGold text-deepOcean px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-4 shadow-sm">
+            <!-- Populated by JS: "Welcome Tuesday Class" -->
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold text-deepOcean mb-4 font-serif">Self in a Multicultural Society</h1>
+        <p class="text-lg md:text-xl text-tealDepth max-w-2xl mx-auto">Explore identity, culture, and critical consciousness. Spring 2026.</p>
+        
+        <div class="mt-8 flex justify-center gap-4 flex-wrap">
+            <a href="https://umsystem.zoom.us/" target="_blank" class="bg-tealDepth text-white px-6 py-3 rounded-xl font-bold hover:bg-deepOcean transition shadow-lg flex items-center gap-2">
+                <i class="ph ph-video-camera text-xl"></i> Zoom Portal
+            </a>
+            <a href="https://umsystem.zoom.us/meeting/register/X2NTE0hPRFaASJ9GR5gC3g" target="_blank" class="bg-starryGold text-deepOcean border-2 border-deepOcean px-6 py-3 rounded-xl font-bold hover:bg-white transition shadow-lg flex items-center gap-2">
+                <i class="ph ph-sign-in text-xl"></i> Join Meeting
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto space-y-8 pb-20">
+
+        <!-- Template for Weeks. 
+             Ideally, in a full app, we map this. 
+             For this HTML file, I will structurally write out Week 1 and 2 fully, 
+             and streamline the rest to keep file size manageable but editable.
+        -->
+
+        <!-- WEEK 1 -->
+        <section id="week-1" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
+            <div class="absolute top-4 right-4 z-10">
+                <label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10 hover:bg-white transition">
+                    <input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="1">
+                    <span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Mark Complete</span>
+                </label>
+            </div>
+            
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">1</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-deepOcean m-0">Introductions & Syllabus</h2>
+                    <p class="text-sm text-tealDepth font-medium">Spring 2026</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Watch / Read Column -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">Prep Work</h3>
+                    
+                    <!-- Pre-Session Guide Card -->
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-1-guide" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div class="font-bold text-deepOcean">Pre-Session Guide 1</div>
+                            <span class="bg-tealDepth/10 text-tealDepth text-[10px] px-2 py-0.5 rounded-full font-bold">READ</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">Review syllabus and sign up for presentations.</p>
+                    </a>
+                </div>
+
+                <!-- Discuss / Do Column -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">Live Session</h3>
+                    
+                    <!-- Discussion Box -->
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4">
+                        <div class="flex items-center gap-2 mb-2 text-deepOcean font-bold">
+                            <i class="ph ph-users-three text-xl"></i>
+                            <span>Agenda</span>
+                        </div>
+                        <p class="text-sm text-deepOcean/80 italic">Introductions, Syllabus Review, Presentation Sign-ups.</p>
+                    </div>
+
+                    <!-- Exit Ticket -->
+                    <a href="https://forms.office.com/r/Gb5KewF3Hi" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">
+                        <i class="ph ph-paper-plane-right mr-2"></i> Submit Exit Ticket 1
+                    </a>
+                </div>
+            </div>
+
+            <!-- Q&A Section -->
+            <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-1')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean">
+                    <i class="ph ph-question"></i> Ask an Anonymous Question (Week 1)
+                </button>
+                <div id="qa-1" class="accordion-content mt-4">
+                    <form class="qa-form space-y-3" data-week="1">
+                        <textarea placeholder="Type your question here... (Only the instructor sees this)" class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea>
+                        <button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send Question</button>
+                        <div class="form-status text-xs mt-2 hidden"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- WEEK 2 -->
+        <section id="week-2" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
+            <div class="absolute top-4 right-4 z-10">
+                <label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10 hover:bg-white transition">
+                    <input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="2">
+                    <span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Mark Complete</span>
+                </label>
+            </div>
+            
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">2</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 1</h2>
+                    <p class="text-sm text-tealDepth font-medium">Identity Foundations</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">Prep Work</h3>
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-assignment-number-1-2" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div class="font-bold text-deepOcean">Pre-Session Guide 2</div>
+                            <span class="bg-tealDepth/10 text-tealDepth text-[10px] px-2 py-0.5 rounded-full font-bold">READ</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">Live Session</h3>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4">
+                        <div class="flex items-center gap-2 mb-2 text-deepOcean font-bold">
+                            <i class="ph ph-chats-circle text-xl"></i>
+                            <span>Discuss</span>
+                        </div>
+                        <p class="text-sm text-deepOcean/80 italic">Prepare for Breakout Session 1.</p>
+                    </div>
+                    <a href="https://forms.office.com/r/FvzB7cU2ZM" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">
+                        <i class="ph ph-paper-plane-right mr-2"></i> Submit Exit Ticket 2
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-2')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 2)</button>
+                <div id="qa-2" class="accordion-content mt-4">
+                    <form class="qa-form space-y-3" data-week="2">
+                        <textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]" placeholder="Type question..."></textarea>
+                        <button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button>
+                        <div class="form-status text-xs mt-2 hidden"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- WEEK 3 -->
+        <section id="week-3" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="3"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">3</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Race & Identity</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-race" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 3</div></a>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 2</p></div>
+                    <a href="https://forms.office.com/r/4HkDMx54Mr" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 3</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-3')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 3)</button>
+                <div id="qa-3" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="3"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 4 -->
+        <section id="week-4" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="4"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 4</div></a>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">"Who am I as a Cultural Being?"</p></div>
+                    <a href="https://forms.office.com/r/LmUFhHzmpi" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 4 (Journal 1 Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-4')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 4)</button>
+                <div id="qa-4" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="4"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 5 -->
+        <section id="week-5" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="5"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">5</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Toxic Masculinity</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/toxic-masculinity" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 5</div></a>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 3</p></div>
+                    <a href="https://forms.office.com/r/Vrr7cwDL5V" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 5</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-5')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 5)</button>
+                <div id="qa-5" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="5"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 6 -->
+        <section id="week-6" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="6"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">6</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 6</div></a>
+                </div>
+                <div class="space-y-4">
+                    <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 6 (Journal 2 Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-6')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 6)</button>
+                <div id="qa-6" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="6"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 7 -->
+        <section id="week-7" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="7"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">7</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 7</div></a>
+                </div>
+                <div class="space-y-4">
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 7</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-7')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 7)</button>
+                <div id="qa-7" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="7"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 8 -->
+        <section id="week-8" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="8"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 4</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-removed" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 8</div></a>
+                </div>
+                <div class="space-y-4">
+                     <a href="https://umsystem.instructure.com/courses/321213/pages/removed-lecture-companion" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Lecture Companion (Journal 3 Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 8)</button>
+                <div id="qa-8" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="8"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 9 -->
+        <section id="week-9" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="9"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">9</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Cultural Being Presentations</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 9</div></a>
+                </div>
+                <div class="space-y-4">
+                     <p class="text-sm text-tealDepth italic">Prepare for student presentations.</p>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-9')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 9)</button>
+                <div id="qa-9" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="9"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 10 -->
+        <section id="week-10" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="10"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">10</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Mini Lecture + Discussion</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 10</div></a>
+                </div>
+                <div class="space-y-4">
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 10</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-10')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 10)</button>
+                <div id="qa-10" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="10"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 11 -->
+        <section id="week-11" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="11"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">11</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Presentations + Q&A</h2></div></div>
+            <div class="grid md:grid-cols-2 gap-6">
+                 <div class="space-y-4">
+                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 11</div></a>
+                </div>
+                 <div class="space-y-4">
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 11 (Auto-bio Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-11')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 11)</button>
+                <div id="qa-11" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="11"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 12 -->
+        <section id="week-12" class="glass-panel p-6 md:p-8 relative">
+             <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="12"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">12</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 5</h2></div></div>
+             <div class="grid md:grid-cols-2 gap-6">
+                 <div class="space-y-4">
+                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 12</div></a>
+                </div>
+                 <div class="space-y-4">
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 5</p></div>
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 12 (Journal 4 Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-12')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 12)</button>
+                <div id="qa-12" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="12"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+         <!-- WEEK 13 -->
+         <section id="week-13" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="13"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">13</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 6</h2></div></div>
+             <div class="grid md:grid-cols-2 gap-6">
+                 <div class="space-y-4">
+                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 13</div></a>
+                </div>
+                 <div class="space-y-4">
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 13 (Event Paper Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-13')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 13)</button>
+                <div id="qa-13" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="13"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+         <!-- WEEK 14 -->
+         <section id="week-14" class="glass-panel p-6 md:p-8 relative opacity-75">
+            <div class="flex items-center gap-3 mb-6"><span class="bg-gray-400 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">14</span><div><h2 class="text-2xl font-bold text-gray-600 m-0">Fall Break / Thanksgiving</h2></div></div>
+            <p class="text-center italic text-gray-500">No Class Session. Rest and recharge.</p>
+        </section>
+
+        <!-- WEEK 15 -->
+        <section id="week-15" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="15"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">15</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 7</h2></div></div>
+             <div class="grid md:grid-cols-2 gap-6">
+                 <div class="space-y-4">
+                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 14</div></a>
+                </div>
+                 <div class="space-y-4">
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 14</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-15')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 15)</button>
+                <div id="qa-15" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="15"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+        <!-- WEEK 16 -->
+        <section id="week-16" class="glass-panel p-6 md:p-8 relative">
+            <div class="absolute top-4 right-4 z-10"><label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10"><input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="16"><span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Complete</span></label></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">16</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Final Reflection Week</h2></div></div>
+             <div class="grid md:grid-cols-2 gap-6">
+                 <div class="space-y-4">
+                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 15</div></a>
+                </div>
+                 <div class="space-y-4">
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Topic TBD</p></div>
+                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 15 (Final Reflection Due)</a>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-16')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 16)</button>
+                <div id="qa-16" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="16"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-deepOcean/60 py-8">
+        <p>© 2026 GECDV 201 | UMKC School of Education</p>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // --- FIREBASE CONFIGURATION (REPLACE THESE PLACEHOLDERS) ---
+        const firebaseConfig = {
+apiKey: "AIzaSyAKCgHNTj12wRgOqT32nZ0jB_XgDsID1hc",
+authDomain: "class-signup-spring26.firebaseapp.com",
+projectId: "class-signup-spring26",
+storageBucket: "class-signup-spring26.firebasestorage.app",
+messagingSenderId: "61729101450",
+appId: "1:61729101450:web:556af70a98aa6b63e57f73"
+        };
+
+        // Initialize Firebase
+        // Wrapped in try/catch so the UI still renders if config is missing
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            console.log("Firebase initialized.");
+        } catch (e) {
+            console.warn("Firebase config missing or invalid. Q&A features will be disabled.", e);
+        }
+
+        // --- LOGIC: URL Params & Section Handling ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const dayParam = urlParams.get('day') ? urlParams.get('day').toLowerCase() : null;
+        
+        const badgeEl = document.getElementById('class-badge');
+        
+        let collectionName = 'general_questions'; // default
+
+        if (dayParam === 'tuesday') {
+            badgeEl.innerText = "Welcome Tuesday Class";
+            badgeEl.classList.remove('hidden');
+            collectionName = 'tuesday_questions';
+        } else if (dayParam === 'wednesday') {
+            badgeEl.innerText = "Welcome Wednesday Class";
+            badgeEl.classList.remove('hidden');
+            collectionName = 'wednesday_questions';
+        }
+
+        // --- LOGIC: Local Storage Progress ---
+        const checkboxes = document.querySelectorAll('.progress-check');
+        
+        // Load state
+        checkboxes.forEach(cb => {
+            const weekId = cb.dataset.week;
+            const isChecked = localStorage.getItem(`course_progress_w${weekId}`) === 'true';
+            cb.checked = isChecked;
+            
+            // Visual style update on load
+            if(isChecked) {
+                cb.closest('section').classList.add('border-tealDepth');
+                cb.nextElementSibling.innerText = "COMPLETED";
+            }
+        });
+
+        // Save state on change
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', (e) => {
+                const weekId = e.target.dataset.week;
+                const isChecked = e.target.checked;
+                localStorage.setItem(`course_progress_w${weekId}`, isChecked);
+                
+                // Visual feedback
+                const labelText = e.target.nextElementSibling;
+                if(isChecked) {
+                    labelText.innerText = "COMPLETED";
+                    // Add a little celebration animation class here if desired
+                } else {
+                    labelText.innerText = "MARK COMPLETE";
+                }
+            });
+        });
+
+        // --- LOGIC: Accordion Toggle ---
+        window.toggleQA = function(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('open')) {
+                el.classList.remove('open');
+            } else {
+                el.classList.add('open');
+            }
+        }
+
+        // --- LOGIC: Firebase Form Submission ---
+        const forms = document.querySelectorAll('.qa-form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const weekId = form.dataset.week;
+                const textarea = form.querySelector('textarea');
+                const btn = form.querySelector('button');
+                const status = form.querySelector('.form-status');
+                const questionText = textarea.value.trim();
+
+                if (!questionText) return;
+
+                if (!db) {
+                    alert("Firebase is not configured. Please add your keys in the HTML.");
+                    return;
+                }
+
+                // UI Loading State
+                const originalBtnText = btn.innerText;
+                btn.innerText = "Sending...";
+                btn.disabled = true;
+
+                try {
+                    await addDoc(collection(db, collectionName), {
+                        text: questionText,
+                        week: weekId,
+                        timestamp: serverTimestamp(),
+                        resolved: false
+                    });
+
+                    // Success UI
+                    btn.innerText = "Sent!";
+                    btn.classList.replace('bg-starryGold', 'bg-green-500');
+                    btn.classList.replace('text-deepOcean', 'text-white');
+                    textarea.value = "";
+                    
+                    status.innerText = "Your question has been sent anonymously.";
+                    status.classList.remove('hidden');
+                    status.classList.add('text-green-700');
+
+                    setTimeout(() => {
+                        btn.innerText = originalBtnText;
+                        btn.disabled = false;
+                        btn.classList.replace('bg-green-500', 'bg-starryGold');
+                        btn.classList.replace('text-white', 'text-deepOcean');
+                        status.classList.add('hidden');
+                    }, 3000);
+
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    btn.innerText = "Error";
+                    status.innerText = "Could not send. Check console.";
+                    status.classList.remove('hidden');
+                    status.classList.add('text-red-600');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
