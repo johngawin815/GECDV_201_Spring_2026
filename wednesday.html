@@ -455,7 +455,7 @@
         
         <div class="pillar-grid">
             <div class="pillar-card">
-                <svg class="pillar-icon" viewBox="0 0 24 24"><path d="M12 2C7.58 2 4 5.58 4 10v2h16v-2c0-4.42-3.58-8-8-8zm0 2c3.31 0 6 2.69 6 6v2H6v-2c0-3.31 2.69-6 6-6zm-6 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm12-2c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-1.79-4-4-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>
+                <svg class="pillar-icon" viewBox="0 0 24 24"><path d="M12 2C7.58 2 4 5.58 4 10v2h16v-2c0-4.42-3.58-8-8-8zm0 2c3.31 0 6 2.69 6 6v2H6v-2c0-3.31 2.69-6 6-6zm-6 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm12-2c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>
                 <h3>Introspection</h3>
                 <p>Map your personal history and background to understand the forces that have shaped your identity.</p>
             </div>
@@ -672,11 +672,53 @@
 
     <section style="background: var(--sunlight-row);">
         <h2>Support & FAQ</h2>
-        <details><summary>Grading Turnaround</summary><div class="faq-content"><p>All assignments are graded within 3–5 business days.</p></div></details>
-        <details><summary>Need Help?</summary><div class="faq-content"><p>Contact Professor John via the Canvas Inbox.</p></div></details>
-        <details><summary>Do I need to buy a textbook?</summary><div class="faq-content"><p><strong>No.</strong> All materials are in the Course Hub.</p></div></details>
-        <details><summary>Do I need a working webcam?</summary><div class="faq-content"><p><strong>Yes.</strong> Cameras support community. Blur is fine.</p></div></details>
-        <details><summary>Is Generative AI allowed?</summary><div class="faq-content"><p><strong>Yes, with clear boundaries.</strong> Use for brainstorming, not drafting.</p></div></details>
+        
+        <details>
+            <summary>Late Work Policy</summary>
+            <div class="faq-content">
+                <p><strong>1 point deduction for each day an assignment is late.</strong></p>
+                <p>I aim to grade all submissions within 3–5 business days to provide you with timely feedback.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Need Help / Struggling?</summary>
+            <div class="faq-content">
+                <p><strong>Please reach out immediately.</strong> I pride myself on being a student-friendly professor. I don't want this elective course to be an obstacle to your success. Contact me via the Canvas Inbox if you need support.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Do I need to buy a textbook?</summary>
+            <div class="faq-content">
+                <p><strong>No.</strong> All required readings and materials are provided free of charge in the Course Hub.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Do I need a working webcam?</summary>
+            <div class="faq-content">
+                <p><strong>Yes.</strong> Visual connection is vital for building our community. Using a background blur is perfectly fine.</p>
+                <p><em>Note: It is always okay to step away to take care of personal needs—just rejoin us as soon as you are able.</em></p>
+            </div>
+        </details>
+
+        <details>
+            <summary>How long are the Zoom sessions?</summary>
+            <div class="faq-content">
+                <p><strong>Approximately 90 Minutes.</strong> Being on Zoom for 2 hours and 45 minutes is something nobody should endure. :)</p>
+                <p>We will typically meet for about 90 minutes, giving you the remaining time to work on course assignments.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Is Generative AI allowed?</summary>
+            <div class="faq-content">
+                <p><strong>Yes, provided you maintain your authentic voice.</strong></p>
+                <p>In this course, we explore personal experiences where there are no "right" or "wrong" answers—only your unique perspective. You are welcome to use AI tools to assist with your work, as long as the final output reflects your true voice and personal history.</p>
+                <p><em>Transparency Note: Generative AI was utilized in the curation of the course source materials.</em></p>
+            </div>
+        </details>
     </section>
 </div>
 
@@ -737,7 +779,19 @@
         }
     } catch (e) { console.warn("Firebase not found.", e); }
 
-    const rubrics = { zoom: `<b>Zoom Meeting (25 pts)</b><ul style='padding-left:20px;margin-top:5px;'><li>10 pts: Camera on</li><li>5 pts: On time</li><li>10 pts: Active</li></ul>`, async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` };
+    const rubrics = { 
+        zoom: `<b>Zoom Meeting (25 pts)</b>
+               <ul style='padding-left:20px;margin-top:5px;margin-bottom:10px;'>
+                   <li>10 pts: Camera on</li>
+                   <li>5 pts: On time</li>
+                   <li>10 pts: Active participation</li>
+               </ul>
+               <div style="background:var(--sunlight-row); border-left: 4px solid var(--alert); padding: 8px; font-size: 0.9em;">
+                   <strong>Pulse Check:</strong> Similar to an exit ticket—must be completed <u>BEFORE</u> leaving the meeting.
+               </div>`, 
+        async: `<b>Async (25 pts)</b><p>Complete assignment.</p>`, 
+        finals: `<b>Finals (25 pts)</b><p>Final Reflection.</p>` 
+    };
     
     // WEDNESDAY DATES
     let presentationWeeks = { 
