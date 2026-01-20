@@ -190,6 +190,68 @@
             height: 100%;
         }
 
+        /* Iceberg Reveal Effect */
+        .iceberg-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+        }
+        .iceberg-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .iceberg-water {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80%; /* Covers the bottom 80% (Deep Culture) */
+            background: linear-gradient(to bottom, rgba(0, 95, 115, 0.7) 0%, rgba(0, 48, 73, 0.95) 100%);
+            backdrop-filter: blur(8px);
+            transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid rgba(255, 255, 255, 0.5); /* The "Waterline" */
+        }
+        .iceberg-label {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            padding: 10px;
+        }
+        .iceberg-container:hover .iceberg-water {
+            opacity: 0;
+            backdrop-filter: blur(0);
+            pointer-events: none;
+        }
+        .iceberg-container:hover .iceberg-img {
+            transform: scale(1.02);
+        }
+        .iceberg-tip-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #005f73;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
         /* Modal Overlay */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -277,19 +339,38 @@
                 <div>
                     <h2 class="text-2xl font-bold m-0">Introductions & Orientation</h2>
                     <p class="text-sm text-muted-dynamic font-medium live-date" data-week="1">The Cultural Iceberg</p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span>
+                        <span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span>
+                    </div>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <h3 class="text-sm font-bold uppercase tracking-widest text-muted-dynamic border-b border-tealDepth/20 pb-2">Prep Work</h3>
-                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default">
+                    
+                    <!-- THE WATERLINE REVEAL CARD -->
+                    <div class="iceberg-container shadow-lg mb-4">
+                        <div class="iceberg-tip-label">Surface Culture</div>
+                        <img src="hall ice berg.jpg" alt="Cultural Iceberg Diagram" class="iceberg-img">
+                        <div class="iceberg-water">
+                            <div class="iceberg-label">
+                                <i class="ph ph-waves text-2xl block mb-2"></i>
+                                Dive Deeper<br>
+                                <span class="text-xs font-normal opacity-80 normal-case tracking-normal">Hover to reveal Deep Culture</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Added reading -->
+                    <a href="https://thecorecollaborative.com/beyond-the-surface-exploring-the-iceberg-of-culture/" target="_blank" class="block bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-pointer">
                         <div class="flex justify-between items-start">
-                            <div class="font-bold text-dynamic">The Cultural Iceberg</div>
+                            <div class="font-bold text-dynamic">Beyond the Surface</div>
                             <span class="bg-tealDepth/10 text-tealDepth text-[10px] px-2 py-0.5 rounded-full font-bold">READ</span>
                         </div>
-                        <p class="text-sm text-muted-dynamic mt-1">Review syllabus and understand surface vs. deep culture.</p>
-                    </div>
+                        <p class="text-sm text-muted-dynamic mt-1">Exploring the Iceberg of Culture (The Core Collaborative)</p>
+                    </a>
                 </div>
 
                 <div class="space-y-4">
@@ -302,8 +383,11 @@
                         <p class="text-sm text-muted-dynamic italic">Introductions, Syllabus Review, Presentation Sign-ups.</p>
                     </div>
                     <!-- Pulse Check -->
-                    <button onclick="openPulseCheck(1)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2">
-                        <i class="ph ph-heartbeat"></i> Check-in: Week 1 Pulse
+                    <button onclick="openPulseCheck(1)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 1 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
                     </button>
                 </div>
             </div>
@@ -330,6 +414,10 @@
                 <div>
                     <h2 class="text-2xl font-bold m-0">Deep Dive: Race & Privilege</h2>
                     <p class="text-sm text-muted-dynamic font-medium live-date" data-week="2">Race, racism, and privilege</p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span>
+                        <span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span>
+                    </div>
                 </div>
             </div>
 
@@ -384,8 +472,11 @@
             </div>
 
             <div class="mt-4">
-                 <button onclick="openPulseCheck(2)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2">
-                    <i class="ph ph-heartbeat"></i> Check-in: Week 2 Pulse
+                 <button onclick="openPulseCheck(2)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                    <div class="flex items-center gap-2">
+                        <i class="ph ph-heartbeat"></i> <span>Check-in: Week 2 Pulse</span>
+                    </div>
+                    <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
                 </button>
             </div>
 
@@ -394,7 +485,7 @@
                 <div id="qa-2" class="accordion-content mt-4">
                     <form class="qa-form space-y-3" data-week="2">
                         <textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]" placeholder="Type question..."></textarea>
-                        <button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button>
+                        <button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send Question</button>
                         <div class="form-status text-xs mt-2 hidden"></div>
                     </form>
                 </div>
@@ -403,14 +494,19 @@
 
         <!-- WEEK 3 -->
         <section id="week-3" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">3</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="3">Who Am I As a Cultural Being?</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">3</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="3">Who Am I As a Cultural Being?</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group A</div></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Support your peers.</p></div>
-                    <button onclick="openPulseCheck(3)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 3 Pulse</button>
+                    <button onclick="openPulseCheck(3)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 3 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -421,14 +517,19 @@
 
         <!-- WEEK 4 -->
         <section id="week-4" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="4">Socioeconomic status</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="4">Socioeconomic status</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Async / Discussion</span><span class="text-xs text-muted-dynamic">Flexible / No Live Meeting</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Independent Study</div></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Complete Discussion 1 by Feb 15</p></div>
-                    <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 4 Pulse</button>
+                    <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 4 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete by Sunday Night</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -439,14 +540,19 @@
 
         <!-- WEEK 5 -->
         <section id="week-5" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">5</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="5">Who Am I As a Cultural Being?</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">5</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="5">Who Am I As a Cultural Being?</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group B</div></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Support your peers.</p></div>
-                    <button onclick="openPulseCheck(5)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 5 Pulse</button>
+                    <button onclick="openPulseCheck(5)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 5 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -457,14 +563,19 @@
 
         <!-- WEEK 6 -->
         <section id="week-6" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">6</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Gender & Sexuality</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="6">Dialogue & Reflection</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">6</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Gender & Sexuality</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="6">Dialogue & Reflection</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Readings & Media</div></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Journal #1 Due Mar 1</p></div>
-                    <button onclick="openPulseCheck(6)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 6 Pulse</button>
+                    <button onclick="openPulseCheck(6)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 6 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -475,13 +586,18 @@
 
         <!-- WEEK 7 -->
         <section id="week-7" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">7</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="7">Who Am I As a Cultural Being?</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">7</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="7">Who Am I As a Cultural Being?</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group C</div></div>
                 </div>
                 <div class="space-y-4">
-                     <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 7 Pulse</button>
+                     <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 7 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -492,14 +608,19 @@
 
         <!-- WEEK 8 -->
         <section id="week-8" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Immigration</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="8">Immigration Narratives</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Immigration</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="8">Immigration Narratives</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Immigration Narratives</div></div>
                 </div>
                 <div class="space-y-4">
                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Autobiography Due Mar 15</p></div>
-                     <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 8 Pulse</button>
+                     <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 8 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -510,14 +631,19 @@
 
         <!-- WEEK 9 -->
         <section id="week-9" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">9</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="9">Who Am I As a Cultural Being?</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">9</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="9">Who Am I As a Cultural Being?</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group D</div></div>
                 </div>
                 <div class="space-y-4">
                      <p class="text-sm text-muted-dynamic italic">Prepare for student presentations.</p>
-                     <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 9 Pulse</button>
+                     <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 9 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -528,14 +654,19 @@
 
         <!-- WEEK 10 -->
         <section id="week-10" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">10</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="10">Ableism & Self</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">10</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="10">Ableism & Self</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Async / Discussion</span><span class="text-xs text-muted-dynamic">Flexible / No Live Meeting</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Independent Study</div></div>
                 </div>
                 <div class="space-y-4">
                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Discussion 2 Due Apr 5</p></div>
-                     <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 10 Pulse</button>
+                     <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 10 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete by Sunday Night</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -546,13 +677,18 @@
 
         <!-- WEEK 11 -->
         <section id="week-11" class="glass-panel p-6 md:p-8 relative">
-             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">11</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="11">Who Am I As a Cultural Being?</p></div></div>
+             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">11</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="11">Who Am I As a Cultural Being?</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group E</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 11 Pulse</button>
+                     <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 11 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -563,14 +699,19 @@
 
         <!-- WEEK 12 -->
         <section id="week-12" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">12</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Healthcare & Education</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="12">Health care & Education</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">12</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Healthcare & Education</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="12">Health care & Education</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Systemic Inequities</div></div>
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Journal #2 Due Apr 19</p></div>
-                     <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 12 Pulse</button>
+                     <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 12 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -581,14 +722,19 @@
 
          <!-- WEEK 13 -->
          <section id="week-13" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">13</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="13">Who Am I As a Cultural Being?</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">13</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="13">Who Am I As a Cultural Being?</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group F</div></div>
                 </div>
                  <div class="space-y-4">
                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Event Paper Due Apr 26</p></div>
-                     <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 13 Pulse</button>
+                     <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 13 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -599,13 +745,18 @@
 
          <!-- WEEK 14 -->
          <section id="week-14" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">14</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Synthesis</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="14">Bringing It All Together</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">14</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Synthesis</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="14">Bringing It All Together</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Course Review</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(14)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 14 Pulse</button>
+                     <button onclick="openPulseCheck(14)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 14 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -616,13 +767,18 @@
 
         <!-- WEEK 15 -->
         <section id="week-15" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">15</span><div><h2 class="text-2xl font-bold m-0">Closing Session</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="15">TBD</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">15</span><div><h2 class="text-2xl font-bold m-0">Closing Session</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="15">TBD</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Final Thoughts</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 15 Pulse</button>
+                     <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 15 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -633,14 +789,19 @@
 
         <!-- WEEK 16 -->
         <section id="week-16" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">16</span><div><h2 class="text-2xl font-bold m-0">Finals Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="16">No Class Meeting</p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">16</span><div><h2 class="text-2xl font-bold m-0">Finals Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="16">No Class Meeting</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-gray-100 text-gray-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">No Live Meeting</span></div></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Final Reflection Due</div></div>
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Due May 17</p></div>
-                     <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 16 Pulse</button>
+                     <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                        <div class="flex items-center gap-2">
+                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 16 Pulse</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete with Final Reflection</span>
+                    </button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
