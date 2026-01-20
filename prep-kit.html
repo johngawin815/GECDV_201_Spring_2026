@@ -24,6 +24,9 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Merriweather', 'serif'],
+                    },
+                    animation: {
+                        'bounce-short': 'bounce 0.5s ease-in-out 1.5'
                     }
                 }
             }
@@ -86,7 +89,7 @@
             overflow: hidden;
         }
         .accordion-content.open {
-            max-height: 500px; /* Arbitrary large height */
+            max-height: 800px;
             opacity: 1;
         }
 
@@ -95,19 +98,44 @@
             background: rgba(255, 255, 255, 0.9);
             border: 2px solid #005f73;
             color: #003049;
+            transition: all 0.2s;
         }
         .input-zen:focus {
             border-color: #ffd166;
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.3);
         }
+
+        /* Emoji Radio Selector */
+        .emoji-radio:checked + label {
+            transform: scale(1.2);
+            filter: grayscale(0);
+            text-shadow: 0 0 10px rgba(255, 209, 102, 0.8);
+        }
+        .emoji-radio + label {
+            filter: grayscale(0.8);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .emoji-radio + label:hover {
+            filter: grayscale(0);
+            transform: scale(1.1);
+        }
+        
+        /* Modal Animation */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.2s ease-out; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
+        
+        /* Video Card Hover */
+        .video-card:hover .play-overlay { opacity: 1; }
     </style>
 </head>
 <body id="application-root" class="p-4 md:p-8">
 
     <!-- Sticky Nav Pill -->
     <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 glass-nav px-2 py-2 rounded-full shadow-lg max-w-[95vw] overflow-x-auto flex space-x-1 no-scrollbar">
-        <!-- JS will populate generic week links here for quick jumping -->
         <a href="#week-1" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W1</a>
         <a href="#week-2" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W2</a>
         <a href="#week-3" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W3</a>
@@ -130,29 +158,14 @@
     <header class="max-w-4xl mx-auto mt-16 mb-12 text-center glass-panel p-8 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-starryGold to-tealDepth"></div>
         <div id="class-badge" class="hidden inline-block bg-starryGold text-deepOcean px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-4 shadow-sm">
-            <!-- Populated by JS: "Welcome Tuesday Class" -->
+            <!-- Populated by JS -->
         </div>
         <h1 class="text-3xl md:text-5xl font-bold text-deepOcean mb-4 font-serif">Self in a Multicultural Society</h1>
         <p class="text-lg md:text-xl text-tealDepth max-w-2xl mx-auto">Explore identity, culture, and critical consciousness. Spring 2026.</p>
-        
-        <div class="mt-8 flex justify-center gap-4 flex-wrap">
-            <a href="https://umsystem.zoom.us/" target="_blank" class="bg-tealDepth text-white px-6 py-3 rounded-xl font-bold hover:bg-deepOcean transition shadow-lg flex items-center gap-2">
-                <i class="ph ph-video-camera text-xl"></i> Zoom Portal
-            </a>
-            <a href="https://umsystem.zoom.us/meeting/register/X2NTE0hPRFaASJ9GR5gC3g" target="_blank" class="bg-starryGold text-deepOcean border-2 border-deepOcean px-6 py-3 rounded-xl font-bold hover:bg-white transition shadow-lg flex items-center gap-2">
-                <i class="ph ph-sign-in text-xl"></i> Join Meeting
-            </a>
-        </div>
     </header>
 
     <!-- Main Content Container -->
     <main class="max-w-4xl mx-auto space-y-8 pb-20">
-
-        <!-- Template for Weeks. 
-             Ideally, in a full app, we map this. 
-             For this HTML file, I will structurally write out Week 1 and 2 fully, 
-             and streamline the rest to keep file size manageable but editable.
-        -->
 
         <!-- WEEK 1 -->
         <section id="week-1" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
@@ -175,8 +188,6 @@
                 <!-- Watch / Read Column -->
                 <div class="space-y-4">
                     <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">Prep Work</h3>
-                    
-                    <!-- Pre-Session Guide Card -->
                     <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-1-guide" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm">
                         <div class="flex justify-between items-start">
                             <div class="font-bold text-deepOcean">Pre-Session Guide 1</div>
@@ -189,8 +200,6 @@
                 <!-- Discuss / Do Column -->
                 <div class="space-y-4">
                     <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">Live Session</h3>
-                    
-                    <!-- Discussion Box -->
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4">
                         <div class="flex items-center gap-2 mb-2 text-deepOcean font-bold">
                             <i class="ph ph-users-three text-xl"></i>
@@ -198,11 +207,11 @@
                         </div>
                         <p class="text-sm text-deepOcean/80 italic">Introductions, Syllabus Review, Presentation Sign-ups.</p>
                     </div>
-
-                    <!-- Exit Ticket -->
-                    <a href="https://forms.office.com/r/Gb5KewF3Hi" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">
-                        <i class="ph ph-paper-plane-right mr-2"></i> Submit Exit Ticket 1
-                    </a>
+                    <!-- Exit Ticket Button -->
+                    <button onclick="openPulseCheck(1)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="1">
+                        <i class="ph ph-check-circle text-xl"></i> 
+                        <span class="btn-text">Check-in: Week 1 Pulse</span>
+                    </button>
                 </div>
             </div>
 
@@ -221,7 +230,7 @@
             </div>
         </section>
 
-        <!-- WEEK 2 -->
+        <!-- WEEK 2: UPDATED WITH VIDEO GRID -->
         <section id="week-2" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
             <div class="absolute top-4 right-4 z-10">
                 <label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10 hover:bg-white transition">
@@ -233,35 +242,102 @@
             <div class="flex items-center gap-3 mb-6">
                 <span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">2</span>
                 <div>
-                    <h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 1</h2>
-                    <p class="text-sm text-tealDepth font-medium">Identity Foundations</p>
+                    <h2 class="text-2xl font-bold text-deepOcean m-0">Deconstructing Privilege</h2>
+                    <p class="text-sm text-tealDepth font-medium">Race, Racism & The Self</p>
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">Prep Work</h3>
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-assignment-number-1-2" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm">
-                        <div class="flex justify-between items-start">
-                            <div class="font-bold text-deepOcean">Pre-Session Guide 2</div>
-                            <span class="bg-tealDepth/10 text-tealDepth text-[10px] px-2 py-0.5 rounded-full font-bold">READ</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="space-y-4">
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">Live Session</h3>
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4">
-                        <div class="flex items-center gap-2 mb-2 text-deepOcean font-bold">
-                            <i class="ph ph-chats-circle text-xl"></i>
-                            <span>Discuss</span>
-                        </div>
-                        <p class="text-sm text-deepOcean/80 italic">Prepare for Breakout Session 1.</p>
+            <p class="text-sm text-deepOcean/80 mb-6 max-w-2xl italic border-l-4 border-starryGold pl-4 py-1">
+                "Privilege" is a contested term. Watch these four distinct perspectives. Your goal is not to agree with all of them, but to understand how the definitions and arguments differ.
+            </p>
+
+            <!-- Video Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                
+                <!-- Video 1 -->
+                <a href="https://www.youtube.com/watch?v=7gUO3yN8eFg" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
+                    <img src="https://img.youtube.com/vi/7gUO3yN8eFg/mqdefault.jpg" alt="Jay Shetty" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
+                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="ph ph-play-circle text-4xl text-white"></i>
                     </div>
-                    <a href="https://forms.office.com/r/FvzB7cU2ZM" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">
-                        <i class="ph ph-paper-plane-right mr-2"></i> Submit Exit Ticket 2
-                    </a>
+                    <div class="absolute top-2 left-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">The Metaphor</div>
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
+                        <div class="text-white font-bold text-sm leading-tight">Privilege Explained</div>
+                        <div class="text-white/80 text-xs">Jay Shetty</div>
+                    </div>
+                </a>
+
+                <!-- Video 2 -->
+                <a href="https://www.youtube.com/watch?v=y25fPzr8fM4" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
+                    <img src="https://img.youtube.com/vi/y25fPzr8fM4/mqdefault.jpg" alt="John Amaechi" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
+                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                    </div>
+                    <div class="absolute top-2 left-2 bg-tealDepth/90 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">The Systemic View</div>
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
+                        <div class="text-white font-bold text-sm leading-tight">What is White Privilege?</div>
+                        <div class="text-white/80 text-xs">John Amaechi</div>
+                    </div>
+                </a>
+
+                <!-- Video 3 -->
+                <a href="https://www.youtube.com/watch?v=GR4gUQIEsns" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
+                    <img src="https://img.youtube.com/vi/GR4gUQIEsns/mqdefault.jpg" alt="Ben Shapiro" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
+                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                    </div>
+                    <div class="absolute top-2 left-2 bg-red-800/80 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">The Counter-Argument</div>
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
+                        <div class="text-white font-bold text-sm leading-tight">Debunking Privilege</div>
+                        <div class="text-white/80 text-xs">Ben Shapiro</div>
+                    </div>
+                </a>
+
+                <!-- Video 4 -->
+                <a href="https://www.youtube.com/watch?v=CwVK7P3ZdeI" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
+                    <img src="https://img.youtube.com/vi/CwVK7P3ZdeI/mqdefault.jpg" alt="Jesse Lee Peterson" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
+                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                    </div>
+                    <div class="absolute top-2 left-2 bg-gray-700/80 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Alternative View</div>
+                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
+                        <div class="text-white font-bold text-sm leading-tight">Is it Real?</div>
+                        <div class="text-white/80 text-xs">Jesse Lee Peterson</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Discussion Prep -->
+            <div class="bg-white/60 p-5 rounded-xl border border-tealDepth/20 mb-6">
+                <div class="flex items-center gap-2 mb-3 text-deepOcean font-bold border-b border-tealDepth/10 pb-2">
+                    <i class="ph ph-lightbulb text-xl text-starryGold"></i>
+                    <span>Breakout Discussion Prep</span>
+                </div>
+                <ul class="space-y-3 text-sm text-deepOcean/90">
+                    <li class="flex gap-2">
+                        <span class="font-bold text-tealDepth">1.</span>
+                        <span>Amaechi describes privilege as "the absence of inconvenience." How does this definition compare to Shapiro’s view of privilege as "individual decision making"?</span>
+                    </li>
+                    <li class="flex gap-2">
+                        <span class="font-bold text-tealDepth">2.</span>
+                        <span>Jay Shetty uses a race metaphor. Is this a helpful simplification, or does it miss the complexity that Peterson or Shapiro emphasize?</span>
+                    </li>
+                    <li class="flex gap-2">
+                        <span class="font-bold text-tealDepth">3.</span>
+                        <span>Identify one point of <strong>convergence</strong> (agreement) and one point of fundamental <strong>divergence</strong> between these four speakers.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                     <button onclick="openPulseCheck(2)" class="w-full h-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="2">
+                        <i class="ph ph-check-circle text-xl"></i> 
+                        <span class="btn-text">Check-in: Week 2 Pulse</span>
+                    </button>
                 </div>
             </div>
+
             <div class="mt-8 pt-6 border-t border-gray-200/50">
                 <button onclick="toggleQA('qa-2')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 2)</button>
                 <div id="qa-2" class="accordion-content mt-4">
@@ -284,7 +360,7 @@
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 2</p></div>
-                    <a href="https://forms.office.com/r/4HkDMx54Mr" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 3</a>
+                    <button onclick="openPulseCheck(3)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="3"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 3 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -303,7 +379,7 @@
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">"Who am I as a Cultural Being?"</p></div>
-                    <a href="https://forms.office.com/r/LmUFhHzmpi" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 4 (Journal 1 Due)</a>
+                    <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="4"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 4 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -322,7 +398,7 @@
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 3</p></div>
-                    <a href="https://forms.office.com/r/Vrr7cwDL5V" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 5</a>
+                    <button onclick="openPulseCheck(5)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="5"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 5 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -340,7 +416,7 @@
                     <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 6</div></a>
                 </div>
                 <div class="space-y-4">
-                    <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 6 (Journal 2 Due)</a>
+                    <button onclick="openPulseCheck(6)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="6"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 6 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -358,7 +434,7 @@
                     <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 7</div></a>
                 </div>
                 <div class="space-y-4">
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 7</a>
+                     <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="7"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 7 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -376,7 +452,7 @@
                     <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-removed" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 8</div></a>
                 </div>
                 <div class="space-y-4">
-                     <a href="https://umsystem.instructure.com/courses/321213/pages/removed-lecture-companion" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Lecture Companion (Journal 3 Due)</a>
+                     <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="8"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 8 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -395,6 +471,7 @@
                 </div>
                 <div class="space-y-4">
                      <p class="text-sm text-tealDepth italic">Prepare for student presentations.</p>
+                     <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="9"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 9 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -412,7 +489,7 @@
                     <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 10</div></a>
                 </div>
                 <div class="space-y-4">
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 10</a>
+                     <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="10"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 10 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -430,7 +507,7 @@
                     <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 11</div></a>
                 </div>
                  <div class="space-y-4">
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 11 (Auto-bio Due)</a>
+                     <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="11"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 11 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -449,7 +526,7 @@
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 5</p></div>
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 12 (Journal 4 Due)</a>
+                     <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="12"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 12 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -467,7 +544,7 @@
                     <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 13</div></a>
                 </div>
                  <div class="space-y-4">
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 13 (Event Paper Due)</a>
+                     <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="13"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 13 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -491,7 +568,7 @@
                     <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 14</div></a>
                 </div>
                  <div class="space-y-4">
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 14</a>
+                     <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="15"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 15 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -510,7 +587,7 @@
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Topic TBD</p></div>
-                     <a href="#" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md">Exit Ticket 15 (Final Reflection Due)</a>
+                     <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="16"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 16 Pulse</span></button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
@@ -526,78 +603,269 @@
         <p>© 2026 GECDV 201 | UMKC School of Education</p>
     </footer>
 
+    <!-- PULSE CHECK MODAL -->
+    <div id="pulse-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-deepOcean/60 backdrop-blur-sm" onclick="closePulseCheck()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative z-10 overflow-hidden transform transition-all scale-95 opacity-0" id="pulse-modal-content">
+            <div class="bg-gradient-to-r from-deepOcean to-tealDepth p-6 text-white text-center relative">
+                <button onclick="closePulseCheck()" class="absolute top-4 right-4 text-white/70 hover:text-white"><i class="ph ph-x text-2xl"></i></button>
+                <h3 class="text-2xl font-serif font-bold mb-1">Weekly Pulse Check</h3>
+                <p class="text-white/80 text-sm">Week <span id="pulse-week-display">1</span> Check-in</p>
+            </div>
+            
+            <form id="pulse-form" class="p-6 space-y-6">
+                <!-- Name Field -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-tealDepth mb-2">Student Name</label>
+                    <input type="text" id="pulse-name" required placeholder="Your Full Name" class="input-zen w-full p-3 rounded-lg text-sm">
+                </div>
+
+                <!-- Emoji Sentiment -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-tealDepth mb-3 text-center">Current Vibe?</label>
+                    <div class="flex justify-between px-2">
+                        <div class="text-center">
+                            <input type="radio" name="vibe" id="vibe-1" value="confused" class="emoji-radio hidden" required>
+                            <label for="vibe-1" class="text-3xl block">🤔</label>
+                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Lost</span>
+                        </div>
+                        <div class="text-center">
+                            <input type="radio" name="vibe" id="vibe-2" value="tired" class="emoji-radio hidden">
+                            <label for="vibe-2" class="text-3xl block">😴</label>
+                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Tired</span>
+                        </div>
+                        <div class="text-center">
+                            <input type="radio" name="vibe" id="vibe-3" value="good" class="emoji-radio hidden">
+                            <label for="vibe-3" class="text-3xl block">🙂</label>
+                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Good</span>
+                        </div>
+                        <div class="text-center">
+                            <input type="radio" name="vibe" id="vibe-4" value="inspired" class="emoji-radio hidden">
+                            <label for="vibe-4" class="text-3xl block">🤩</label>
+                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Lit</span>
+                        </div>
+                        <div class="text-center">
+                            <input type="radio" name="vibe" id="vibe-5" value="mindblown" class="emoji-radio hidden">
+                            <label for="vibe-5" class="text-3xl block">🤯</label>
+                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Wow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Takeaway -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-tealDepth mb-2">One Key Takeaway (140 chars)</label>
+                    <textarea id="pulse-takeaway" required maxlength="140" placeholder="One thing that stuck with me..." class="input-zen w-full p-3 rounded-lg text-sm h-24 resize-none"></textarea>
+                    <div class="text-right text-[10px] text-gray-400 mt-1"><span id="char-count">0</span>/140</div>
+                </div>
+
+                <button type="submit" class="w-full bg-starryGold text-deepOcean font-bold py-3 rounded-xl hover:bg-tealDepth hover:text-white transition shadow-md flex items-center justify-center gap-2">
+                    <i class="ph ph-stamp text-xl"></i> Submit & Stamp
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Firebase SDKs -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- FIREBASE CONFIGURATION (REPLACE THESE PLACEHOLDERS) ---
-        const firebaseConfig = {
-apiKey: "AIzaSyAKCgHNTj12wRgOqT32nZ0jB_XgDsID1hc",
-authDomain: "class-signup-spring26.firebaseapp.com",
-projectId: "class-signup-spring26",
-storageBucket: "class-signup-spring26.firebasestorage.app",
-messagingSenderId: "61729101450",
-appId: "1:61729101450:web:556af70a98aa6b63e57f73"
+        // --- PASTE KEYS BELOW ONLY IF RUNNING LOCALLY OUTSIDE CANVAS ---
+        const manualFirebaseConfig = {
+            apiKey: "", 
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
         };
 
-        // Initialize Firebase
-        // Wrapped in try/catch so the UI still renders if config is missing
-        let db;
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            console.log("Firebase initialized.");
-        } catch (e) {
-            console.warn("Firebase config missing or invalid. Q&A features will be disabled.", e);
+        let db, auth, appId = 'default-app-id';
+        let user = null;
+
+        // --- INIT FIREBASE ---
+        async function initFirebase() {
+            try {
+                let config;
+                if (typeof __firebase_config !== 'undefined') {
+                    config = JSON.parse(__firebase_config);
+                    if (typeof __app_id !== 'undefined') appId = __app_id;
+                } else if (manualFirebaseConfig.apiKey) {
+                    config = manualFirebaseConfig;
+                }
+
+                if (config) {
+                    const app = initializeApp(config);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    user = auth.currentUser;
+                }
+            } catch (e) { console.error("Firebase Init Error:", e); }
         }
+        initFirebase();
 
         // --- LOGIC: URL Params & Section Handling ---
         const urlParams = new URLSearchParams(window.location.search);
         const dayParam = urlParams.get('day') ? urlParams.get('day').toLowerCase() : null;
-        
         const badgeEl = document.getElementById('class-badge');
-        
-        let collectionName = 'general_questions'; // default
+        let collectionName = 'questions_general'; 
+        let exitTicketCollection = 'attendance_log_general';
 
         if (dayParam === 'tuesday') {
             badgeEl.innerText = "Welcome Tuesday Class";
             badgeEl.classList.remove('hidden');
-            collectionName = 'tuesday_questions';
+            collectionName = 'questions_tuesday';
+            exitTicketCollection = 'attendance_log_tuesday';
         } else if (dayParam === 'wednesday') {
             badgeEl.innerText = "Welcome Wednesday Class";
             badgeEl.classList.remove('hidden');
-            collectionName = 'wednesday_questions';
+            collectionName = 'questions_wednesday';
+            exitTicketCollection = 'attendance_log_wednesday';
         }
 
-        // --- LOGIC: Local Storage Progress ---
-        const checkboxes = document.querySelectorAll('.progress-check');
+        // --- PULSE CHECK LOGIC ---
+        let currentPulseWeek = 1;
         
-        // Load state
+        window.openPulseCheck = function(week) {
+            // Check if already submitted locally
+            if(localStorage.getItem(`pulse_submitted_w${week}`)) {
+                // If already submitted, maybe just show a "You're done!" toast?
+                // For now, let's allow re-opening but maybe pre-fill?
+                // Actually, let's keep it simple: Open modal.
+            }
+            
+            currentPulseWeek = week;
+            document.getElementById('pulse-week-display').innerText = week;
+            
+            const modal = document.getElementById('pulse-modal');
+            const content = document.getElementById('pulse-modal-content');
+            
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            // Pre-fill name if available
+            const savedName = localStorage.getItem('student_name_pref');
+            if(savedName) document.getElementById('pulse-name').value = savedName;
+        };
+
+        window.closePulseCheck = function() {
+            const modal = document.getElementById('pulse-modal');
+            const content = document.getElementById('pulse-modal-content');
+            
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        };
+
+        // Character Count
+        document.getElementById('pulse-takeaway').addEventListener('input', function(e) {
+            document.getElementById('char-count').innerText = e.target.value.length;
+        });
+
+        // Handle Pulse Submission
+        document.getElementById('pulse-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Stamping...';
+            btn.disabled = true;
+
+            const name = document.getElementById('pulse-name').value;
+            const vibe = document.querySelector('input[name="vibe"]:checked').value;
+            const takeaway = document.getElementById('pulse-takeaway').value;
+
+            // Save name preference
+            localStorage.setItem('student_name_pref', name);
+
+            try {
+                if(db && auth.currentUser) {
+                     await addDoc(collection(db, 'artifacts', appId, 'public', 'data', exitTicketCollection), {
+                        name: name,
+                        week: currentPulseWeek,
+                        vibe: vibe,
+                        takeaway: takeaway,
+                        timestamp: serverTimestamp()
+                    });
+                } else {
+                    console.warn("DB not connected, simulating success.");
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+
+                // Success UI
+                // 1. Mark button in UI as complete
+                const weekBtn = document.querySelector(`.pulse-btn[data-week="${currentPulseWeek}"]`);
+                if(weekBtn) {
+                    weekBtn.innerHTML = '<i class="ph ph-stamp text-xl"></i> <span class="btn-text">Stamped! ✅</span>';
+                    weekBtn.classList.remove('bg-deepOcean', 'hover:bg-tealDepth');
+                    weekBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'cursor-default');
+                    weekBtn.onclick = null; // Disable click
+                    
+                    // Save local state
+                    localStorage.setItem(`pulse_submitted_w${currentPulseWeek}`, 'true');
+                }
+
+                // 2. Close Modal
+                closePulseCheck();
+                
+                // 3. Reset Form
+                e.target.reset();
+
+            } catch (err) {
+                console.error(err);
+                alert("Error saving ticket. Please try again.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // Initialize Button States from Local Storage
+        document.querySelectorAll('.pulse-btn').forEach(btn => {
+            const w = btn.dataset.week;
+            if(localStorage.getItem(`pulse_submitted_w${w}`)) {
+                btn.innerHTML = '<i class="ph ph-stamp text-xl"></i> <span class="btn-text">Stamped! ✅</span>';
+                btn.classList.remove('bg-deepOcean', 'hover:bg-tealDepth');
+                btn.classList.add('bg-green-600', 'hover:bg-green-700', 'cursor-default');
+                btn.onclick = null;
+            }
+        });
+
+        // --- LOGIC: Local Storage Progress (Checkboxes) ---
+        const checkboxes = document.querySelectorAll('.progress-check');
         checkboxes.forEach(cb => {
             const weekId = cb.dataset.week;
             const isChecked = localStorage.getItem(`course_progress_w${weekId}`) === 'true';
             cb.checked = isChecked;
-            
-            // Visual style update on load
             if(isChecked) {
                 cb.closest('section').classList.add('border-tealDepth');
                 cb.nextElementSibling.innerText = "COMPLETED";
             }
         });
 
-        // Save state on change
         checkboxes.forEach(cb => {
             cb.addEventListener('change', (e) => {
                 const weekId = e.target.dataset.week;
                 const isChecked = e.target.checked;
                 localStorage.setItem(`course_progress_w${weekId}`, isChecked);
-                
-                // Visual feedback
                 const labelText = e.target.nextElementSibling;
                 if(isChecked) {
                     labelText.innerText = "COMPLETED";
-                    // Add a little celebration animation class here if desired
                 } else {
                     labelText.innerText = "MARK COMPLETE";
                 }
@@ -614,9 +882,8 @@ appId: "1:61729101450:web:556af70a98aa6b63e57f73"
             }
         }
 
-        // --- LOGIC: Firebase Form Submission ---
+        // --- LOGIC: Q&A Form Submission ---
         const forms = document.querySelectorAll('.qa-form');
-        
         forms.forEach(form => {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -628,30 +895,23 @@ appId: "1:61729101450:web:556af70a98aa6b63e57f73"
 
                 if (!questionText) return;
 
-                if (!db) {
-                    alert("Firebase is not configured. Please add your keys in the HTML.");
-                    return;
-                }
-
-                // UI Loading State
                 const originalBtnText = btn.innerText;
                 btn.innerText = "Sending...";
                 btn.disabled = true;
 
                 try {
-                    await addDoc(collection(db, collectionName), {
-                        text: questionText,
-                        week: weekId,
-                        timestamp: serverTimestamp(),
-                        resolved: false
-                    });
-
-                    // Success UI
+                    if(db && auth.currentUser) {
+                         await addDoc(collection(db, 'artifacts', appId, 'public', 'data', collectionName), {
+                            text: questionText,
+                            week: weekId,
+                            timestamp: serverTimestamp(),
+                            resolved: false
+                        });
+                    }
                     btn.innerText = "Sent!";
                     btn.classList.replace('bg-starryGold', 'bg-green-500');
                     btn.classList.replace('text-deepOcean', 'text-white');
                     textarea.value = "";
-                    
                     status.innerText = "Your question has been sent anonymously.";
                     status.classList.remove('hidden');
                     status.classList.add('text-green-700');
@@ -667,9 +927,6 @@ appId: "1:61729101450:web:556af70a98aa6b63e57f73"
                 } catch (error) {
                     console.error("Error adding document: ", error);
                     btn.innerText = "Error";
-                    status.innerText = "Could not send. Check console.";
-                    status.classList.remove('hidden');
-                    status.classList.add('text-red-600');
                 }
             });
         });
