@@ -651,7 +651,13 @@
                     <td data-label="Due" style="text-align: right;">Apr 26</td>
                 </tr>
                 <tr>
-                    <td data-label="Assignment"><strong>Presentation</strong><div class="badge-group"><a href="https://umsystem.instructure.com/courses/352476/assignments/3582931" target="_blank" class="badge badge-canvas">Canvas</a></div></td>
+                    <td data-label="Assignment">
+                        <strong>Presentation</strong>
+                        <div class="badge-group">
+                            <a href="https://umsystem.instructure.com/courses/352476/assignments/3582931" target="_blank" class="badge badge-canvas">Canvas</a>
+                            <button onclick="openExemplarModal()" class="badge" style="background: rgba(255, 209, 102, 0.2); color: var(--star-core); border: 1px solid var(--star-core); cursor: pointer;">✨ View Example</button>
+                        </div>
+                    </td>
                     <td data-label="Value" style="text-align: right;">100 pts (10%)</td>
                     <td data-label="Due" style="text-align: right;">Per Sign-up</td>
                 </tr>
@@ -680,6 +686,19 @@
 <div id="signup-modal" class="modal-overlay hidden">
     <div class="modal-content"><div class="modal-header">Sign Up</div><div class="modal-body"><div class="form-group"><label>Date:</label><select id="date-select"></select></div><div class="form-group"><label>Name:</label><input id="student-name" type="text"></div></div><div class="modal-footer"><button onclick="closeModal()" class="btn btn-outline">Cancel</button><button onclick="confirmSignUp()" class="btn btn-blue">Confirm</button></div></div>
 </div>
+<!-- EXEMPLAR MODAL -->
+<div id="exemplar-modal" class="modal-overlay hidden">
+    <div class="modal-content" style="max-width: 900px; height: 80vh; display:flex; flex-direction:column;">
+        <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Exemplar: Who Am I?</span>
+            <button onclick="closeExemplarModal()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div class="modal-body" style="flex:1; padding:0; overflow:hidden;">
+            <iframe src="https://who-am-i-as-a-cultural-b-nou4agt.gamma.site/" style="width:100%; height:100%; border:none;"></iframe>
+        </div>
+    </div>
+</div>
+
 <div id="hover-tooltip" class="hidden"></div>
 
 <script type="module">
@@ -760,6 +779,8 @@ appId: "1:61729101450:web:556af70a98aa6b63e57f73"
         document.getElementById('signup-modal').classList.remove('hidden');
     };
     window.closeModal = () => document.getElementById('signup-modal').classList.add('hidden');
+    window.openExemplarModal = () => document.getElementById('exemplar-modal').classList.remove('hidden');
+    window.closeExemplarModal = () => document.getElementById('exemplar-modal').classList.add('hidden');
 
     function initSmartSchedule() {
         const today = new Date(); 
