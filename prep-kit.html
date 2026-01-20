@@ -24,9 +24,6 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Merriweather', 'serif'],
-                    },
-                    animation: {
-                        'bounce-short': 'bounce 0.5s ease-in-out 1.5'
                     }
                 }
             }
@@ -58,28 +55,17 @@
             border-bottom: 1px solid rgba(0, 48, 73, 0.1);
         }
 
-        /* Utility specific to Canvas overrides */
         #application-root h1, #application-root h2, #application-root h3 {
             margin-top: 0;
             line-height: 1.2;
         }
         
-        #application-root a {
-            text-decoration: none;
-        }
+        #application-root a { text-decoration: none; }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 48, 73, 0.05); 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #005f73; 
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 48, 73, 0.05); }
+        ::-webkit-scrollbar-thumb { background: #005f73; border-radius: 4px; }
 
         /* Accordion Transitions */
         .accordion-content {
@@ -88,17 +74,13 @@
             opacity: 0;
             overflow: hidden;
         }
-        .accordion-content.open {
-            max-height: 800px;
-            opacity: 1;
-        }
+        .accordion-content.open { max-height: 500px; opacity: 1; }
 
         /* Form styling */
         .input-zen {
             background: rgba(255, 255, 255, 0.9);
             border: 2px solid #005f73;
             color: #003049;
-            transition: all 0.2s;
         }
         .input-zen:focus {
             border-color: #ffd166;
@@ -106,52 +88,74 @@
             box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.3);
         }
 
-        /* Emoji Radio Selector */
-        .emoji-radio:checked + label {
-            transform: scale(1.2);
-            filter: grayscale(0);
-            text-shadow: 0 0 10px rgba(255, 209, 102, 0.8);
+        /* Video Container */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .emoji-radio + label {
-            filter: grayscale(0.8);
-            transition: all 0.2s;
-            cursor: pointer;
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-        .emoji-radio + label:hover {
-            filter: grayscale(0);
-            transform: scale(1.1);
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 48, 73, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex; align-items: center; justify-content: center;
         }
+        .hidden { display: none !important; }
         
-        /* Modal Animation */
-        .modal-enter { opacity: 0; transform: scale(0.95); }
-        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.2s ease-out; }
-        .modal-exit { opacity: 1; transform: scale(1); }
-        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
-        
-        /* Video Card Hover */
-        .video-card:hover .play-overlay { opacity: 1; }
+        /* Pulse Check Vibe Buttons */
+        .vibe-btn {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            padding: 10px; border-radius: 12px; border: 2px solid transparent;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .vibe-btn:hover { background: rgba(255,255,255,0.5); transform: translateY(-2px); }
+        .vibe-btn.selected { background: #ffd166; border-color: #003049; color: #003049; }
+        .vibe-icon { font-size: 2rem; }
+        .vibe-label { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
 <body id="application-root" class="p-4 md:p-8">
 
     <!-- Sticky Nav Pill -->
-    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 glass-nav px-2 py-2 rounded-full shadow-lg max-w-[95vw] overflow-x-auto flex space-x-1 no-scrollbar">
-        <a href="#week-1" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W1</a>
-        <a href="#week-2" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W2</a>
-        <a href="#week-3" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W3</a>
-        <a href="#week-4" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W4</a>
-        <a href="#week-5" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W5</a>
-        <a href="#week-6" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W6</a>
-        <a href="#week-7" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W7</a>
-        <a href="#week-8" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W8</a>
-        <a href="#week-9" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W9</a>
-        <a href="#week-10" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W10</a>
-        <a href="#week-11" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W11</a>
-        <a href="#week-12" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W12</a>
-        <a href="#week-13" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W13</a>
-        <a href="#week-14" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W14</a>
-        <a href="#week-15" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W15</a>
-        <a href="#week-16" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W16</a>
+    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 glass-nav px-2 py-2 rounded-full shadow-lg max-w-[95vw] flex items-center gap-2">
+        <!-- Dynamic Back Button (Top) -->
+        <a id="nav-back-link" href="#" class="hidden px-3 py-1.5 rounded-full text-xs font-bold bg-deepOcean text-white hover:bg-tealDepth transition-colors whitespace-nowrap flex items-center gap-1">
+            <i class="ph ph-arrow-left"></i> <span id="nav-back-text">Course Home</span>
+        </a>
+        <div class="h-4 w-px bg-gray-300 mx-1 hidden" id="nav-separator"></div>
+        
+        <!-- Week Links Container -->
+        <div class="flex space-x-1 overflow-x-auto no-scrollbar max-w-[60vw] md:max-w-none">
+            <a href="#week-1" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W1</a>
+            <a href="#week-2" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W2</a>
+            <a href="#week-3" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W3</a>
+            <a href="#week-4" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W4</a>
+            <a href="#week-5" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W5</a>
+            <a href="#week-6" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W6</a>
+            <a href="#week-7" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W7</a>
+            <a href="#week-8" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W8</a>
+            <a href="#week-9" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W9</a>
+            <a href="#week-10" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W10</a>
+            <a href="#week-11" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W11</a>
+            <a href="#week-12" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W12</a>
+            <a href="#week-13" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W13</a>
+            <a href="#week-14" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W14</a>
+            <a href="#week-15" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W15</a>
+            <a href="#week-16" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W16</a>
+        </div>
     </nav>
 
     <!-- Header Section -->
@@ -185,19 +189,17 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
-                <!-- Watch / Read Column -->
                 <div class="space-y-4">
                     <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">Prep Work</h3>
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-1-guide" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm">
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default">
                         <div class="flex justify-between items-start">
-                            <div class="font-bold text-deepOcean">Pre-Session Guide 1</div>
+                            <div class="font-bold text-deepOcean">The Cultural Iceberg</div>
                             <span class="bg-tealDepth/10 text-tealDepth text-[10px] px-2 py-0.5 rounded-full font-bold">READ</span>
                         </div>
-                        <p class="text-sm text-gray-600 mt-1">Review syllabus and sign up for presentations.</p>
-                    </a>
+                        <p class="text-sm text-gray-600 mt-1">Review the syllabus and understand the concept of surface vs. deep culture.</p>
+                    </div>
                 </div>
 
-                <!-- Discuss / Do Column -->
                 <div class="space-y-4">
                     <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">Live Session</h3>
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4">
@@ -207,10 +209,9 @@
                         </div>
                         <p class="text-sm text-deepOcean/80 italic">Introductions, Syllabus Review, Presentation Sign-ups.</p>
                     </div>
-                    <!-- Exit Ticket Button -->
-                    <button onclick="openPulseCheck(1)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="1">
-                        <i class="ph ph-check-circle text-xl"></i> 
-                        <span class="btn-text">Check-in: Week 1 Pulse</span>
+                    <!-- Pulse Check -->
+                    <button onclick="openPulseCheck(1)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2">
+                        <i class="ph ph-heartbeat"></i> Check-in: Week 1 Pulse
                     </button>
                 </div>
             </div>
@@ -218,7 +219,7 @@
             <!-- Q&A Section -->
             <div class="mt-8 pt-6 border-t border-gray-200/50">
                 <button onclick="toggleQA('qa-1')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean">
-                    <i class="ph ph-question"></i> Ask an Anonymous Question (Week 1)
+                    <i class="ph ph-question"></i> Ask an Anonymous Question
                 </button>
                 <div id="qa-1" class="accordion-content mt-4">
                     <form class="qa-form space-y-3" data-week="1">
@@ -230,7 +231,7 @@
             </div>
         </section>
 
-        <!-- WEEK 2: UPDATED WITH VIDEO GRID -->
+        <!-- WEEK 2: DECONSTRUCTING PRIVILEGE (MATCHING LIVE SITE) -->
         <section id="week-2" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
             <div class="absolute top-4 right-4 z-10">
                 <label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10 hover:bg-white transition">
@@ -247,99 +248,68 @@
                 </div>
             </div>
 
-            <p class="text-sm text-deepOcean/80 mb-6 max-w-2xl italic border-l-4 border-starryGold pl-4 py-1">
+            <p class="text-sm text-deepOcean/80 mb-6 italic bg-white/40 p-3 rounded-lg border-l-4 border-starryGold">
                 "Privilege" is a contested term. Watch these four distinct perspectives. Your goal is not to agree with all of them, but to understand how the definitions and arguments differ.
             </p>
 
-            <!-- Video Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <!-- WEEK 2 VIDEO GRID -->
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
                 
                 <!-- Video 1 -->
-                <a href="https://www.youtube.com/watch?v=7gUO3yN8eFg" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
-                    <img src="https://img.youtube.com/vi/7gUO3yN8eFg/mqdefault.jpg" alt="Jay Shetty" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
-                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
-                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                    <div class="video-wrapper mb-2 bg-black">
+                         <iframe width="560" height="315" src="https://www.youtube.com/embed/7gUO3yN8eFg" title="Jay Shetty: The Metaphor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div class="absolute top-2 left-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">The Metaphor</div>
-                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
-                        <div class="text-white font-bold text-sm leading-tight">Privilege Explained</div>
-                        <div class="text-white/80 text-xs">Jay Shetty</div>
-                    </div>
-                </a>
+                    <h4 class="font-bold text-deepOcean text-sm">The Metaphor: Privilege Explained</h4>
+                    <p class="text-xs text-gray-600">Jay Shetty</p>
+                </div>
 
                 <!-- Video 2 -->
-                <a href="https://www.youtube.com/watch?v=y25fPzr8fM4" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
-                    <img src="https://img.youtube.com/vi/y25fPzr8fM4/mqdefault.jpg" alt="John Amaechi" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
-                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
-                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                    <div class="video-wrapper mb-2 bg-black">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/y25fPzr8fM4" title="John Amaechi: Systemic View" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div class="absolute top-2 left-2 bg-tealDepth/90 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">The Systemic View</div>
-                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
-                        <div class="text-white font-bold text-sm leading-tight">What is White Privilege?</div>
-                        <div class="text-white/80 text-xs">John Amaechi</div>
-                    </div>
-                </a>
+                    <h4 class="font-bold text-deepOcean text-sm">The Systemic View</h4>
+                    <p class="text-xs text-gray-600">John Amaechi</p>
+                </div>
 
                 <!-- Video 3 -->
-                <a href="https://www.youtube.com/watch?v=GR4gUQIEsns" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
-                    <img src="https://img.youtube.com/vi/GR4gUQIEsns/mqdefault.jpg" alt="Ben Shapiro" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
-                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
-                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                    <div class="video-wrapper mb-2 bg-black">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/GR4gUQIEsns" title="Ben Shapiro: Counter Argument" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div class="absolute top-2 left-2 bg-red-800/80 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">The Counter-Argument</div>
-                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
-                        <div class="text-white font-bold text-sm leading-tight">Debunking Privilege</div>
-                        <div class="text-white/80 text-xs">Ben Shapiro</div>
-                    </div>
-                </a>
+                    <h4 class="font-bold text-deepOcean text-sm">The Counter-Argument</h4>
+                    <p class="text-xs text-gray-600">Ben Shapiro</p>
+                </div>
 
                 <!-- Video 4 -->
-                <a href="https://www.youtube.com/watch?v=CwVK7P3ZdeI" target="_blank" class="video-card block relative rounded-xl overflow-hidden shadow-md group">
-                    <img src="https://img.youtube.com/vi/CwVK7P3ZdeI/mqdefault.jpg" alt="Jesse Lee Peterson" class="w-full h-40 object-cover object-center transform group-hover:scale-105 transition duration-500">
-                    <div class="play-overlay absolute inset-0 bg-deepOcean/40 flex items-center justify-center opacity-0 transition duration-300">
-                        <i class="ph ph-play-circle text-4xl text-white"></i>
+                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                    <div class="video-wrapper mb-2 bg-black">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/CwVK7P3ZdeI" title="Jesse Lee Peterson: Alternative View" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div class="absolute top-2 left-2 bg-gray-700/80 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Alternative View</div>
-                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-deepOcean to-transparent p-3 pt-8">
-                        <div class="text-white font-bold text-sm leading-tight">Is it Real?</div>
-                        <div class="text-white/80 text-xs">Jesse Lee Peterson</div>
-                    </div>
-                </a>
+                    <h4 class="font-bold text-deepOcean text-sm">Alternative View: Is it Real?</h4>
+                    <p class="text-xs text-gray-600">Jesse Lee Peterson</p>
+                </div>
             </div>
 
-            <!-- Discussion Prep -->
-            <div class="bg-white/60 p-5 rounded-xl border border-tealDepth/20 mb-6">
-                <div class="flex items-center gap-2 mb-3 text-deepOcean font-bold border-b border-tealDepth/10 pb-2">
-                    <i class="ph ph-lightbulb text-xl text-starryGold"></i>
-                    <span>Breakout Discussion Prep</span>
-                </div>
-                <ul class="space-y-3 text-sm text-deepOcean/90">
-                    <li class="flex gap-2">
-                        <span class="font-bold text-tealDepth">1.</span>
-                        <span>Amaechi describes privilege as "the absence of inconvenience." How does this definition compare to Shapiro’s view of privilege as "individual decision making"?</span>
-                    </li>
-                    <li class="flex gap-2">
-                        <span class="font-bold text-tealDepth">2.</span>
-                        <span>Jay Shetty uses a race metaphor. Is this a helpful simplification, or does it miss the complexity that Peterson or Shapiro emphasize?</span>
-                    </li>
-                    <li class="flex gap-2">
-                        <span class="font-bold text-tealDepth">3.</span>
-                        <span>Identify one point of <strong>convergence</strong> (agreement) and one point of fundamental <strong>divergence</strong> between these four speakers.</span>
-                    </li>
+            <!-- Breakout Prep -->
+            <div class="bg-deepOcean/5 border border-deepOcean/10 rounded-xl p-5 mb-6">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-deepOcean mb-3 border-b border-deepOcean/10 pb-2">Breakout Discussion Prep</h3>
+                <ul class="space-y-3 text-sm text-deepOcean/90 list-disc pl-5">
+                    <li><strong>Amaechi</strong> describes privilege as "the absence of inconvenience." How does this definition compare to <strong>Shapiro’s</strong> view of privilege as "individual decision making"?</li>
+                    <li><strong>Jay Shetty</strong> uses a race metaphor. Is this a helpful simplification, or does it miss the complexity that Peterson or Shapiro emphasize?</li>
+                    <li>Identify one point of <strong>convergence</strong> (agreement) and one point of fundamental <strong>divergence</strong> between these four speakers.</li>
                 </ul>
             </div>
 
-            <div class="flex flex-col md:flex-row gap-4">
-                <div class="flex-1">
-                     <button onclick="openPulseCheck(2)" class="w-full h-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="2">
-                        <i class="ph ph-check-circle text-xl"></i> 
-                        <span class="btn-text">Check-in: Week 2 Pulse</span>
-                    </button>
-                </div>
+            <div class="mt-4">
+                 <button onclick="openPulseCheck(2)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2">
+                    <i class="ph ph-heartbeat"></i> Check-in: Week 2 Pulse
+                </button>
             </div>
 
             <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-2')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 2)</button>
+                <button onclick="toggleQA('qa-2')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-2" class="accordion-content mt-4">
                     <form class="qa-form space-y-3" data-week="2">
                         <textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]" placeholder="Type question..."></textarea>
@@ -356,15 +326,15 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">3</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Race & Identity</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-race" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 3</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Race: The Power of an Illusion</div><p class="text-xs text-gray-600 mt-1">Review the provided reading materials.</p></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 2</p></div>
-                    <button onclick="openPulseCheck(3)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="3"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 3 Pulse</span></button>
+                    <button onclick="openPulseCheck(3)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 3 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-3')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 3)</button>
+                <button onclick="toggleQA('qa-3')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-3" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="3"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -375,15 +345,15 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 4</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presenting "Who Am I?"</div></div>
                 </div>
                 <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">"Who am I as a Cultural Being?"</p></div>
-                    <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="4"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 4 Pulse</span></button>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Presentations Group A</p></div>
+                    <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 4 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-4')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 4)</button>
+                <button onclick="toggleQA('qa-4')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-4" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="4"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -394,15 +364,15 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">5</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Toxic Masculinity</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/toxic-masculinity" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 5</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">The Man Box</div></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 3</p></div>
-                    <button onclick="openPulseCheck(5)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="5"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 5 Pulse</span></button>
+                    <button onclick="openPulseCheck(5)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 5 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-5')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 5)</button>
+                <button onclick="toggleQA('qa-5')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-5" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="5"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -413,14 +383,14 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">6</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 6</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group B</div></div>
                 </div>
                 <div class="space-y-4">
-                    <button onclick="openPulseCheck(6)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="6"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 6 Pulse</span></button>
+                    <button onclick="openPulseCheck(6)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 6 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-6')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 6)</button>
+                <button onclick="toggleQA('qa-6')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-6" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="6"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -431,14 +401,14 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">7</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 7</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group C</div></div>
                 </div>
                 <div class="space-y-4">
-                     <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="7"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 7 Pulse</span></button>
+                     <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 7 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-7')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 7)</button>
+                <button onclick="toggleQA('qa-7')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-7" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="7"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -449,14 +419,14 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 4</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-removed" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 8</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Immigration Narratives</div></div>
                 </div>
                 <div class="space-y-4">
-                     <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="8"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 8 Pulse</span></button>
+                     <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 8 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 8)</button>
+                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-8" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="8"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -467,15 +437,15 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">9</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Cultural Being Presentations</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 9</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group D</div></div>
                 </div>
                 <div class="space-y-4">
                      <p class="text-sm text-tealDepth italic">Prepare for student presentations.</p>
-                     <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="9"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 9 Pulse</span></button>
+                     <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 9 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-9')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 9)</button>
+                <button onclick="toggleQA('qa-9')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-9" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="9"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -486,14 +456,14 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">10</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Mini Lecture + Discussion</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 10</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Ableism & Access</div></div>
                 </div>
                 <div class="space-y-4">
-                     <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="10"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 10 Pulse</span></button>
+                     <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 10 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-10')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 10)</button>
+                <button onclick="toggleQA('qa-10')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-10" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="10"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -504,14 +474,14 @@
              <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">11</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Presentations + Q&A</h2></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <a href="https://umsystem.instructure.com/courses/321213/pages/pre-session-guide-who-am-i-as-a-cultural-being-presentations" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 11</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group E</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="11"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 11 Pulse</span></button>
+                     <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 11 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-11')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 11)</button>
+                <button onclick="toggleQA('qa-11')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-11" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="11"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -522,15 +492,15 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">12</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 5</h2></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 12</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Education & Equity</div></div>
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 5</p></div>
-                     <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="12"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 12 Pulse</span></button>
+                     <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 12 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-12')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 12)</button>
+                <button onclick="toggleQA('qa-12')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-12" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="12"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -541,14 +511,14 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">13</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 6</h2></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 13</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Synthesis & Application</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="13"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 13 Pulse</span></button>
+                     <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 13 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-13')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 13)</button>
+                <button onclick="toggleQA('qa-13')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-13" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="13"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -565,14 +535,14 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">15</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 7</h2></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 14</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Looking Forward</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="15"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 15 Pulse</span></button>
+                     <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 15 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-15')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 15)</button>
+                <button onclick="toggleQA('qa-15')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-15" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="15"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -583,286 +553,248 @@
             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">16</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Final Reflection Week</h2></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <a href="#" class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm"><div class="font-bold text-deepOcean">Pre-Session Guide 15</div></a>
+                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Final Reflection</div></div>
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Topic TBD</p></div>
-                     <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2 group pulse-btn" data-week="16"><i class="ph ph-check-circle text-xl"></i> <span class="btn-text">Check-in: Week 16 Pulse</span></button>
+                     <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 16 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-16')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question (Week 16)</button>
+                <button onclick="toggleQA('qa-16')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-16" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="16"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
     </main>
 
+    <!-- Fixed Bottom Return Button -->
+    <a id="fab-back-link" href="#" class="hidden fixed bottom-6 right-6 z-50 bg-deepOcean text-white px-6 py-3 rounded-full shadow-2xl font-bold flex items-center gap-2 hover:scale-105 hover:bg-tealDepth transition-all border-2 border-starryGold group">
+        <i class="ph ph-rocket-launch text-xl group-hover:-translate-x-1 transition-transform"></i>
+        <span>Return to Mission Control</span>
+    </a>
+
     <!-- Footer -->
     <footer class="text-center text-deepOcean/60 py-8">
         <p>© 2026 GECDV 201 | UMKC School of Education</p>
     </footer>
 
-    <!-- PULSE CHECK MODAL -->
-    <div id="pulse-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-deepOcean/60 backdrop-blur-sm" onclick="closePulseCheck()"></div>
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative z-10 overflow-hidden transform transition-all scale-95 opacity-0" id="pulse-modal-content">
-            <div class="bg-gradient-to-r from-deepOcean to-tealDepth p-6 text-white text-center relative">
-                <button onclick="closePulseCheck()" class="absolute top-4 right-4 text-white/70 hover:text-white"><i class="ph ph-x text-2xl"></i></button>
-                <h3 class="text-2xl font-serif font-bold mb-1">Weekly Pulse Check</h3>
-                <p class="text-white/80 text-sm">Week <span id="pulse-week-display">1</span> Check-in</p>
-            </div>
+    <!-- Pulse Check Modal -->
+    <div id="pulse-modal" class="modal-overlay hidden">
+        <div class="bg-white p-6 rounded-2xl max-w-sm w-full mx-4 shadow-2xl border-4 border-starryGold relative">
+            <h3 class="text-xl font-bold text-deepOcean mb-4 text-center">Weekly Pulse Check</h3>
+            <p id="pulse-week-label" class="text-sm text-tealDepth text-center mb-6 font-bold uppercase tracking-wider">Week X Check-in</p>
             
-            <form id="pulse-form" class="p-6 space-y-6">
-                <!-- Name Field -->
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-tealDepth mb-2">Student Name</label>
-                    <input type="text" id="pulse-name" required placeholder="Your Full Name" class="input-zen w-full p-3 rounded-lg text-sm">
+                    <label class="block text-xs font-bold text-deepOcean mb-1 uppercase">Student Name</label>
+                    <input type="text" id="pulse-name" class="w-full border-2 border-gray-200 rounded-lg p-2 text-sm focus:border-starryGold outline-none">
                 </div>
 
-                <!-- Emoji Sentiment -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-tealDepth mb-3 text-center">Current Vibe?</label>
-                    <div class="flex justify-between px-2">
-                        <div class="text-center">
-                            <input type="radio" name="vibe" id="vibe-1" value="confused" class="emoji-radio hidden" required>
-                            <label for="vibe-1" class="text-3xl block">🤔</label>
-                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Lost</span>
+                    <label class="block text-xs font-bold text-deepOcean mb-2 uppercase">Current Vibe?</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div onclick="selectVibe(this, 'Lost')" class="vibe-btn">
+                            <span class="vibe-icon">🤔</span>
+                            <span class="vibe-label">Lost</span>
                         </div>
-                        <div class="text-center">
-                            <input type="radio" name="vibe" id="vibe-2" value="tired" class="emoji-radio hidden">
-                            <label for="vibe-2" class="text-3xl block">😴</label>
-                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Tired</span>
+                        <div onclick="selectVibe(this, 'Tired')" class="vibe-btn">
+                            <span class="vibe-icon">😴</span>
+                            <span class="vibe-label">Tired</span>
                         </div>
-                        <div class="text-center">
-                            <input type="radio" name="vibe" id="vibe-3" value="good" class="emoji-radio hidden">
-                            <label for="vibe-3" class="text-3xl block">🙂</label>
-                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Good</span>
+                        <div onclick="selectVibe(this, 'Good')" class="vibe-btn">
+                            <span class="vibe-icon">🙂</span>
+                            <span class="vibe-label">Good</span>
                         </div>
-                        <div class="text-center">
-                            <input type="radio" name="vibe" id="vibe-4" value="inspired" class="emoji-radio hidden">
-                            <label for="vibe-4" class="text-3xl block">🤩</label>
-                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Lit</span>
+                        <div onclick="selectVibe(this, 'Lit')" class="vibe-btn">
+                            <span class="vibe-icon">🤩</span>
+                            <span class="vibe-label">Lit</span>
                         </div>
-                        <div class="text-center">
-                            <input type="radio" name="vibe" id="vibe-5" value="mindblown" class="emoji-radio hidden">
-                            <label for="vibe-5" class="text-3xl block">🤯</label>
-                            <span class="text-[10px] text-gray-500 font-bold uppercase mt-1 block">Wow</span>
+                         <div onclick="selectVibe(this, 'Wow')" class="vibe-btn col-span-4 justify-center flex-row">
+                            <span class="vibe-icon">🤯</span>
+                            <span class="vibe-label ml-2">Wow</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Takeaway -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-tealDepth mb-2">One Key Takeaway (140 chars)</label>
-                    <textarea id="pulse-takeaway" required maxlength="140" placeholder="One thing that stuck with me..." class="input-zen w-full p-3 rounded-lg text-sm h-24 resize-none"></textarea>
-                    <div class="text-right text-[10px] text-gray-400 mt-1"><span id="char-count">0</span>/140</div>
+                    <label class="block text-xs font-bold text-deepOcean mb-1 uppercase">One Key Takeaway (140 chars)</label>
+                    <textarea id="pulse-takeaway" maxlength="140" class="w-full border-2 border-gray-200 rounded-lg p-2 text-sm h-20 focus:border-starryGold outline-none resize-none"></textarea>
+                    <div class="text-right text-[10px] text-gray-400" id="char-count">0/140</div>
                 </div>
 
-                <button type="submit" class="w-full bg-starryGold text-deepOcean font-bold py-3 rounded-xl hover:bg-tealDepth hover:text-white transition shadow-md flex items-center justify-center gap-2">
-                    <i class="ph ph-stamp text-xl"></i> Submit & Stamp
-                </button>
-            </form>
+                <button onclick="submitPulse()" class="w-full bg-deepOcean text-white font-bold py-3 rounded-lg hover:bg-tealDepth transition shadow-md">Submit & Stamp</button>
+            </div>
+            
+            <button onclick="closePulseModal()" class="absolute top-4 right-4 text-gray-400 hover:text-deepOcean">
+                <i class="ph ph-x text-xl"></i>
+            </button>
         </div>
     </div>
 
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- PASTE KEYS BELOW ONLY IF RUNNING LOCALLY OUTSIDE CANVAS ---
+        // --- FIREBASE CONFIGURATION ---
         const manualFirebaseConfig = {
-            apiKey: "", 
-            authDomain: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
+            apiKey: "AIzaSyAKCgHNTj12wRgOqT32nZ0jB_XgDsID1hc",
+            authDomain: "class-signup-spring26.firebaseapp.com",
+            projectId: "class-signup-spring26",
+            storageBucket: "class-signup-spring26.firebasestorage.app",
+            messagingSenderId: "61729101450",
+            appId: "1:61729101450:web:556af70a98aa6b63e57f73"
         };
 
-        let db, auth, appId = 'default-app-id';
-        let user = null;
-
-        // --- INIT FIREBASE ---
-        async function initFirebase() {
-            try {
-                let config;
-                if (typeof __firebase_config !== 'undefined') {
-                    config = JSON.parse(__firebase_config);
-                    if (typeof __app_id !== 'undefined') appId = __app_id;
-                } else if (manualFirebaseConfig.apiKey) {
-                    config = manualFirebaseConfig;
-                }
-
-                if (config) {
-                    const app = initializeApp(config);
-                    auth = getAuth(app);
-                    db = getFirestore(app);
-
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
+        // Initialize Firebase
+        let db, auth;
+        try {
+            const firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : manualFirebaseConfig;
+            if(firebaseConfig.apiKey !== "YOUR_API_KEY_HERE") {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                
+                // Anonymous Auth for Security
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        console.log("User authenticated anonymously for Q&A.");
                     } else {
-                        await signInAnonymously(auth);
+                        signInAnonymously(auth).catch((error) => console.error("Auth failed:", error));
                     }
-                    user = auth.currentUser;
-                }
-            } catch (e) { console.error("Firebase Init Error:", e); }
+                });
+            }
+        } catch (e) {
+            console.warn("Firebase config missing or invalid. Q&A features will be disabled.", e);
         }
-        initFirebase();
 
         // --- LOGIC: URL Params & Section Handling ---
         const urlParams = new URLSearchParams(window.location.search);
         const dayParam = urlParams.get('day') ? urlParams.get('day').toLowerCase() : null;
+        
         const badgeEl = document.getElementById('class-badge');
-        let collectionName = 'questions_general'; 
-        let exitTicketCollection = 'attendance_log_general';
+        const backLink = document.getElementById('nav-back-link');
+        const backText = document.getElementById('nav-back-text');
+        const separator = document.getElementById('nav-separator');
+        const fabLink = document.getElementById('fab-back-link');
+        
+        let collectionName = 'general_questions'; // default
 
+        // Protocol C: Navigation Back Logic
         if (dayParam === 'tuesday') {
             badgeEl.innerText = "Welcome Tuesday Class";
             badgeEl.classList.remove('hidden');
-            collectionName = 'questions_tuesday';
-            exitTicketCollection = 'attendance_log_tuesday';
+            collectionName = 'tuesday_questions';
+            
+            backLink.href = 'index.html';
+            backText.innerText = 'Tuesday Home';
+            backLink.classList.remove('hidden');
+            separator.classList.remove('hidden');
+
+            fabLink.href = 'index.html';
+            fabLink.classList.remove('hidden');
+
         } else if (dayParam === 'wednesday') {
             badgeEl.innerText = "Welcome Wednesday Class";
             badgeEl.classList.remove('hidden');
-            collectionName = 'questions_wednesday';
-            exitTicketCollection = 'attendance_log_wednesday';
+            collectionName = 'wednesday_questions';
+
+            backLink.href = 'wednesday.html';
+            backText.innerText = 'Wednesday Home';
+            backLink.classList.remove('hidden');
+            separator.classList.remove('hidden');
+
+            fabLink.href = 'wednesday.html';
+            fabLink.classList.remove('hidden');
         }
 
-        // --- PULSE CHECK LOGIC ---
-        let currentPulseWeek = 1;
-        
-        window.openPulseCheck = function(week) {
-            // Check if already submitted locally
-            if(localStorage.getItem(`pulse_submitted_w${week}`)) {
-                // If already submitted, maybe just show a "You're done!" toast?
-                // For now, let's allow re-opening but maybe pre-fill?
-                // Actually, let's keep it simple: Open modal.
+        // --- LOGIC: Pulse Check ---
+        let currentWeekForPulse = 0;
+        let selectedVibe = '';
+
+        window.openPulseCheck = (week) => {
+            currentWeekForPulse = week;
+            document.getElementById('pulse-week-label').innerText = `Week ${week} Check-in`;
+            // Reset form
+            document.querySelectorAll('.vibe-btn').forEach(btn => btn.classList.remove('selected'));
+            selectedVibe = '';
+            document.getElementById('pulse-takeaway').value = '';
+            document.getElementById('char-count').innerText = '0/140';
+            
+            // Check local storage for existing stamp
+            const saved = JSON.parse(localStorage.getItem(`pulse_w${week}`));
+            if(saved) {
+                document.getElementById('pulse-name').value = saved.name || '';
+                // Could auto-select vibe if we wanted, but let's let them re-submit if they want
             }
             
-            currentPulseWeek = week;
-            document.getElementById('pulse-week-display').innerText = week;
-            
-            const modal = document.getElementById('pulse-modal');
-            const content = document.getElementById('pulse-modal-content');
-            
-            modal.classList.remove('hidden');
-            // Small delay to allow display:block to apply before opacity transition
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
+            document.getElementById('pulse-modal').classList.remove('hidden');
+        }
 
-            // Pre-fill name if available
-            const savedName = localStorage.getItem('student_name_pref');
-            if(savedName) document.getElementById('pulse-name').value = savedName;
-        };
+        window.closePulseModal = () => {
+            document.getElementById('pulse-modal').classList.add('hidden');
+        }
 
-        window.closePulseCheck = function() {
-            const modal = document.getElementById('pulse-modal');
-            const content = document.getElementById('pulse-modal-content');
-            
-            content.classList.remove('scale-100', 'opacity-100');
-            content.classList.add('scale-95', 'opacity-0');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 200);
-        };
+        window.selectVibe = (el, vibe) => {
+            document.querySelectorAll('.vibe-btn').forEach(btn => btn.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedVibe = vibe;
+        }
 
-        // Character Count
-        document.getElementById('pulse-takeaway').addEventListener('input', function(e) {
-            document.getElementById('char-count').innerText = e.target.value.length;
+        document.getElementById('pulse-takeaway').addEventListener('input', function() {
+            document.getElementById('char-count').innerText = `${this.value.length}/140`;
         });
 
-        // Handle Pulse Submission
-        document.getElementById('pulse-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
+        window.submitPulse = () => {
+            const name = document.getElementById('pulse-name').value.trim();
+            const takeaway = document.getElementById('pulse-takeaway').value.trim();
+
+            if(!selectedVibe) return alert("Please select a vibe!");
             
-            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Stamping...';
-            btn.disabled = true;
+            const data = {
+                week: currentWeekForPulse,
+                name: name,
+                vibe: selectedVibe,
+                takeaway: takeaway,
+                timestamp: new Date().toISOString()
+            };
 
-            const name = document.getElementById('pulse-name').value;
-            const vibe = document.querySelector('input[name="vibe"]:checked').value;
-            const takeaway = document.getElementById('pulse-takeaway').value;
+            // Save to Local Storage (Mirroring live site behavior for now)
+            localStorage.setItem(`pulse_w${currentWeekForPulse}`, JSON.stringify(data));
+            
+            // Visual feedback
+            alert(`Pulse Checked! Vibe: ${selectedVibe}`);
+            closePulseModal();
+            
+            // Optional: If you want this to go to Firebase in the future, add logic here.
+        }
 
-            // Save name preference
-            localStorage.setItem('student_name_pref', name);
-
-            try {
-                if(db && auth.currentUser) {
-                     await addDoc(collection(db, 'artifacts', appId, 'public', 'data', exitTicketCollection), {
-                        name: name,
-                        week: currentPulseWeek,
-                        vibe: vibe,
-                        takeaway: takeaway,
-                        timestamp: serverTimestamp()
-                    });
-                } else {
-                    console.warn("DB not connected, simulating success.");
-                    await new Promise(r => setTimeout(r, 1000));
-                }
-
-                // Success UI
-                // 1. Mark button in UI as complete
-                const weekBtn = document.querySelector(`.pulse-btn[data-week="${currentPulseWeek}"]`);
-                if(weekBtn) {
-                    weekBtn.innerHTML = '<i class="ph ph-stamp text-xl"></i> <span class="btn-text">Stamped! ✅</span>';
-                    weekBtn.classList.remove('bg-deepOcean', 'hover:bg-tealDepth');
-                    weekBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'cursor-default');
-                    weekBtn.onclick = null; // Disable click
-                    
-                    // Save local state
-                    localStorage.setItem(`pulse_submitted_w${currentPulseWeek}`, 'true');
-                }
-
-                // 2. Close Modal
-                closePulseCheck();
-                
-                // 3. Reset Form
-                e.target.reset();
-
-            } catch (err) {
-                console.error(err);
-                alert("Error saving ticket. Please try again.");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        });
-
-        // Initialize Button States from Local Storage
-        document.querySelectorAll('.pulse-btn').forEach(btn => {
-            const w = btn.dataset.week;
-            if(localStorage.getItem(`pulse_submitted_w${w}`)) {
-                btn.innerHTML = '<i class="ph ph-stamp text-xl"></i> <span class="btn-text">Stamped! ✅</span>';
-                btn.classList.remove('bg-deepOcean', 'hover:bg-tealDepth');
-                btn.classList.add('bg-green-600', 'hover:bg-green-700', 'cursor-default');
-                btn.onclick = null;
-            }
-        });
-
-        // --- LOGIC: Local Storage Progress (Checkboxes) ---
+        // --- LOGIC: Local Storage Progress ---
         const checkboxes = document.querySelectorAll('.progress-check');
+        
+        // Load state
         checkboxes.forEach(cb => {
             const weekId = cb.dataset.week;
             const isChecked = localStorage.getItem(`course_progress_w${weekId}`) === 'true';
             cb.checked = isChecked;
+            
+            // Visual style update on load
             if(isChecked) {
                 cb.closest('section').classList.add('border-tealDepth');
                 cb.nextElementSibling.innerText = "COMPLETED";
             }
         });
 
+        // Save state on change
         checkboxes.forEach(cb => {
             cb.addEventListener('change', (e) => {
                 const weekId = e.target.dataset.week;
                 const isChecked = e.target.checked;
                 localStorage.setItem(`course_progress_w${weekId}`, isChecked);
+                
+                // Visual feedback
                 const labelText = e.target.nextElementSibling;
                 if(isChecked) {
                     labelText.innerText = "COMPLETED";
@@ -882,8 +814,9 @@
             }
         }
 
-        // --- LOGIC: Q&A Form Submission ---
+        // --- LOGIC: Firebase Form Submission ---
         const forms = document.querySelectorAll('.qa-form');
+        
         forms.forEach(form => {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -895,23 +828,34 @@
 
                 if (!questionText) return;
 
+                if (!db || !auth.currentUser) {
+                    status.innerText = "Connection initializing... try again in 2 seconds.";
+                    status.classList.remove('hidden');
+                    status.classList.add('text-orange-600');
+                    return;
+                }
+
+                // UI Loading State
                 const originalBtnText = btn.innerText;
                 btn.innerText = "Sending...";
                 btn.disabled = true;
 
                 try {
-                    if(db && auth.currentUser) {
-                         await addDoc(collection(db, 'artifacts', appId, 'public', 'data', collectionName), {
-                            text: questionText,
-                            week: weekId,
-                            timestamp: serverTimestamp(),
-                            resolved: false
-                        });
-                    }
+                    // Protocol B: Routing to correct collection
+                    await addDoc(collection(db, 'artifacts', typeof __app_id !== 'undefined' ? __app_id : 'default-app-id', 'public', 'data', collectionName), {
+                        text: questionText,
+                        week: weekId,
+                        timestamp: serverTimestamp(),
+                        resolved: false,
+                        day: dayParam || 'general'
+                    });
+
+                    // Success UI
                     btn.innerText = "Sent!";
                     btn.classList.replace('bg-starryGold', 'bg-green-500');
                     btn.classList.replace('text-deepOcean', 'text-white');
                     textarea.value = "";
+                    
                     status.innerText = "Your question has been sent anonymously.";
                     status.classList.remove('hidden');
                     status.classList.add('text-green-700');
@@ -927,6 +871,9 @@
                 } catch (error) {
                     console.error("Error adding document: ", error);
                     btn.innerText = "Error";
+                    status.innerText = "Could not send. Check console.";
+                    status.classList.remove('hidden');
+                    status.classList.add('text-red-600');
                 }
             });
         });
