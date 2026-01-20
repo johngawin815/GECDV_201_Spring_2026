@@ -569,7 +569,7 @@
     </main>
 
     <!-- Fixed Bottom Return Button -->
-    <a id="fab-back-link" href="#" class="hidden fixed bottom-6 right-6 z-50 bg-deepOcean text-white px-6 py-3 rounded-full shadow-2xl font-bold flex items-center gap-2 hover:scale-105 hover:bg-tealDepth transition-all border-2 border-starryGold group">
+    <a id="fab-back-link" href="#" class="fixed bottom-6 right-6 z-50 bg-deepOcean text-white px-6 py-3 rounded-full shadow-2xl font-bold flex items-center gap-2 hover:scale-105 hover:bg-tealDepth transition-all border-2 border-starryGold group hidden">
         <i class="ph ph-rocket-launch text-xl group-hover:-translate-x-1 transition-transform"></i>
         <span>Return to Mission Control</span>
     </a>
@@ -694,7 +694,7 @@
             separator.classList.remove('hidden');
 
             fabLink.href = 'index.html';
-            fabLink.classList.remove('hidden');
+            fabLink.classList.remove('hidden'); // Ensure visible
 
         } else if (dayParam === 'wednesday') {
             badgeEl.innerText = "Welcome Wednesday Class";
@@ -707,7 +707,7 @@
             separator.classList.remove('hidden');
 
             fabLink.href = 'wednesday.html';
-            fabLink.classList.remove('hidden');
+            fabLink.classList.remove('hidden'); // Ensure visible
         }
 
         // --- LOGIC: Pulse Check ---
