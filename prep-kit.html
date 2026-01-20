@@ -31,33 +31,79 @@
     </script>
 
     <style>
-        /* Zen Earth Theme & Glassmorphism */
+        :root {
+            /* Light Mode (Default - Zen Earth) */
+            --bg-body: linear-gradient(to bottom, #e0fbfc 0%, #c2dfe3 100%);
+            --text-main: #003049;
+            --text-muted: #005f73;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --nav-text: #003049;
+            --nav-hover: #ffd166;
+            --accent-gold: #ffd166;
+            --accent-teal: #005f73;
+            --btn-text: #ffffff;
+            --shadow-color: rgba(0, 48, 73, 0.1);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode (Deep Sea Celestial) */
+            --bg-body: linear-gradient(135deg, #021a29 0%, #003049 100%);
+            --text-main: #e0fbfc;
+            --text-muted: #98c1d9;
+            --glass-bg: rgba(0, 48, 73, 0.75);
+            --glass-border: rgba(152, 193, 217, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --nav-bg: rgba(2, 26, 41, 0.9);
+            --nav-text: #e0fbfc;
+            --nav-hover: #005f73;
+            --accent-gold: #ffd166;
+            --accent-teal: #4ea8de;
+            --btn-text: #021a29;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Base Styles using CSS Variables */
         body {
-            background: linear-gradient(to bottom, #e0fbfc 0%, #c2dfe3 100%);
+            background: var(--bg-body);
             min-height: 100vh;
-            color: #003049;
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(0, 48, 73, 0.1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
             border-radius: 16px;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--nav-bg);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 48, 73, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--nav-text);
+        }
+
+        .week-link {
+            color: var(--nav-text);
+        }
+        .week-link:hover {
+            background-color: var(--nav-hover);
+            color: var(--text-main);
         }
 
         #application-root h1, #application-root h2, #application-root h3 {
             margin-top: 0;
             line-height: 1.2;
+            color: var(--text-main);
         }
         
         #application-root a { text-decoration: none; }
@@ -65,7 +111,7 @@
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: rgba(0, 48, 73, 0.05); }
-        ::-webkit-scrollbar-thumb { background: #005f73; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-teal); border-radius: 4px; }
 
         /* Accordion Transitions */
         .accordion-content {
@@ -79,13 +125,52 @@
         /* Form styling */
         .input-zen {
             background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #005f73;
-            color: #003049;
+            border: 2px solid var(--accent-teal);
+            color: #003049; /* Keep input text dark for readability on light bg */
         }
         .input-zen:focus {
-            border-color: #ffd166;
+            border-color: var(--accent-gold);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.3);
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 60;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+            border-radius: 2rem;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        .theme-toggle {
+            cursor: pointer;
+            width: 48px;
+            height: 24px;
+            background: var(--accent-teal);
+            border-radius: 12px;
+            position: relative;
+            transition: background 0.3s;
+        }
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        [data-theme="dark"] .theme-toggle::after {
+            transform: translateX(24px);
         }
 
         /* Video Container */
@@ -120,41 +205,55 @@
             display: flex; flex-direction: column; align-items: center; gap: 5px;
             padding: 10px; border-radius: 12px; border: 2px solid transparent;
             transition: all 0.2s; cursor: pointer;
+            color: #003049; /* Modal is always light mode currently */
         }
-        .vibe-btn:hover { background: rgba(255,255,255,0.5); transform: translateY(-2px); }
+        .vibe-btn:hover { background: rgba(0,0,0,0.05); transform: translateY(-2px); }
         .vibe-btn.selected { background: #ffd166; border-color: #003049; color: #003049; }
         .vibe-icon { font-size: 2rem; }
         .vibe-label { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+
+        /* Helper Utility for Text Colors in Dark Mode */
+        .text-dynamic { color: var(--text-main); }
+        .text-muted-dynamic { color: var(--text-muted); }
+        .bg-card-dynamic { background: var(--card-bg); }
+        
     </style>
 </head>
 <body id="application-root" class="p-4 md:p-8">
 
+    <!-- Theme Toggle -->
+    <div class="toggle-container">
+        <i class="ph ph-sun text-yellow-500"></i>
+        <div class="theme-toggle" onclick="toggleTheme()"></div>
+        <i class="ph ph-moon text-blue-300"></i>
+    </div>
+
     <!-- Sticky Nav Pill -->
-    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 glass-nav px-2 py-2 rounded-full shadow-lg max-w-[95vw] flex items-center gap-2">
+    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 glass-nav px-2 py-2 rounded-full shadow-lg max-w-[85vw] flex items-center gap-2">
         <!-- Dynamic Back Button (Top) -->
         <a id="nav-back-link" href="#" class="hidden px-3 py-1.5 rounded-full text-xs font-bold bg-deepOcean text-white hover:bg-tealDepth transition-colors whitespace-nowrap flex items-center gap-1">
-            <i class="ph ph-arrow-left"></i> <span id="nav-back-text">Course Home</span>
+            <i class="ph ph-arrow-left"></i> <span id="nav-back-text">Home</span>
         </a>
         <div class="h-4 w-px bg-gray-300 mx-1 hidden" id="nav-separator"></div>
         
         <!-- Week Links Container -->
         <div class="flex space-x-1 overflow-x-auto no-scrollbar max-w-[60vw] md:max-w-none">
-            <a href="#week-1" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W1</a>
-            <a href="#week-2" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W2</a>
-            <a href="#week-3" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W3</a>
-            <a href="#week-4" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W4</a>
-            <a href="#week-5" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W5</a>
-            <a href="#week-6" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W6</a>
-            <a href="#week-7" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W7</a>
-            <a href="#week-8" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W8</a>
-            <a href="#week-9" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W9</a>
-            <a href="#week-10" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W10</a>
-            <a href="#week-11" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W11</a>
-            <a href="#week-12" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W12</a>
-            <a href="#week-13" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W13</a>
-            <a href="#week-14" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W14</a>
-            <a href="#week-15" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W15</a>
-            <a href="#week-16" class="px-3 py-1.5 rounded-full text-xs font-bold text-deepOcean hover:bg-starryGold transition-colors whitespace-nowrap">W16</a>
+            <a href="#week-1" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W1</a>
+            <a href="#week-2" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W2</a>
+            <a href="#week-3" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W3</a>
+            <a href="#week-4" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W4</a>
+            <a href="#week-5" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W5</a>
+            <a href="#week-6" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W6</a>
+            <a href="#week-7" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W7</a>
+            <a href="#week-8" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W8</a>
+            <a href="#week-9" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W9</a>
+            <a href="#week-10" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W10</a>
+            <a href="#week-11" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W11</a>
+            <a href="#week-12" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W12</a>
+            <a href="#week-13" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W13</a>
+            <a href="#week-14" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W14</a>
+            <a href="#week-15" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W15</a>
+            <a href="#week-16" class="week-link px-3 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap">W16</a>
         </div>
     </nav>
 
@@ -164,8 +263,8 @@
         <div id="class-badge" class="hidden inline-block bg-starryGold text-deepOcean px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-4 shadow-sm">
             <!-- Populated by JS -->
         </div>
-        <h1 class="text-3xl md:text-5xl font-bold text-deepOcean mb-4 font-serif">Self in a Multicultural Society</h1>
-        <p class="text-lg md:text-xl text-tealDepth max-w-2xl mx-auto">Explore identity, culture, and critical consciousness. Spring 2026.</p>
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif">Self in a Multicultural Society</h1>
+        <p class="text-lg md:text-xl text-muted-dynamic max-w-2xl mx-auto">Explore identity, culture, and critical consciousness. Spring 2026.</p>
     </header>
 
     <!-- Main Content Container -->
@@ -173,35 +272,34 @@
 
         <!-- WEEK 1 -->
         <section id="week-1" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
-            
             <div class="flex items-center gap-3 mb-6">
                 <span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">1</span>
                 <div>
-                    <h2 class="text-2xl font-bold text-deepOcean m-0">Introductions & Syllabus</h2>
-                    <p class="text-sm text-tealDepth font-medium live-date" data-week="1">Spring 2026</p>
+                    <h2 class="text-2xl font-bold m-0">Introductions & Orientation</h2>
+                    <p class="text-sm text-muted-dynamic font-medium live-date" data-week="1">The Cultural Iceberg</p>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">Prep Work</h3>
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-muted-dynamic border-b border-tealDepth/20 pb-2">Prep Work</h3>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default">
                         <div class="flex justify-between items-start">
-                            <div class="font-bold text-deepOcean">The Cultural Iceberg</div>
+                            <div class="font-bold text-dynamic">The Cultural Iceberg</div>
                             <span class="bg-tealDepth/10 text-tealDepth text-[10px] px-2 py-0.5 rounded-full font-bold">READ</span>
                         </div>
-                        <p class="text-sm text-gray-600 mt-1">Review the syllabus and understand the concept of surface vs. deep culture.</p>
+                        <p class="text-sm text-muted-dynamic mt-1">Review syllabus and understand surface vs. deep culture.</p>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">Live Session</h3>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-accent-gold text-shadow-sm border-b border-starryGold/50 pb-2 text-dynamic">Live Session</h3>
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4">
-                        <div class="flex items-center gap-2 mb-2 text-deepOcean font-bold">
+                        <div class="flex items-center gap-2 mb-2 text-dynamic font-bold">
                             <i class="ph ph-users-three text-xl"></i>
                             <span>Agenda</span>
                         </div>
-                        <p class="text-sm text-deepOcean/80 italic">Introductions, Syllabus Review, Presentation Sign-ups.</p>
+                        <p class="text-sm text-muted-dynamic italic">Introductions, Syllabus Review, Presentation Sign-ups.</p>
                     </div>
                     <!-- Pulse Check -->
                     <button onclick="openPulseCheck(1)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2">
@@ -212,7 +310,7 @@
 
             <!-- Q&A Section -->
             <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-1')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean">
+                <button onclick="toggleQA('qa-1')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic">
                     <i class="ph ph-question"></i> Ask an Anonymous Question
                 </button>
                 <div id="qa-1" class="accordion-content mt-4">
@@ -225,65 +323,60 @@
             </div>
         </section>
 
-        <!-- WEEK 2: DECONSTRUCTING PRIVILEGE (MATCHING LIVE SITE) -->
+        <!-- WEEK 2 -->
         <section id="week-2" class="glass-panel p-6 md:p-8 relative group transition hover:shadow-xl">
-            
             <div class="flex items-center gap-3 mb-6">
                 <span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">2</span>
                 <div>
-                    <h2 class="text-2xl font-bold text-deepOcean m-0">Deconstructing Privilege</h2>
-                    <p class="text-sm text-tealDepth font-medium live-date" data-week="2">Race, Racism & The Self</p>
+                    <h2 class="text-2xl font-bold m-0">Deep Dive: Race & Privilege</h2>
+                    <p class="text-sm text-muted-dynamic font-medium live-date" data-week="2">Race, racism, and privilege</p>
                 </div>
             </div>
 
-            <p class="text-sm text-deepOcean/80 mb-6 italic bg-white/40 p-3 rounded-lg border-l-4 border-starryGold">
+            <p class="text-sm text-muted-dynamic mb-6 italic bg-card-dynamic p-3 rounded-lg border-l-4 border-starryGold">
                 "Privilege" is a contested term. Watch these four distinct perspectives. Your goal is not to agree with all of them, but to understand how the definitions and arguments differ.
             </p>
 
             <!-- WEEK 2 VIDEO GRID -->
             <div class="grid md:grid-cols-2 gap-6 mb-6">
-                
                 <!-- Video 1 -->
-                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                <div class="bg-card-dynamic p-3 rounded-xl border border-white/20 shadow-sm">
                     <div class="video-wrapper mb-2 bg-black">
                          <iframe width="560" height="315" src="https://www.youtube.com/embed/7gUO3yN8eFg" title="Jay Shetty: The Metaphor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <h4 class="font-bold text-deepOcean text-sm">The Metaphor: Privilege Explained</h4>
-                    <p class="text-xs text-gray-600">Jay Shetty</p>
+                    <h4 class="font-bold text-dynamic text-sm">The Metaphor: Privilege Explained</h4>
+                    <p class="text-xs text-muted-dynamic">Jay Shetty</p>
                 </div>
-
                 <!-- Video 2 -->
-                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                <div class="bg-card-dynamic p-3 rounded-xl border border-white/20 shadow-sm">
                     <div class="video-wrapper mb-2 bg-black">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/y25fPzr8fM4" title="John Amaechi: Systemic View" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <h4 class="font-bold text-deepOcean text-sm">The Systemic View</h4>
-                    <p class="text-xs text-gray-600">John Amaechi</p>
+                    <h4 class="font-bold text-dynamic text-sm">The Systemic View</h4>
+                    <p class="text-xs text-muted-dynamic">John Amaechi</p>
                 </div>
-
                 <!-- Video 3 -->
-                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                <div class="bg-card-dynamic p-3 rounded-xl border border-white/20 shadow-sm">
                     <div class="video-wrapper mb-2 bg-black">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/GR4gUQIEsns" title="Ben Shapiro: Counter Argument" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <h4 class="font-bold text-deepOcean text-sm">The Counter-Argument</h4>
-                    <p class="text-xs text-gray-600">Ben Shapiro</p>
+                    <h4 class="font-bold text-dynamic text-sm">The Counter-Argument</h4>
+                    <p class="text-xs text-muted-dynamic">Ben Shapiro</p>
                 </div>
-
                 <!-- Video 4 -->
-                <div class="bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                <div class="bg-card-dynamic p-3 rounded-xl border border-white/20 shadow-sm">
                     <div class="video-wrapper mb-2 bg-black">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/CwVK7P3ZdeI" title="Jesse Lee Peterson: Alternative View" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <h4 class="font-bold text-deepOcean text-sm">Alternative View: Is it Real?</h4>
-                    <p class="text-xs text-gray-600">Jesse Lee Peterson</p>
+                    <h4 class="font-bold text-dynamic text-sm">Alternative View: Is it Real?</h4>
+                    <p class="text-xs text-muted-dynamic">Jesse Lee Peterson</p>
                 </div>
             </div>
 
             <!-- Breakout Prep -->
             <div class="bg-deepOcean/5 border border-deepOcean/10 rounded-xl p-5 mb-6">
-                <h3 class="text-sm font-bold uppercase tracking-widest text-deepOcean mb-3 border-b border-deepOcean/10 pb-2">Breakout Discussion Prep</h3>
-                <ul class="space-y-3 text-sm text-deepOcean/90 list-disc pl-5">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-dynamic mb-3 border-b border-deepOcean/10 pb-2">Breakout Discussion Prep</h3>
+                <ul class="space-y-3 text-sm text-muted-dynamic list-disc pl-5">
                     <li><strong>Amaechi</strong> describes privilege as "the absence of inconvenience." How does this definition compare to <strong>Shapiro’s</strong> view of privilege as "individual decision making"?</li>
                     <li><strong>Jay Shetty</strong> uses a race metaphor. Is this a helpful simplification, or does it miss the complexity that Peterson or Shapiro emphasize?</li>
                     <li>Identify one point of <strong>convergence</strong> (agreement) and one point of fundamental <strong>divergence</strong> between these four speakers.</li>
@@ -297,7 +390,7 @@
             </div>
 
             <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-2')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-2')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-2" class="accordion-content mt-4">
                     <form class="qa-form space-y-3" data-week="2">
                         <textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]" placeholder="Type question..."></textarea>
@@ -310,246 +403,248 @@
 
         <!-- WEEK 3 -->
         <section id="week-3" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">3</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Race & Identity</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="3"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">3</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="3">Who Am I As a Cultural Being?</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Race: The Power of an Illusion</div><p class="text-xs text-gray-600 mt-1">Review the provided reading materials.</p></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group A</div></div>
                 </div>
                 <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 2</p></div>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Support your peers.</p></div>
                     <button onclick="openPulseCheck(3)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 3 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-3')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-3')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-3" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="3"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 4 -->
         <section id="week-4" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="4"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="4">Socioeconomic status</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presenting "Who Am I?"</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Independent Study</div></div>
                 </div>
                 <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Presentations Group A</p></div>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Complete Discussion 1 by Feb 15</p></div>
                     <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 4 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-4')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-4')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-4" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="4"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 5 -->
         <section id="week-5" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">5</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Toxic Masculinity</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="5"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">5</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="5">Who Am I As a Cultural Being?</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">The Man Box</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group B</div></div>
                 </div>
                 <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 3</p></div>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Support your peers.</p></div>
                     <button onclick="openPulseCheck(5)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 5 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-5')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-5')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-5" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="5"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 6 -->
         <section id="week-6" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">6</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="6"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">6</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Gender & Sexuality</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="6">Dialogue & Reflection</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group B</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Readings & Media</div></div>
                 </div>
                 <div class="space-y-4">
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Journal #1 Due Mar 1</p></div>
                     <button onclick="openPulseCheck(6)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 6 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-6')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-6')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-6" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="6"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 7 -->
         <section id="week-7" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">7</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Student Presentations</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="7"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">7</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="7">Who Am I As a Cultural Being?</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group C</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group C</div></div>
                 </div>
                 <div class="space-y-4">
                      <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 7 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-7')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-7')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-7" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="7"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 8 -->
         <section id="week-8" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 4</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="8"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Immigration</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="8">Immigration Narratives</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Immigration Narratives</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Immigration Narratives</div></div>
                 </div>
                 <div class="space-y-4">
+                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Autobiography Due Mar 15</p></div>
                      <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 8 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-8" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="8"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 9 -->
         <section id="week-9" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">9</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Cultural Being Presentations</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="9"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">9</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="9">Who Am I As a Cultural Being?</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group D</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group D</div></div>
                 </div>
                 <div class="space-y-4">
-                     <p class="text-sm text-tealDepth italic">Prepare for student presentations.</p>
+                     <p class="text-sm text-muted-dynamic italic">Prepare for student presentations.</p>
                      <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 9 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-9')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-9')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-9" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="9"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 10 -->
         <section id="week-10" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">10</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Mini Lecture + Discussion</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="10"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">10</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="10">Ableism & Self</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Ableism & Access</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Independent Study</div></div>
                 </div>
                 <div class="space-y-4">
+                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Discussion 2 Due Apr 5</p></div>
                      <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 10 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-10')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-10')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-10" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="10"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 11 -->
         <section id="week-11" class="glass-panel p-6 md:p-8 relative">
-            
-             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">11</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Presentations + Q&A</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="11"></p></div></div>
+             <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">11</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="11">Who Am I As a Cultural Being?</p></div></div>
             <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Presentations Group E</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group E</div></div>
                 </div>
                  <div class="space-y-4">
                      <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 11 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-11')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-11')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-11" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="11"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 12 -->
         <section id="week-12" class="glass-panel p-6 md:p-8 relative">
-             
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">12</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 5</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="12"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">12</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Healthcare & Education</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="12">Health care & Education</p></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Education & Equity</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Systemic Inequities</div></div>
                 </div>
                  <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Breakout Discussion 5</p></div>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Journal #2 Due Apr 19</p></div>
                      <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 12 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-12')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-12')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-12" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="12"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
          <!-- WEEK 13 -->
          <section id="week-13" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">13</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 6</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="13"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">13</span><div><h2 class="text-2xl font-bold m-0">Student Presentations</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="13">Who Am I As a Cultural Being?</p></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Synthesis & Application</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group F</div></div>
                 </div>
                  <div class="space-y-4">
+                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Event Paper Due Apr 26</p></div>
                      <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 13 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-13')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-13')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-13" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="13"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
          <!-- WEEK 14 -->
-         <section id="week-14" class="glass-panel p-6 md:p-8 relative opacity-75">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-gray-400 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">14</span><div><h2 class="text-2xl font-bold text-gray-600 m-0">Fall Break / Thanksgiving</h2><p class="text-sm text-gray-500 font-medium live-date" data-week="14"></p></div></div>
-            <p class="text-center italic text-gray-500">No Class Session. Rest and recharge.</p>
+         <section id="week-14" class="glass-panel p-6 md:p-8 relative">
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">14</span><div><h2 class="text-2xl font-bold m-0">Deep Dive: Synthesis</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="14">Bringing It All Together</p></div></div>
+             <div class="grid md:grid-cols-2 gap-6">
+                 <div class="space-y-4">
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Course Review</div></div>
+                </div>
+                 <div class="space-y-4">
+                     <button onclick="openPulseCheck(14)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 14 Pulse</button>
+                </div>
+            </div>
+             <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-14')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
+                <div id="qa-14" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="14"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+            </div>
         </section>
 
         <!-- WEEK 15 -->
         <section id="week-15" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">15</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Lecture + Breakout 7</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="15"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">15</span><div><h2 class="text-2xl font-bold m-0">Closing Session</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="15">TBD</p></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Looking Forward</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Final Thoughts</div></div>
                 </div>
                  <div class="space-y-4">
                      <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 15 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-15')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-15')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-15" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="15"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
 
         <!-- WEEK 16 -->
         <section id="week-16" class="glass-panel p-6 md:p-8 relative">
-            
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">16</span><div><h2 class="text-2xl font-bold text-deepOcean m-0">Final Reflection Week</h2><p class="text-sm text-tealDepth font-medium live-date" data-week="16"></p></div></div>
+            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">16</span><div><h2 class="text-2xl font-bold m-0">Finals Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="16">No Class Meeting</p></div></div>
              <div class="grid md:grid-cols-2 gap-6">
                  <div class="space-y-4">
-                    <div class="block bg-white/60 p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white transition shadow-sm cursor-default"><div class="font-bold text-deepOcean">Final Reflection</div></div>
+                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Final Reflection Due</div></div>
                 </div>
                  <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-deepOcean/80 italic">Topic TBD</p></div>
+                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Due May 17</p></div>
                      <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex items-center justify-center gap-2"><i class="ph ph-heartbeat"></i> Check-in: Week 16 Pulse</button>
                 </div>
             </div>
              <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-16')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean"><i class="ph ph-question"></i> Ask Question</button>
+                <button onclick="toggleQA('qa-16')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-16" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="16"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
             </div>
         </section>
@@ -557,30 +652,30 @@
     </main>
 
     <!-- Fixed Bottom Return Button -->
-    <a id="fab-back-link" href="#" class="fixed bottom-6 right-6 z-50 bg-deepOcean text-white px-6 py-3 rounded-full shadow-2xl font-bold flex items-center gap-2 hover:scale-105 hover:bg-tealDepth transition-all border-2 border-starryGold group hidden">
-        <i class="ph ph-rocket-launch text-xl group-hover:-translate-x-1 transition-transform"></i>
-        <span>Return to Mission Control</span>
+    <a id="fab-back-link" href="#" class="fixed bottom-6 right-6 z-50 bg-deepOcean text-white px-4 py-2 text-sm rounded-full shadow-2xl font-bold flex items-center gap-2 hover:scale-105 hover:bg-tealDepth transition-all border-2 border-starryGold group hidden">
+        <i class="ph ph-rocket-launch text-lg group-hover:-translate-x-1 transition-transform"></i>
+        <span>Mission Control</span>
     </a>
 
     <!-- Footer -->
-    <footer class="text-center text-deepOcean/60 py-8">
+    <footer class="text-center text-muted-dynamic/60 py-8">
         <p>© 2026 GECDV 201 | UMKC School of Education</p>
     </footer>
 
     <!-- Pulse Check Modal -->
     <div id="pulse-modal" class="modal-overlay hidden">
-        <div class="bg-white p-6 rounded-2xl max-w-sm w-full mx-4 shadow-2xl border-4 border-starryGold relative">
-            <h3 class="text-xl font-bold text-deepOcean mb-4 text-center">Weekly Pulse Check</h3>
+        <div class="bg-white p-6 rounded-2xl max-w-sm w-full mx-4 shadow-2xl border-4 border-starryGold relative text-deepOcean">
+            <h3 class="text-xl font-bold mb-4 text-center">Weekly Pulse Check</h3>
             <p id="pulse-week-label" class="text-sm text-tealDepth text-center mb-6 font-bold uppercase tracking-wider">Week X Check-in</p>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-deepOcean mb-1 uppercase">Student Name</label>
-                    <input type="text" id="pulse-name" class="w-full border-2 border-gray-200 rounded-lg p-2 text-sm focus:border-starryGold outline-none">
+                    <label class="block text-xs font-bold mb-1 uppercase">Student Name</label>
+                    <input type="text" id="pulse-name" class="w-full border-2 border-gray-200 rounded-lg p-2 text-sm focus:border-starryGold outline-none text-deepOcean">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-deepOcean mb-2 uppercase">Current Vibe?</label>
+                    <label class="block text-xs font-bold mb-2 uppercase">Current Vibe?</label>
                     <div class="grid grid-cols-4 gap-2">
                         <div onclick="selectVibe(this, 'Lost')" class="vibe-btn">
                             <span class="vibe-icon">🤔</span>
@@ -606,8 +701,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-deepOcean mb-1 uppercase">One Key Takeaway (140 chars)</label>
-                    <textarea id="pulse-takeaway" maxlength="140" class="w-full border-2 border-gray-200 rounded-lg p-2 text-sm h-20 focus:border-starryGold outline-none resize-none"></textarea>
+                    <label class="block text-xs font-bold mb-1 uppercase">One Key Takeaway (140 chars)</label>
+                    <textarea id="pulse-takeaway" maxlength="140" class="w-full border-2 border-gray-200 rounded-lg p-2 text-sm h-20 focus:border-starryGold outline-none resize-none text-deepOcean"></textarea>
                     <div class="text-right text-[10px] text-gray-400" id="char-count">0/140</div>
                 </div>
 
@@ -657,6 +752,20 @@
         } catch (e) {
             console.warn("Firebase config missing or invalid. Q&A features will be disabled.", e);
         }
+
+        // --- THEME LOGIC ---
+        window.toggleTheme = function() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
 
         // --- LOGIC: URL Params & Section Handling ---
         const urlParams = new URLSearchParams(window.location.search);
@@ -708,16 +817,19 @@
              startDate = new Date('2026-01-20T12:00:00'); // Default to Tuesday logic if unknown
         }
 
-        // Logic 3: Populate Dates
+        // Logic 3: Populate Dates (With Spring Break Logic)
+        // W9 = Mar 17/18. W10 = Mar 31/Apr 1. That is a 2 week gap.
+        // So for W10+, we add 1 extra week (7 days)
         const dateLabels = document.querySelectorAll('.live-date');
         dateLabels.forEach(label => {
             const week = parseInt(label.dataset.week);
             if(!isNaN(week)) {
-                // Calculate date: Start Date + (Week-1)*7 days
+                let weeksToAdd = week - 1;
+                if(week >= 10) weeksToAdd += 1; // Add extra week for Spring Break gap
+
                 const sessionDate = new Date(startDate);
-                sessionDate.setDate(startDate.getDate() + (week - 1) * 7);
+                sessionDate.setDate(startDate.getDate() + (weeksToAdd * 7));
                 
-                // Format: "Tue, Jan 20"
                 const options = { weekday: 'short', month: 'short', day: 'numeric' };
                 label.innerText = sessionDate.toLocaleDateString('en-US', options);
             }
