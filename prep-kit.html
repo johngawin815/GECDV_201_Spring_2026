@@ -517,21 +517,62 @@
 
         <!-- WEEK 4 -->
         <section id="week-4" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span><div><h2 class="text-2xl font-bold m-0">Asynchronous Week</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="4">Socioeconomic status</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Async / Discussion</span><span class="text-xs text-muted-dynamic">Flexible / No Live Meeting</span></div></div></div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Independent Study</div></div>
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">4</span>
+                <div>
+                    <h2 class="text-2xl font-bold m-0">Asynchronous Week: Socioeconomic Status</h2>
+                    <p class="text-sm text-muted-dynamic font-medium live-date" data-week="4">Philly Streets</p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Async / Video Analysis</span>
+                        <span class="text-xs text-muted-dynamic">No Live Meeting</span>
+                    </div>
                 </div>
-                <div class="space-y-4">
-                    <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Complete Discussion 1 by Feb 15</p></div>
+            </div>
+
+            <div class="grid md:grid-cols-1 gap-6"> <!-- Single column for video content -->
+                
+                <!-- Content Block -->
+                <div class="space-y-6">
+                    <p class="text-dynamic">Watch the documentary below on Kensington, Philadelphia. It explores the intersection of deindustrialization, addiction, and gentrification.</p>
+                    
+                    <!-- Video -->
+                    <div class="bg-card-dynamic p-3 rounded-xl border border-white/20 shadow-sm">
+                        <div class="video-wrapper mb-2 bg-black">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/925wmb-4Yr4" title="Philly Streets" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <h4 class="font-bold text-dynamic text-sm">Philly Streets: Kensington Avenue</h4>
+                        <p class="text-xs text-muted-dynamic">Channel 5 News</p>
+                    </div>
+
+                    <!-- Questions -->
+                    <div class="bg-deepOcean/5 border border-deepOcean/10 rounded-xl p-5">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-dynamic mb-3 border-b border-deepOcean/10 pb-2">Self-Reflective Questions</h3>
+                        <ul class="space-y-4 text-sm text-muted-dynamic list-decimal pl-5">
+                            <li><strong>Systemic Forces:</strong> The documentary links Kensington's crisis to historical events like deindustrialization. How does this history challenge the narrative that poverty is just a lack of "hard work"?</li>
+                            <li><strong>Gentrification:</strong> The video contrasts the "new" development with the existing streets. Who is "safety" really for in this context, and who gets displaced?</li>
+                            <li><strong>The Ethics of Viewing:</strong> The narrator questions the "content economy" of filming suffering. Did you feel like a witness or a voyeur while watching? How does your own class privilege shape your reaction?</li>
+                            <li><strong>Economic Survival:</strong> We see dealers discussing the economics of the trade. How does the lack of legal economic opportunity drive the underground economy in neglected neighborhoods?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Action Block -->
+                <div class="space-y-4 pt-4 border-t border-gray-200/50">
+                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4 flex items-center gap-3">
+                        <i class="ph ph-chat-text text-2xl text-starryGold"></i>
+                        <p class="text-sm text-muted-dynamic italic font-bold">Use these questions to guide your Discussion Board #1 post (Due Feb 15).</p>
+                    </div>
+                    
                     <button onclick="openPulseCheck(4)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 4 Pulse</span>
                         </div>
-                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete by Sunday Night</span>
+                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete after watching</span>
                     </button>
                 </div>
+
             </div>
+
              <div class="mt-8 pt-6 border-t border-gray-200/50">
                 <button onclick="toggleQA('qa-4')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
                 <div id="qa-4" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="4"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
@@ -592,7 +633,7 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group C</div></div>
                 </div>
                 <div class="space-y-4">
-                     <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <button onclick="openPulseCheck(7)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 7 Pulse</span>
                         </div>
@@ -614,8 +655,8 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Immigration Narratives</div></div>
                 </div>
                 <div class="space-y-4">
-                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Autobiography Due Mar 15</p></div>
-                     <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Autobiography Due Mar 15</p></div>
+                      <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 8 Pulse</span>
                         </div>
@@ -637,8 +678,8 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group D</div></div>
                 </div>
                 <div class="space-y-4">
-                     <p class="text-sm text-muted-dynamic italic">Prepare for student presentations.</p>
-                     <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <p class="text-sm text-muted-dynamic italic">Prepare for student presentations.</p>
+                      <button onclick="openPulseCheck(9)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 9 Pulse</span>
                         </div>
@@ -660,8 +701,8 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Independent Study</div></div>
                 </div>
                 <div class="space-y-4">
-                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Discussion 2 Due Apr 5</p></div>
-                     <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Discussion 2 Due Apr 5</p></div>
+                      <button onclick="openPulseCheck(10)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 10 Pulse</span>
                         </div>
@@ -683,7 +724,7 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group E</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <button onclick="openPulseCheck(11)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 11 Pulse</span>
                         </div>
@@ -706,7 +747,7 @@
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Journal #2 Due Apr 19</p></div>
-                     <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <button onclick="openPulseCheck(12)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 12 Pulse</span>
                         </div>
@@ -728,8 +769,8 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Presentations Group F</div></div>
                 </div>
                  <div class="space-y-4">
-                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Event Paper Due Apr 26</p></div>
-                     <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Event Paper Due Apr 26</p></div>
+                      <button onclick="openPulseCheck(13)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 13 Pulse</span>
                         </div>
@@ -751,7 +792,7 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Course Review</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(14)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <button onclick="openPulseCheck(14)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 14 Pulse</span>
                         </div>
@@ -773,7 +814,7 @@
                     <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Final Thoughts</div></div>
                 </div>
                  <div class="space-y-4">
-                     <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <button onclick="openPulseCheck(15)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 15 Pulse</span>
                         </div>
@@ -796,7 +837,7 @@
                 </div>
                  <div class="space-y-4">
                     <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Due May 17</p></div>
-                     <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
+                      <button onclick="openPulseCheck(16)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
                         <div class="flex items-center gap-2">
                             <i class="ph ph-heartbeat"></i> <span>Check-in: Week 16 Pulse</span>
                         </div>
