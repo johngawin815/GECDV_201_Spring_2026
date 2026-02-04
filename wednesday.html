@@ -517,11 +517,11 @@
                     <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-3-status"></div><div id="week-3-slots" style="margin-top:8px;"></div></td>
                     <td data-label="Toolkit"><div class="btn-group"><a href="prep-kit.html?day=wednesday#week-3" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
-                <tr data-date="2026-02-11">
+                <tr id="week-4-row" data-date="2026-02-11">
                     <td data-label="Week" class="week-cell">4</td>
                     <td data-label="Date" class="date-cell">Feb 11</td>
-                    <td data-label="Agenda"><strong>Asynchronous Week</strong><br><em>Socioeconomic status</em></td>
-                    <td data-label="Toolkit"><div class="btn-group"><a href="prep-kit.html?day=wednesday#week-4" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('async')" onmouseenter="showTooltip(event, 'async')" onmouseleave="hideTooltip()" class="btn btn-outline">Participation</button></div><span class="due-date-text">Discussion 1 Due: Feb 15</span></td>
+                    <td data-label="Agenda"><strong>Student Presentations</strong><br><em>Who Am I As a Cultural Being?</em><div id="week-4-status"></div><div id="week-4-slots" style="margin-top:8px;"></div></td>
+                    <td data-label="Toolkit"><div class="btn-group"><a href="prep-kit.html?day=wednesday#week-4" class="btn btn-gold">Prep Kit</a><button onclick="openAttendanceModal('zoom')" onmouseenter="showTooltip(event, 'zoom')" onmouseleave="hideTooltip()" class="btn btn-outline">Attendance</button></div></td>
                 </tr>
                 <tr id="week-5-row" data-date="2026-02-18">
                     <td data-label="Week" class="week-cell">5</td>
@@ -795,8 +795,10 @@
     };
     
     // WEDNESDAY DATES
+    // Updated to include Week 4 (Feb 11)
     let presentationWeeks = { 
         3: { date: "Feb 04", students: [] }, 
+        4: { date: "Feb 11", students: [] },
         5: { date: "Feb 18", students: [] }, 
         7: { date: "Mar 04", students: [] }, 
         9: { date: "Mar 18", students: [] }, 
