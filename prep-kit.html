@@ -704,25 +704,80 @@
         </section>
 
         <!-- WEEK 8 -->
-        <section id="week-8" class="glass-panel p-6 md:p-8 relative">
-            <div class="flex items-center gap-3 mb-6"><span class="bg-deepOcean text-white w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl">8</span><div><h2 class="text-2xl font-bold m-0">Deep Dive & Dialogue</h2><p class="text-sm text-muted-dynamic font-medium live-date" data-week="8">exploring the interplay of deep culture on self and society</p><div class="flex items-center gap-2 mt-1"><span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Live Zoom</span><span class="text-xs text-muted-dynamic meeting-time">4:30 PM - 7:15 PM</span></div></div></div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <div class="bg-card-dynamic p-4 rounded-xl border-l-4 border-tealDepth hover:bg-white/80 transition shadow-sm cursor-default"><div class="font-bold text-dynamic">Immigration Narratives</div></div>
-                </div>
-                <div class="space-y-4">
-                      <div class="bg-starryGold/10 border-2 border-starryGold rounded-xl p-4"><p class="text-sm text-muted-dynamic italic">Autobiography Due Mar 15</p></div>
-                      <button onclick="openPulseCheck(8)" class="w-full bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md flex flex-col items-center justify-center gap-1">
-                        <div class="flex items-center gap-2">
-                            <i class="ph ph-heartbeat"></i> <span>Check-in: Week 8 Pulse</span>
-                        </div>
-                        <span class="text-xs font-normal opacity-80 uppercase tracking-wide">Complete before leaving Zoom</span>
-                    </button>
+        <section id="week-8" class="glass-panel p-6 md:p-8 relative transition hover:shadow-xl border-l-4 border-starryGold">
+            <div class="absolute top-4 right-4 z-10">
+                <label class="flex items-center gap-2 cursor-pointer bg-white/50 px-3 py-1 rounded-lg border border-deepOcean/10 hover:bg-white transition">
+                    <input type="checkbox" class="progress-check w-5 h-5 accent-tealDepth rounded" data-week="8">
+                    <span class="text-xs font-bold text-tealDepth uppercase tracking-wider">Mark Complete</span>
+                </label>
+            </div>
+            
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-starryGold text-deepOcean w-10 h-10 flex items-center justify-center rounded-full font-bold font-serif text-xl shadow-sm">8</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-deepOcean m-0">Cultural Migration</h2>
+                    <p class="text-sm text-tealDepth font-medium">Leaving the Tribe & The "Crisis of Faith"</p>
                 </div>
             </div>
-             <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-muted-dynamic flex items-center gap-2 hover:text-dynamic"><i class="ph ph-question"></i> Ask Question</button>
-                <div id="qa-8" class="accordion-content mt-4"><form class="qa-form space-y-3" data-week="8"><textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]"></textarea><button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send</button><div class="form-status text-xs mt-2 hidden"></div></form></div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-tealDepth border-b border-tealDepth/20 pb-2">1. Watch</h3>
+                    
+                    <div class="bg-white/60 rounded-xl overflow-hidden shadow-sm border border-deepOcean/5 group hover:shadow-md transition">
+                        <div class="relative aspect-video bg-black">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/Pj-h6MEgE7I" title="Why I Left the Mormon Church" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4">
+                            <div class="font-bold text-deepOcean text-lg leading-tight mb-2">Why I Left The Mormon Church</div>
+                            <p class="text-sm text-gray-600">Journalist Johnny Harris illustrates "The Plan"—the strict cultural script he was born into—and the painful process of losing his map.</p>
+                            <div class="mt-3 flex gap-2">
+                                <span class="text-[10px] uppercase font-bold bg-tealDepth/10 text-tealDepth px-2 py-1 rounded">The Plan</span>
+                                <span class="text-[10px] uppercase font-bold bg-tealDepth/10 text-tealDepth px-2 py-1 rounded">Deconstruction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-starryGold text-shadow-sm border-b border-starryGold/50 pb-2 text-deepOcean">2. Reflect</h3>
+                    
+                    <div class="bg-deepOcean/5 border border-deepOcean/10 rounded-xl p-5 space-y-4">
+                        <div class="flex items-center gap-2 font-bold text-deepOcean">
+                            <i class="ph ph-warning-circle text-xl text-alert"></i>
+                            <span>The "Shelf" Metaphor</span>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded-lg border-l-4 border-tealDepth shadow-sm">
+                                <p class="text-sm text-deepOcean italic">"I had a little shelf in my brain. And every time I encountered something that didn't fit 'The Plan,' I would take that little doubt and put it on the shelf... until the shelf broke."</p>
+                            </div>
+
+                            <p class="text-sm text-gray-600"><strong>Reflection Prompt:</strong> What scripts or "Plans" has your culture handed you? Do you have items sitting on a "shelf" that you are afraid to look at?</p>
+                        </div>
+                    </div>
+
+                    <a href="https://umsystem.instructure.com/courses/321213/assignments/3172895" class="block bg-deepOcean text-white p-4 rounded-xl text-center font-bold hover:bg-tealDepth transition shadow-md group">
+                        <span class="block text-sm font-normal opacity-80 mb-1">Major Assignment</span>
+                        <span class="flex items-center justify-center gap-2">
+                            Submit Cultural Autobiography <i class="ph ph-upload-simple group-hover:-translate-y-1 transition"></i>
+                        </span>
+                    </a>
+                    <div class="text-center text-xs text-alert font-bold">Due: Mar 15 (Sunday)</div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-200/50">
+                <button onclick="toggleQA('qa-8')" class="text-sm font-bold text-tealDepth flex items-center gap-2 hover:text-deepOcean">
+                    <i class="ph ph-question"></i> Ask an Anonymous Question (Week 8)
+                </button>
+                <div id="qa-8" class="accordion-content mt-4">
+                    <form class="qa-form space-y-3" data-week="8">
+                        <textarea class="input-zen w-full p-3 rounded-lg text-sm min-h-[80px]" placeholder="Ask about the Autobiography assignment or the video..."></textarea>
+                        <button type="submit" class="bg-starryGold text-deepOcean px-4 py-2 rounded-lg text-sm font-bold hover:bg-white border border-deepOcean transition">Send Question</button>
+                        <div class="form-status text-xs mt-2 hidden"></div>
+                    </form>
+                </div>
             </div>
         </section>
 
